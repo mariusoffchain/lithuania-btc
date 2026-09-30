@@ -1590,3 +1590,8 @@ html[lang="lt"] .theme-atlas .date-badge span {
 .theme-atlas .planned-event {
   grid-template-columns: 1fr;
 }
+
+/* The section heading already supplies the first separator. */
+.theme-atlas .upcoming-events > .list-heading + .event-card {
+  border-top: 0;
+}
