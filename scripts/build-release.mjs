@@ -170,7 +170,7 @@ for (const lang of ["", "lt", "en"]) {
         "Bitcoin places and events in Lithuania</p>",
       );
   html = html.replace(
-    /(<span class="brand-description"\s*>)[\s\S]*?<\/span>/,
+    /(<span class="brand-description"\s*>)[\s\S]*?<\/span\s*>/,
     "$1" + about[language].shortTagline + "</span>",
   );
   if (lang !== "lt") {
