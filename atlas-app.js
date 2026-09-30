@@ -105,9 +105,7 @@ try {
   lang =
     urlLang === "lt" || urlLang === "en"
       ? urlLang
-      : document.documentElement.dataset.language ||
-        localStorage.getItem("lt-btc-language") ||
-        ((navigator.language || "").startsWith("lt") ? "lt" : "en");
+      : document.documentElement.dataset.language || "lt";
 } catch {}
 if (!TXT[lang]) lang = "lt";
 const t = (k) => TXT[lang][k] || k;
@@ -762,8 +760,8 @@ function showEvent(e) {
       async () => {
         const url = new URL(location.href);
         url.searchParams.set("event", e.id);
-        url.searchParams.set("lang", lang);
-        if (/^\/(en|lt)\/$/.test(url.pathname)) url.pathname = "/" + lang + "/";
+        url.searchParams.delete("lang");
+        url.pathname = lang === "en" ? "/en/" : "/";
         url.searchParams.delete("edition");
         url.searchParams.delete("mode");
         try {
@@ -1040,16 +1038,12 @@ async function initMap() {
   }
 }
 $("#language").onclick = () => {
-  lang = lang === "lt" ? "en" : "lt";
-  try {
-    localStorage.setItem("lt-btc-language", lang);
-  } catch {}
   const u = new URL(location.href);
-  u.searchParams.set("lang", lang);
-  history.replaceState(null, "", u);
-  updateHomeLink();
-  renderLabels();
+  u.pathname = lang === "lt" ? "/en/" : "/";
+  u.searchParams.delete("lang");
+  location.assign(u.href);
 };
+
 $(".dialog-close").onclick = () => dialog.close();
 dialog.addEventListener("close", () => {
   activeEvent = null;

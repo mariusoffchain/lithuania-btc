@@ -70,7 +70,7 @@ const template = (await readFile(resolve(root, "atlas.html"), "utf8")).replace(
 );
 for (const lang of ["", "lt", "en"]) {
   const en = lang === "en",
-    path = lang ? "/" + lang + "/" : "/";
+    path = en ? "/en/" : "/";
   const description = en
     ? "Find places accepting Bitcoin in Lithuania, community meetups and Bitcoin walks."
     : "Bitcoin priimančios vietos Lietuvoje, bendruomenės susitikimai ir pasivaikščiojimai.";
@@ -78,7 +78,7 @@ for (const lang of ["", "lt", "en"]) {
     .replace("<head>", '<head><base href="/">')
     .replace(
       '<html lang="lt">',
-      `<html lang="${en ? "en" : "lt"}"${lang ? ` data-language="${lang}"` : ""}>`,
+      `<html lang="${en ? "en" : "lt"}" data-language="${en ? "en" : "lt"}">`,
     );
   html = html
     .replace(
@@ -138,7 +138,7 @@ await writeFile(
 );
 await writeFile(
   resolve(out, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/lt/", "/en/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
 );
 const manifest = JSON.parse(
   await readFile(resolve(root, "manifest.webmanifest"), "utf8"),
