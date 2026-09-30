@@ -1,0 +1,84 @@
+{
+  "en": {
+    "title": "About Lithuania BTC",
+    "description": "Lithuania BTC is a community-run map and events site: BTC Map merchants, meetups, Bitcoin Walk Vilnius and conferences like PROOF, all in one place.",
+    "heading": "Bitcoin in Lithuania, in person",
+    "intro": "Find places accepting Bitcoin in Lithuania and meet the people using it. Lithuania BTC brings a merchant map, community meetups, walks and conferences together in one place.",
+    "tagline": "Bitcoin places and community events in Lithuania.",
+    "shortTagline": "Bitcoin places and events in Lithuania",
+    "aboutLabel": "About",
+    "backLabel": "Back to map",
+    "sections": [
+      {
+        "heading": "The map",
+        "paragraphs": [
+          "The merchant map pulls from BTC Map, which is built on OpenStreetMap data contributed by the community. Coverage is not exhaustive, and listings can go out of date as businesses close, move or change what they accept.",
+          "If you notice a place that is missing, closed or listed incorrectly, you can add or correct it directly on BTC Map. Updates there flow into future refreshes of this site."
+        ]
+      },
+      {
+        "heading": "Meetups and walks",
+        "paragraphs": [
+          "Bitcoin Lithuania meetups and Bitcoin Walk Vilnius are informal gatherings where people talk, walk and sometimes try paying in Bitcoin together. Past events include film screenings and discussions at venues like Zolak Micro Art Residence.",
+          "Conferences such as PROOF have also taken place in Vilnius, with talks and workshops on privacy, decentralized tools and financial sovereignty. The event list is curated by hand, so it reflects what has been verified rather than every event happening in Lithuania."
+        ]
+      },
+      {
+        "heading": "The project",
+        "paragraphs": [
+          "The aim is to make the local Bitcoin community easier to find, whether you live in Lithuania or are visiting. Discover a place to spend Bitcoin, meet others at an event and explore what people are building here.",
+          "The site's code is open source under the MIT license, so other communities are free to fork it for their own country or region. That license covers the code only: photos and branding shown here are not automatically included and must be sourced separately."
+        ]
+      },
+      {
+        "heading": "Follow the initiative",
+        "paragraphs": [
+          "Meetups and Bitcoin Walk Vilnius are separate initiatives with their own community channels. Their links are gathered in the Community section, where you can find updates and join the conversation."
+        ]
+      }
+    ],
+    "contributeHeading": "Get involved",
+    "contributeText": "Join a meetup or walk, add or correct a place on BTC Map, or fork the code for your own country."
+  },
+  "lt": {
+    "title": "Apie Lithuania BTC",
+    "description": "Lithuania BTC yra bendruomenės kuriamas žemėlapis ir renginių svetainė: BTC Map prekybininkai, susitikimai, „Bitcoin Walk Vilnius“ ir konferencijos, pvz., PROOF.",
+    "heading": "Bitcoin Lietuvoje, gyvai",
+    "intro": "Atrask Bitcoin priimančias vietas Lietuvoje ir susipažink su žmonėmis, kurie juo naudojasi. Lithuania BTC vienoje vietoje pateikia prekybininkų žemėlapį, bendruomenės susitikimus, pasivaikščiojimus ir konferencijas.",
+    "tagline": "Bitcoin priimančios vietos ir bendruomenės renginiai Lietuvoje.",
+    "shortTagline": "Bitcoin vietos ir renginiai Lietuvoje",
+    "aboutLabel": "Apie",
+    "backLabel": "Grįžti į žemėlapį",
+    "sections": [
+      {
+        "heading": "Žemėlapis",
+        "paragraphs": [
+          "Prekybininkų žemėlapis remiasi BTC Map, kuris naudoja bendruomenės papildomus OpenStreetMap duomenis. Duomenys neaprėpia visų vietų, o kai kurios nuorodos gali pasenti, jei verslas užsidaro, persikelia ar pakeičia atsiskaitymo būdus.",
+          "Jei pastebi, kad vietos trūksta, ji uždaryta arba nurodyta neteisingai, gali ją pridėti ar pataisyti tiesiai BTC Map. Ten atlikti pakeitimai pateks į vėlesnius šios svetainės atnaujinimus."
+        ]
+      },
+      {
+        "heading": "Susitikimai ir pasivaikščiojimai",
+        "paragraphs": [
+          "„Bitcoin Lithuania“ susitikimai ir „Bitcoin Walk Vilnius“ yra neformalūs susibūrimai, kuriuose žmonės kalbasi, vaikšto ir kartais kartu išbando atsiskaitymą Bitcoin. Praėję renginiai apėmė filmų peržiūras ir diskusijas tokiose erdvėse kaip Zolak Micro Art Residence.",
+          "Vilniuje taip pat vyko konferencijos, pvz., PROOF, su pranešimais ir dirbtuvėmis apie privatumą, decentralizuotas priemones ir finansinį suverenitetą. Renginių sąrašas sudaromas rankiniu būdu, todėl jame yra patikrinti renginiai, o ne visi Lietuvoje vykstantys renginiai."
+        ]
+      },
+      {
+        "heading": "Projektas",
+        "paragraphs": [
+          "Šio projekto tikslas – padėti atrasti vietinę Bitcoin bendruomenę tiek Lietuvos gyventojams, tiek svečiams. Čia gali rasti, kur atsiskaityti Bitcoin, susipažinti su kitais renginiuose ir sužinoti apie vietines iniciatyvas.",
+          "Svetainės kodas yra atviras ir platinamas pagal MIT licenciją, todėl kitos bendruomenės gali jį panaudoti savo šaliai ar regionui. Ši licencija apima tik kodą: čia rodomos nuotraukos ir vizualinis prekės ženklas nėra automatiškai įtraukti, jų reikia gauti atskirai."
+        ]
+      },
+      {
+        "heading": "Sek iniciatyvą",
+        "paragraphs": [
+          "Susitikimai ir „Bitcoin Walk Vilnius“ yra atskiros iniciatyvos, turinčios savo bendruomenės kanalus. Jų nuorodas rasi skiltyje „Bendruomenė“ – ten gali sužinoti naujienas ir prisijungti prie pokalbių."
+        ]
+      }
+    ],
+    "contributeHeading": "Prisijunk",
+    "contributeText": "Ateik į susitikimą ar pasivaikščiojimą, pridėk ar pataisyk vietą BTC Map arba pritaikyk svetainės kodą savo šaliai ar regionui."
+  }
+}

@@ -6,3 +6,4 @@ public-build/
 .dev.vars*
 *.log
 .DS_Store
+designs/share-atlas-*.html

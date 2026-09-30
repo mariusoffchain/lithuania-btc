@@ -58,14 +58,20 @@
         "theme-atlas edition-" + edition + " mode-" + mode;
     </script>
     <header class="navbar">
-      <a class="brand" href="./" aria-label="Lithuania BTC"
-        ><img class="brand-logo" src="assets/logo.png" alt="" /><span
-          class="brand-name"
-          ><span class="wordmark-country">Lithuania</span
-          ><span class="wordmark-btc">BTC</span></span
-        ></a
-      >
+      <a class="brand" href="/" aria-label="Lithuania BTC">
+        <img class="brand-logo" src="assets/logo.png" alt="" />
+        <span class="brand-copy"
+          ><span class="brand-name"
+            ><span class="wordmark-country">Lithuania</span
+            ><span class="wordmark-btc">BTC</span></span
+          >
+          <span class="brand-description"
+            >Bitcoin vietos ir renginiai Lietuvoje</span
+          ></span
+        >
+      </a>
       <nav id="main-navigation" class="nav-links" aria-label="Community">
+        <a class="desktop-about" data-about-link href="/about/">Apie</a>
         <div id="socials" class="initiatives"></div>
         <a
           id="add-place"
@@ -159,6 +165,9 @@
         class="community-pane"
         aria-label="Community"
       >
+        <p class="community-description">
+          Bitcoin vietos ir renginiai Lietuvoje
+        </p>
         <div id="community-gallery"></div>
         <div id="community-links"></div>
         <footer id="community-source" class="community-source"></footer>
@@ -179,6 +188,11 @@
         <span class="folk-icon folk-meetup" aria-hidden="true"></span
         ><span>Community</span>
       </button>
+      <a data-about-link href="/about/" class="mobile-about"
+        ><svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M5 3h14v18H5ZM9 8h6m-6 4h6m-6 4h4" /></svg
+        ><span>Apie</span></a
+      >
     </nav>
     <dialog id="event-dialog" aria-labelledby="detail-title">
       <button class="dialog-close" aria-label="Close">×</button>

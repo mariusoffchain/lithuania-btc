@@ -1,0 +1,65 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { readFileSync, mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+const out = mkdtempSync(join(tmpdir(), "lithuania-seo-"));
+execFileSync(process.execPath, ["scripts/build-release.mjs", out]);
+const get = (p) => readFileSync(join(out, p), "utf8");
+for (const [path, lang] of [
+  ["", "lt"],
+  ["en/", "en"],
+  ["about/", "lt"],
+  ["en/about/", "en"],
+]) {
+  test(`${path || "/"} has indexable localized metadata and sharing image`, () => {
+    const html = get(path + "index.html");
+    assert.match(html, new RegExp(`<html lang="${lang}"`));
+    assert.match(
+      html,
+      new RegExp(`rel="canonical" href="https://lithuaniabtc.com/${path}"`),
+    );
+    assert.match(
+      html,
+      new RegExp(
+        `og:image"\\s+content="https://lithuaniabtc.com/assets/share-atlas-${lang}.jpg"`,
+      ),
+    );
+    assert.ok(
+      readFileSync(join(out, `assets/share-atlas-${lang}.jpg`)).length > 10000,
+    );
+    const schema = JSON.parse(
+      html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1],
+    );
+    assert.equal(
+      schema["@type"],
+      path.includes("about") ? "AboutPage" : "WebSite",
+    );
+    const alternate = path.includes("about") ? "about/" : "";
+    assert.match(
+      html,
+      new RegExp(
+        `hreflang="en"\\s+href="https://lithuaniabtc.com/en/${alternate}"`,
+      ),
+    );
+    assert.match(
+      html,
+      new RegExp(
+        `hreflang="lt"\\s+href="https://lithuaniabtc.com/${alternate}"`,
+      ),
+    );
+    if (path.includes("about")) {
+      assert.match(html, /<h1>/);
+      assert.equal((html.match(/<h2>/g) || []).length, 5);
+      assert.ok(!html.includes('src="atlas-app.js"'));
+    }
+    assert.ok(
+      get("sitemap.xml").includes(`https://lithuaniabtc.com/${path}</loc>`),
+    );
+  });
+}
+test("About pages are available in the offline shell", () => {
+  assert.ok(get("sw.js").includes('"/about/"'));
+  assert.ok(get("sw.js").includes('"/en/about/"'));
+});

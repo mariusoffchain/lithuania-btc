@@ -9,6 +9,7 @@ import {
 import { fileURLToPath } from "node:url";
 import { resolve, dirname } from "node:path";
 import { createHash } from "node:crypto";
+import { aboutPage } from "./about-page.mjs";
 import { COUNTRY } from "../country-config.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = resolve(root, process.argv[2] || "public-build");
@@ -25,6 +26,8 @@ const files = [
   "templates.css",
   "atlas-editions.css",
   "navigation.css",
+  "about.css",
+  "about.js",
   "LICENSE",
   "vendor/maplibre-gl.js",
   "vendor/maplibre-gl.css",
@@ -43,6 +46,8 @@ const assets = (await readdir(resolve(root, "assets"))).filter(
       "logo.png",
       "vytis-cutout.png",
       "share-card.jpg",
+      "share-atlas-en.jpg",
+      "share-atlas-lt.jpg",
       "IBM-Plex-OFL.txt",
       "zolak-provenance.txt",
     ].includes(n),
@@ -67,6 +72,9 @@ await copyFile(
 const template = (await readFile(resolve(root, "atlas.html"), "utf8")).replace(
   "</head>",
   '<link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/assets/logo.png"><meta name="apple-mobile-web-app-title" content="Lithuania BTC"><script defer src="/pwa.js"></script></head>',
+);
+const about = JSON.parse(
+  await readFile(resolve(root, "data/about.json"), "utf8"),
 );
 for (const lang of ["", "lt", "en"]) {
   const en = lang === "en",
@@ -117,6 +125,64 @@ for (const lang of ["", "lt", "en"]) {
   meta("og:url", origin + path);
   meta("og:locale", en ? "en_GB" : "lt_LT");
   meta("og:locale:alternate", en ? "lt_LT" : "en_GB");
+  const language = en ? "en" : "lt";
+  const title =
+    COUNTRY.name +
+    (en
+      ? " | Bitcoin map and events in Lithuania"
+      : " | Bitcoin vietos ir renginiai Lietuvoje");
+  const shareImage = origin + "/assets/share-atlas-" + language + ".jpg";
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`);
+  meta("og:title", title);
+  meta("twitter:title", title);
+  meta("og:image", shareImage);
+  meta("twitter:image", shareImage);
+  meta(
+    "og:image:alt",
+    en
+      ? "Lithuania BTC, Bitcoin places and community events in Lithuania"
+      : "Lithuania BTC, Bitcoin vietos ir bendruomenės renginiai Lietuvoje",
+  );
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": origin + "/#website",
+    name: COUNTRY.name,
+    url: origin + "/",
+    inLanguage: ["lt", "en"],
+    description,
+  }).replaceAll("<", "\\u003c");
+  html = html.replace(
+    "</head>",
+    `<meta name="twitter:description" content="${description}"><script type="application/ld+json">${schema}</script></head>`,
+  );
+  if (en)
+    html = html
+      .replaceAll('href="/about/"', 'href="/en/about/"')
+      .replaceAll(">Apie<", ">About<")
+      .replaceAll(
+        "Bitcoin vietos ir renginiai Lietuvoje</span>",
+        "Bitcoin places and events in Lithuania</span>",
+      )
+      .replaceAll(
+        "Bitcoin vietos ir renginiai Lietuvoje</p>",
+        "Bitcoin places and events in Lithuania</p>",
+      );
+  if (lang !== "lt") {
+    const aboutDir = en ? "en/about" : "about";
+    await mkdir(resolve(out, aboutDir), { recursive: true });
+    await writeFile(
+      resolve(out, aboutDir, "index.html"),
+      aboutPage({
+        homeHTML: html,
+        copy: about[language],
+        lang: language,
+        origin,
+        name: COUNTRY.name,
+        repository: COUNTRY.repository,
+      }),
+    );
+  }
   // Deliver translated initial labels even before the application runs.
   if (en)
     html = html
@@ -138,7 +204,7 @@ await writeFile(
 );
 await writeFile(
   resolve(out, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/", "/about/", "/en/about/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
 );
 const manifest = JSON.parse(
   await readFile(resolve(root, "manifest.webmanifest"), "utf8"),
@@ -157,6 +223,8 @@ const precache = [
   "/",
   "/en/",
   "/lt/",
+  "/about/",
+  "/en/about/",
   ...files.filter((f) => f !== "LICENSE").map((f) => "/" + f),
   ...assets.map((f) => "/assets/" + f),
   ...(site.gallery || []).map((p) => "/" + p.src),

@@ -167,6 +167,16 @@ let selected = null,
   dataFailed = false,
   requestSerial = 0,
   mapFailure = false;
+function updateAboutLinks() {
+  document.querySelectorAll("[data-about-link]").forEach((a) => {
+    a.href =
+      (lang === "lt" ? "/about/" : "/en/about/") +
+      "?mode=" +
+      (isDark() ? "dark" : "light");
+    (a.querySelector("span") || a).textContent =
+      lang === "lt" ? "Apie" : "About";
+  });
+}
 function updateHomeLink() {
   const url = new URL(location.href);
   url.searchParams.delete("event");
@@ -522,7 +532,20 @@ function renderLabels() {
   );
   $("#fit").title = $("#fit").getAttribute("aria-label");
   document.documentElement.lang = lang;
-  document.title = COUNTRY.name;
+  document.title =
+    COUNTRY.name +
+    (lang === "lt"
+      ? " | Bitcoin vietos ir renginiai Lietuvoje"
+      : " | Bitcoin map and events in Lithuania");
+  document
+    .querySelectorAll(".brand-description, .community-description")
+    .forEach((n) => {
+      n.textContent =
+        lang === "lt"
+          ? "Bitcoin vietos ir renginiai Lietuvoje"
+          : "Bitcoin places and events in Lithuania";
+    });
+  updateAboutLinks();
   document.querySelector("meta[name=description]").content =
     lang === "lt"
       ? "Bitcoin priimančios vietos Lietuvoje, bendruomenės susitikimai ir pasivaikščiojimai."
@@ -1176,6 +1199,7 @@ $("#appearance").onclick = async () => {
     u.searchParams.set("mode", dark ? "dark" : "light");
     history.replaceState(null, "", u);
     updateHomeLink();
+    updateAboutLinks();
     renderAppearance();
     popup?.remove();
     if (map) {
@@ -1295,7 +1319,11 @@ function syncMobileLayout() {
     lang === "lt" ? "Naršymas" : "Navigation",
   );
   $("#community-pane").setAttribute("aria-label", labels.community);
-  setMobileView(document.body.dataset.mobileView || "map");
+  setMobileView(
+    document.body.dataset.mobileView ||
+      new URLSearchParams(location.search).get("view") ||
+      "map",
+  );
   requestAnimationFrame(() => map?.resize());
 }
 $(".mobile-bottom-nav").addEventListener("click", (e) => {
