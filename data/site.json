@@ -74,7 +74,11 @@
         "en": "A speaker presenting at the PROOF conference",
         "lt": "Pranešėjas PROOF konferencijoje"
       },
-      "source": "Provided by the site owner on 2026-09-30"
+      "source": "Provided by the site owner on 2026-09-30",
+      "thumbnail": {
+        "position": [0, 100],
+        "zoom": 1.55
+      }
     },
     {
       "src": "assets/events/deco-proof-conference-nostr.jpeg",

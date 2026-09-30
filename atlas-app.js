@@ -323,6 +323,16 @@ function renderGallery(container) {
     );
     const img = document.createElement("img");
     img.src = item.src;
+    // Editorial crop applies only to the mosaic; the lightbox keeps the original.
+    if (item.thumbnail) {
+      const clamp = (value, fallback, min, max) =>
+        Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
+      const [x, y] = item.thumbnail.position || [];
+      const position = `${clamp(x, 50, 0, 100)}% ${clamp(y, 50, 0, 100)}%`;
+      img.style.objectPosition = position;
+      img.style.transformOrigin = position;
+      img.style.transform = `scale(${clamp(item.thumbnail.zoom, 1, 1, 3)})`;
+    }
     img.alt = "";
     img.loading = "lazy";
     img.width = 300;

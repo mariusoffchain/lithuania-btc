@@ -39,7 +39,7 @@ Before deploying a fork, change the Worker name and remove or replace the Lithua
 ## Maintain content
 
 - `data/events.json`: verified events, ISO timestamps with timezone offsets, translated titles/descriptions, venue, links and optional coordinates. Events automatically move into the archive after their end time. The same detail template handles meetups, conferences and walks (`type: "walk"`). Never invent coordinates for an uncertain venue.
-- `data/site.json`: community links and photo metadata.
+- `data/site.json`: community links and photo metadata. Optional `thumbnail: { "position": [0, 100], "zoom": 1.55 }` sets the mosaic crop in percentages and scale, leaving the full-size carousel image unchanged.
 - `data/about.json`: the English and Lithuanian descriptive pages. See [SEO.md](SEO.md) for metadata, share-card reconstruction and the indexing action plan.
 - `npm run refresh:merchants`: update the fallback BTC Map snapshot, filtering through the country boundary. Review the diff before publishing.
 - Run build and redeploy after changing content. No automatic event import or background publication is configured.
