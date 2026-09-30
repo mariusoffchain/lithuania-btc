@@ -1591,8 +1591,8 @@ html[lang="lt"] .theme-atlas .date-badge span {
 .theme-atlas .pending-date::before {
   content: "";
   display: block;
-  width: 42px;
-  height: 56px;
+  width: 30px;
+  height: 40px;
   margin-top: 2px;
   background: var(--text);
   mask: url(assets/folk-hourglass.svg) center / contain no-repeat;
