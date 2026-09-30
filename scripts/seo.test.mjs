@@ -63,3 +63,16 @@ test("About pages are available in the offline shell", () => {
   assert.ok(get("sw.js").includes('"/about/"'));
   assert.ok(get("sw.js").includes('"/en/about/"'));
 });
+test("About uses the shared header and four complete mobile links", () => {
+  for (const path of ["about/", "en/about/"]) {
+    const html = get(path + "index.html");
+    const nav = html.match(/<nav class="mobile-bottom-nav"[\s\S]*?<\/nav>/)[0];
+    assert.equal((nav.match(/<a\b/g) || []).length, 4);
+    assert.equal((nav.match(/<\/a\s*>/g) || []).length, 4);
+    assert.ok(!nav.includes("<button"));
+    assert.match(nav, /folk-icon folk-meetup/);
+    for (const id of ["socials", "add-place", "appearance", "language"])
+      assert.ok(html.includes(`id="${id}"`));
+    assert.ok(!html.includes('id="about-theme"'));
+  }
+});

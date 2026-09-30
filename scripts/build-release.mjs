@@ -26,6 +26,7 @@ const files = [
   "templates.css",
   "atlas-editions.css",
   "navigation.css",
+  "navigation.js",
   "about.css",
   "about.js",
   "LICENSE",
@@ -168,6 +169,10 @@ for (const lang of ["", "lt", "en"]) {
         "Bitcoin vietos ir renginiai Lietuvoje</p>",
         "Bitcoin places and events in Lithuania</p>",
       );
+  html = html.replace(
+    /(<span class="brand-description"\s*>)[\s\S]*?<\/span>/,
+    "$1" + about[language].shortTagline + "</span>",
+  );
   if (lang !== "lt") {
     const aboutDir = en ? "en/about" : "about";
     await mkdir(resolve(out, aboutDir), { recursive: true });

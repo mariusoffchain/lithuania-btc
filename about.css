@@ -8,25 +8,10 @@ body.about-page {
   background: var(--paper);
   color: var(--text);
 }
-.about-page .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 120;
-  background: var(--paper);
-}
-.about-page .nav-links {
-  flex-wrap: nowrap;
-}
-.about-language {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
 .about-content {
   max-width: 1100px;
   margin: auto;
-  padding: 65px 44px 70px;
+  padding: 129px 44px 70px;
 }
 .about-kicker {
   display: block;
@@ -123,9 +108,4 @@ body.about-page {
   .about-page .mobile-bottom-nav a[aria-current] {
     color: var(--text);
   }
-}
-.about-page #about-theme,
-.about-page .about-language {
-  border: 0;
-  background: transparent;
 }

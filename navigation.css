@@ -1443,3 +1443,95 @@ html[lang="lt"] .theme-atlas .date-badge span {
     outline-offset: -5px;
   }
 }
+
+/* Shared masthead rhythm on the map, event, community and About views. */
+.theme-atlas .navbar {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 64px;
+  min-height: 64px;
+  z-index: 120;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.theme-atlas .navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: nowrap;
+}
+.theme-atlas .navbar .initiatives {
+  gap: 22px;
+}
+.theme-atlas .navbar :is(.initiative > summary, .nav-add, .desktop-about) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+  font: 15px/1 var(--sans);
+  white-space: nowrap;
+}
+.theme-atlas .navbar :is(.initiative > summary, .nav-add) .folk-icon {
+  width: 21px;
+  height: 21px;
+}
+.theme-atlas .navbar :is(#appearance, #language) {
+  position: static;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 !important;
+  margin: 0;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none;
+  font: 600 16px/1 var(--serif);
+}
+.theme-atlas .navbar #appearance .folk-icon {
+  width: 21px;
+  height: 21px;
+}
+.theme-atlas .navbar #appearance::after {
+  content: none;
+}
+.theme-atlas .navbar [aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .theme-atlas .navbar {
+    padding-inline: 16px;
+  }
+  .theme-atlas .navbar .nav-links,
+  .theme-atlas .navbar .initiatives {
+    gap: 14px;
+  }
+  .theme-atlas .brand-description {
+    font-size: 10px;
+  }
+}
+@media (max-width: 760px) {
+  .theme-atlas .navbar {
+    height: 60px;
+    min-height: 60px;
+    padding-inline: 10px;
+  }
+  .theme-atlas .navbar .nav-links {
+    gap: 2px;
+  }
+  .theme-atlas .navbar :is(.desktop-about, .initiatives, .nav-add) {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .theme-atlas .navbar a.desktop-about,
+  .theme-atlas .navbar a.nav-add {
+    display: none;
+  }
+}
