@@ -543,7 +543,9 @@ function eventCard(e) {
         lang === "lt" ? "Data bus paskelbta" : "Date to be announced",
       ),
     );
-    b.append(copy);
+    const date = el("div", "date-badge pending-date");
+    date.setAttribute("aria-hidden", "true");
+    b.append(date, copy);
     return b;
   }
   const b = button("", () => showEvent(e), "event-card");

@@ -1587,8 +1587,16 @@ html[lang="lt"] .theme-atlas .date-badge span {
     top: calc(60px + env(safe-area-inset-top, 0px));
   }
 }
-.theme-atlas .planned-event {
-  grid-template-columns: 1fr;
+/* Reuse the date column so undated events align with dated cards. */
+.theme-atlas .pending-date::before {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 56px;
+  margin-top: 2px;
+  background: var(--text);
+  mask: url(assets/folk-hourglass.svg) center / contain no-repeat;
+  -webkit-mask: url(assets/folk-hourglass.svg) center / contain no-repeat;
 }
 
 /* The section heading already supplies the first separator. */
