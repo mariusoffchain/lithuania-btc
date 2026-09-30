@@ -175,7 +175,13 @@ function updateHomeLink() {
 updateHomeLink();
 const dialog = $("#event-dialog");
 let downloadURL;
-let galleryDialog, galleryImg, galleryCloseBtn;
+let galleryDialog,
+  galleryImg,
+  galleryCloseBtn,
+  galleryPrev,
+  galleryNext,
+  galleryCount;
+let galleryIndex = 0;
 function galleryAlt(item) {
   return (item.alt && (item.alt[lang] || item.alt.en)) || "";
 }
@@ -184,6 +190,14 @@ function updateGalleryLabels() {
   const label = lang === "lt" ? "Uždaryti" : "Close";
   galleryCloseBtn.textContent = label;
   galleryCloseBtn.setAttribute("aria-label", label);
+  galleryPrev.setAttribute(
+    "aria-label",
+    lang === "lt" ? "Ankstesnė nuotrauka" : "Previous photo",
+  );
+  galleryNext.setAttribute(
+    "aria-label",
+    lang === "lt" ? "Kita nuotrauka" : "Next photo",
+  );
   galleryDialog.setAttribute(
     "aria-label",
     lang === "lt" ? "Nuotrauka" : "Photo",
@@ -200,7 +214,64 @@ function ensureGalleryDialog() {
   );
   galleryImg = document.createElement("img");
   galleryImg.className = "gallery-dialog-img";
-  galleryDialog.append(galleryCloseBtn, galleryImg);
+  const stage = el("div", "gallery-dialog-stage");
+  stage.append(galleryImg);
+  galleryPrev = button(
+    "←",
+    () => showGalleryPhoto(galleryIndex - 1),
+    "gallery-dialog-arrow",
+  );
+  galleryNext = button(
+    "→",
+    () => showGalleryPhoto(galleryIndex + 1),
+    "gallery-dialog-arrow",
+  );
+  galleryCount = el("span", "gallery-dialog-count");
+  galleryCount.setAttribute("role", "status");
+  galleryCount.setAttribute("aria-live", "polite");
+  galleryCount.setAttribute("aria-atomic", "true");
+  const controls = el("div", "gallery-dialog-controls");
+  controls.append(galleryPrev, galleryCount, galleryNext);
+  galleryDialog.append(galleryCloseBtn, stage, controls);
+  galleryDialog.addEventListener("keydown", (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      showGalleryPhoto(galleryIndex + (event.key === "ArrowRight" ? 1 : -1));
+    }
+  });
+  let touchStart = null;
+  stage.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStart =
+        event.touches.length === 1
+          ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+          : null;
+    },
+    { passive: true },
+  );
+  stage.addEventListener(
+    "touchcancel",
+    () => {
+      touchStart = null;
+    },
+    { passive: true },
+  );
+  stage.addEventListener(
+    "touchend",
+    (event) => {
+      const start = touchStart;
+      touchStart = null;
+      if (!start || event.touches.length || event.changedTouches.length !== 1)
+        return;
+      const dx = event.changedTouches[0].clientX - start.x;
+      const dy = event.changedTouches[0].clientY - start.y;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5)
+        showGalleryPhoto(galleryIndex + (dx < 0 ? 1 : -1));
+    },
+    { passive: true },
+  );
   galleryDialog.addEventListener("close", () => {
     galleryImg.removeAttribute("src");
     galleryImg.alt = "";
@@ -209,11 +280,20 @@ function ensureGalleryDialog() {
   updateGalleryLabels();
   return galleryDialog;
 }
+function showGalleryPhoto(index) {
+  const items = config.gallery || [];
+  if (!items.length) return;
+  galleryIndex = ((index % items.length) + items.length) % items.length;
+  const item = items[galleryIndex];
+  galleryImg.src = item.src;
+  galleryImg.alt = galleryAlt(item);
+  galleryCount.textContent = `${galleryIndex + 1} / ${items.length}`;
+  galleryPrev.disabled = galleryNext.disabled = items.length < 2;
+}
 function openGalleryPhoto(item) {
   ensureGalleryDialog();
   updateGalleryLabels();
-  galleryImg.src = item.src;
-  galleryImg.alt = galleryAlt(item);
+  showGalleryPhoto(Math.max(0, (config.gallery || []).indexOf(item)));
   if (!galleryDialog.open) galleryDialog.showModal();
 }
 function renderGallery(container) {
