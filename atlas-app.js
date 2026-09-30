@@ -169,6 +169,14 @@ let selected = null,
   requestSerial = 0,
   mapFailure = false;
 function updateAboutLinks() {
+  document.querySelectorAll("[data-ecosystem-link]").forEach((a) => {
+    a.href =
+      (lang === "lt" ? "/ecosystem/" : "/en/ecosystem/") +
+      "?mode=" +
+      (isDark() ? "dark" : "light");
+    (a.querySelector("span:last-child") || a).textContent =
+      lang === "lt" ? "Ekosistema" : "Ecosystem";
+  });
   document.querySelectorAll("[data-about-link]").forEach((a) => {
     a.href =
       (lang === "lt" ? "/about/" : "/en/about/") +
@@ -631,6 +639,20 @@ function showEvent(e) {
   activeEvent = e;
   const target = $("#event-detail");
   target.replaceChildren();
+  const owner =
+    e.type === "conference" ? "proof" : e.type === "walk" ? "walks" : "meetups";
+  const ownerLink = el(
+    "a",
+    "event-organiser",
+    lang === "lt" ? "Apie organizatorių →" : "About the organiser →",
+  );
+  ownerLink.href =
+    (lang === "lt" ? "/ecosystem/" : "/en/ecosystem/") +
+    "?mode=" +
+    (isDark() ? "dark" : "light") +
+    "#" +
+    owner;
+  target.append(ownerLink);
   const h = el("h2", null, e.title[lang] || e.title.en);
   h.id = "detail-title";
   target.append(
@@ -1243,6 +1265,14 @@ start();
 
 // Mobile destinations reuse the existing controls and preserve map state.
 function setMobileView(view) {
+  if (view === "community") {
+    location.replace(
+      (lang === "lt" ? "/ecosystem/" : "/en/ecosystem/") +
+        "?mode=" +
+        (isDark() ? "dark" : "light"),
+    );
+    return;
+  }
   if (!["map", "events", "community"].includes(view)) return;
   document.body.dataset.mobileView = view;
   document.querySelectorAll(".mobile-bottom-nav button").forEach((b) => {

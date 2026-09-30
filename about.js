@@ -19,7 +19,7 @@ function syncTheme() {
   document.querySelectorAll('a[href^="/"]').forEach((a) => {
     const url = new URL(a.getAttribute("href"), location.origin);
     url.searchParams.set("mode", dark ? "dark" : "light");
-    a.href = url.pathname + url.search;
+    a.href = url.pathname + url.search + url.hash;
   });
 }
 button.addEventListener("click", () => {
@@ -41,7 +41,10 @@ language.setAttribute(
 );
 language.onclick = () => {
   location.href =
-    (en ? "/about/" : "/en/about/") +
+    (en ? "/" : "/en/") +
+    (document.body.classList.contains("ecosystem-page")
+      ? "ecosystem/"
+      : "about/") +
     "?mode=" +
     (document.body.classList.contains("mode-dark") ? "dark" : "light");
 };
@@ -58,3 +61,13 @@ const config = JSON.parse(
   document.querySelector("#community-config").textContent,
 );
 renderInitiatives(config, en ? "en" : "lt");
+
+document.querySelectorAll("[data-ecosystem-link]").forEach((a) => {
+  a.href =
+    (en ? "/en/ecosystem/" : "/ecosystem/") +
+    "?mode=" +
+    (document.body.classList.contains("mode-dark") ? "dark" : "light");
+  (a.querySelector("span:last-child") || a).textContent = en
+    ? "Ecosystem"
+    : "Ekosistema";
+});

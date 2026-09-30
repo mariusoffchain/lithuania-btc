@@ -16,7 +16,7 @@ export async function buildLLMs(root, out, site) {
   const origin = COUNTRY.origin;
   const text = (value) => String(value || "").replace(/[\r\n]+/g, " ");
   await mkdir(resolve(out, "read"), { recursive: true });
-  const overview = `# ${COUNTRY.name}\n\nBitcoin-accepting places, meetups and walks in Lithuania. The default site is Lithuanian; /en/ is English. All event times use ${COUNTRY.timezone}.\n\n## Navigation\n\n- [Lithuanian map](${origin}/)\n- [English map](${origin}/en/)\n- [Events](${origin}/en/?view=events)\n- [Community and photos](${origin}/en/?view=community)\n- [About](${origin}/en/about/)\n- [Open-source repository](${COUNTRY.repository})\n\nOn mobile, use Map, Events, Community and About in the bottom navigation. On desktop the map and event list share the home page.\n\n## Community links\n\n${(
+  const overview = `# ${COUNTRY.name}\n\nBitcoin-accepting places, meetups and walks in Lithuania. The default site is Lithuanian; /en/ is English. All event times use ${COUNTRY.timezone}.\n\n## Navigation\n\n- [Lithuanian map](${origin}/)\n- [English map](${origin}/en/)\n- [Events](${origin}/en/?view=events)\n- [Ecosystem and community photos](${origin}/en/ecosystem/)\n- [Ecosystem](${origin}/en/ecosystem/)\n- [About](${origin}/en/about/)\n- [Open-source repository](${COUNTRY.repository})\n\nOn mobile, use Map, Events, Ecosystem and About in the bottom navigation. On desktop the map and event list share the home page.\n\n## Community links\n\n${(
     site.initiatives || []
   )
     .map(
@@ -37,6 +37,6 @@ export async function buildLLMs(root, out, site) {
     await writeFile(resolve(out, `read/${name}.md`), content);
   await writeFile(
     resolve(out, "llms.txt"),
-    `# ${COUNTRY.name}\n\n> A community map of Bitcoin-accepting places, meetups and walks in Lithuania, available in Lithuanian and English.\n\nEvent dates may be unconfirmed. Merchant records are a dated snapshot, not a guarantee of current acceptance. Follow source links for verification. This file is a reading guide, not a grant of additional rights over third-party content.\n\n## Text resources\n\n- [Overview and community links](${origin}/read/overview.md)\n- [Events in English and Lithuanian](${origin}/read/events.md)\n- [Merchant snapshot and attribution](${origin}/read/merchants.md)\n\n## Website\n\n- [Lithuanian home](${origin}/)\n- [English home](${origin}/en/)\n- [About](${origin}/en/about/)\n- [Sitemap](${origin}/sitemap.xml)\n`,
+    `# ${COUNTRY.name}\n\n> A community map of Bitcoin-accepting places, meetups and walks in Lithuania, available in Lithuanian and English.\n\nEvent dates may be unconfirmed. Merchant records are a dated snapshot, not a guarantee of current acceptance. Follow source links for verification. This file is a reading guide, not a grant of additional rights over third-party content.\n\n## Text resources\n\n- [Overview and community links](${origin}/read/overview.md)\n- [Events in English and Lithuanian](${origin}/read/events.md)\n- [Merchant snapshot and attribution](${origin}/read/merchants.md)\n\n## Website\n\n- [Lithuanian home](${origin}/)\n- [English home](${origin}/en/)\n- [Ecosystem](${origin}/en/ecosystem/)\n- [About](${origin}/en/about/)\n- [Sitemap](${origin}/sitemap.xml)\n`,
   );
 }

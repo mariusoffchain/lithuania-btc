@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { resolve, dirname } from "node:path";
 import { createHash } from "node:crypto";
 import { buildLLMs } from "./build-llms.mjs";
+import { ecosystemPage } from "./ecosystem-page.mjs";
 import { aboutPage } from "./about-page.mjs";
 import { COUNTRY } from "../country-config.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -30,6 +31,8 @@ const files = [
   "navigation.js",
   "about.css",
   "about.js",
+  "ecosystem.js",
+  "ecosystem.css",
   "LICENSE",
   "vendor/maplibre-gl.js",
   "vendor/maplibre-gl.css",
@@ -174,7 +177,29 @@ for (const lang of ["", "lt", "en"]) {
     /(<span class="brand-description"\s*>)[\s\S]*?<\/span\s*>/,
     "$1" + about[language].shortTagline + "</span>",
   );
+  html = html
+    .replaceAll(
+      'href="/ecosystem/"',
+      `href="${en ? "/en/ecosystem/" : "/ecosystem/"}"`,
+    )
+    .replaceAll(">Ekosistema<", en ? ">Ecosystem<" : ">Ekosistema<");
   if (lang !== "lt") {
+    const ecosystemDir = en ? "en/ecosystem" : "ecosystem";
+    await mkdir(resolve(out, ecosystemDir), { recursive: true });
+    await writeFile(
+      resolve(out, ecosystemDir, "index.html"),
+      ecosystemPage({
+        homeHTML: html,
+        lang: language,
+        origin,
+        name: COUNTRY.name,
+        repository: COUNTRY.repository,
+        site,
+        events: JSON.parse(
+          await readFile(resolve(root, "data/events.json"), "utf8"),
+        ),
+      }),
+    );
     const aboutDir = en ? "en/about" : "about";
     await mkdir(resolve(out, aboutDir), { recursive: true });
     await writeFile(
@@ -212,7 +237,7 @@ await writeFile(
 );
 await writeFile(
   resolve(out, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/", "/about/", "/en/about/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/", "/about/", "/en/about/", "/ecosystem/", "/en/ecosystem/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
 );
 const manifest = JSON.parse(
   await readFile(resolve(root, "manifest.webmanifest"), "utf8"),
@@ -233,6 +258,8 @@ const precache = [
   "/lt/",
   "/about/",
   "/en/about/",
+  "/ecosystem/",
+  "/en/ecosystem/",
   ...files.filter((f) => f !== "LICENSE").map((f) => "/" + f),
   ...assets.map((f) => "/assets/" + f),
   ...(site.gallery || []).map((p) => "/" + p.src),

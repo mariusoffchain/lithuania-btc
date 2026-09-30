@@ -1603,3 +1603,23 @@ html[lang="lt"] .theme-atlas .date-badge span {
 .theme-atlas .upcoming-events > .list-heading + .event-card {
   border-top: 0;
 }
+
+.desktop-ecosystem {
+  font: inherit;
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 0;
+}
+.desktop-ecosystem:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.event-organiser {
+  display: inline-block;
+  margin: 0 0 18px;
+}
+@media (max-width: 760px) {
+  .desktop-ecosystem {
+    display: none;
+  }
+}

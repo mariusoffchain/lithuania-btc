@@ -1,0 +1,127 @@
+.ecosystem-filters,
+.ecosystem-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.ecosystem-filters button {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  cursor: pointer;
+}
+.ecosystem-filters button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 7px;
+}
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+}
+.ecosystem-card {
+  padding: 28px 0;
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 110px;
+}
+.ecosystem-card[hidden] {
+  display: none;
+}
+.ecosystem-card h2,
+.ecosystem-photos h2 {
+  font: 400 30px var(--serif);
+}
+.ecosystem-card p,
+.ecosystem-card li {
+  line-height: 1.6;
+}
+.ecosystem-card details {
+  margin-top: 24px;
+}
+.ecosystem-card summary {
+  cursor: pointer;
+}
+.ecosystem-card li {
+  margin: 10px 0;
+}
+.ecosystem-photos {
+  margin: 40px 0;
+}
+.ecosystem-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.ecosystem-photo {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.ecosystem-photo img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+#ecosystem-gallery {
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--rule);
+  max-width: 92vw;
+  max-height: 90dvh;
+  padding: 24px;
+}
+#ecosystem-gallery::backdrop {
+  background: #000c;
+}
+#ecosystem-gallery img {
+  max-width: 80vw;
+  max-height: 65dvh;
+  object-fit: contain;
+}
+#ecosystem-gallery button {
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--rule);
+  padding: 10px 18px;
+  cursor: pointer;
+}
+#ecosystem-gallery [data-close] {
+  display: block;
+  margin-left: auto;
+}
+#ecosystem-gallery div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+@media (max-width: 760px) {
+  .ecosystem-grid {
+    grid-template-columns: 1fr;
+  }
+  .ecosystem-photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ecosystem-photo img {
+    height: 120px;
+  }
+  .ecosystem-filters {
+    gap: 8px 18px;
+  }
+  .ecosystem-page .about-content {
+    padding-bottom: 110px;
+  }
+  .desktop-ecosystem {
+    display: none;
+  }
+}
