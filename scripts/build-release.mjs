@@ -47,8 +47,8 @@ const assets = (await readdir(resolve(root, "assets"))).filter(
       "logo.png",
       "vytis-cutout.png",
       "share-card.jpg",
-      "share-atlas-en.jpg",
-      "share-atlas-lt.jpg",
+      "share-atlas-en-v2.jpg",
+      "share-atlas-lt-v2.jpg",
       "IBM-Plex-OFL.txt",
       "zolak-provenance.txt",
     ].includes(n),
@@ -132,7 +132,7 @@ for (const lang of ["", "lt", "en"]) {
     (en
       ? " | Bitcoin map and events in Lithuania"
       : " | Bitcoin vietos ir renginiai Lietuvoje");
-  const shareImage = origin + "/assets/share-atlas-" + language + ".jpg";
+  const shareImage = origin + "/assets/share-atlas-" + language + "-v2.jpg";
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`);
   meta("og:title", title);
   meta("twitter:title", title);

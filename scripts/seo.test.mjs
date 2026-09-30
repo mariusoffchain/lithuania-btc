@@ -23,11 +23,12 @@ for (const [path, lang] of [
     assert.match(
       html,
       new RegExp(
-        `og:image"\\s+content="https://lithuaniabtc.com/assets/share-atlas-${lang}.jpg"`,
+        `og:image"\\s+content="https://lithuaniabtc.com/assets/share-atlas-${lang}-v2.jpg"`,
       ),
     );
     assert.ok(
-      readFileSync(join(out, `assets/share-atlas-${lang}.jpg`)).length > 10000,
+      readFileSync(join(out, `assets/share-atlas-${lang}-v2.jpg`)).length >
+        10000,
     );
     const schema = JSON.parse(
       html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1],

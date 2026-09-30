@@ -7,7 +7,7 @@
 - Mobile navigation has a fourth About destination. Desktop has a short brand description and an About link.
 - Localized titles, descriptions, canonical URLs, reciprocal `hreflang` alternatives, and WebSite/AboutPage JSON-LD describe the real site. No invented reviews or business identity.
 - `/sitemap.xml` lists the 4 canonical pages. `/robots.txt` advertises it.
-- Open Graph and Twitter large-image cards use separate EN/LT Atlas JPEGs, 1200 × 630. Both languages show the real logo, self-hosted IBM Plex, the country boundary and traditional ornament.
+- Open Graph and Twitter large-image cards use separate EN/LT Atlas JPEGs, 1200 × 630. Both languages show the real logo, self-hosted IBM Plex, the country boundary and a short description.
 - About pages and their assets are included in the existing offline shell.
 
 These changes help describe and discover the site; they do not guarantee indexing, ranking or the exact snippet Google chooses.
@@ -25,7 +25,7 @@ These changes help describe and discover the site; they do not guarantee indexin
 - Descriptive copy: `data/about.json` (EN and LT).
 - About layout: `scripts/about-page.mjs`, `about.css`, `about.js`.
 - Metadata and sitemap: `scripts/build-release.mjs`.
-- Share-card source: `scripts/build-share-templates.mjs`. Run `node scripts/build-share-templates.mjs`, serve `designs/` locally, and export each rendered HTML at exactly 1200 × 630 as `assets/share-atlas-en.jpg` / `assets/share-atlas-lt.jpg`. Wait for fonts and logo to load before capture. Generated HTML is ignored by Git; JPEGs are tracked. The cards intentionally contain no live merchant counts or dates.
+- Share-card source: `scripts/build-share-templates.mjs`. Run `node scripts/build-share-templates.mjs`, serve `designs/` locally, and export each rendered HTML at exactly 1200 × 630 as `assets/share-atlas-en-v2.jpg` / `assets/share-atlas-lt-v2.jpg`. Wait for fonts and logo to load before capture. Generated HTML is ignored by Git; JPEGs are tracked. The cards intentionally contain no live merchant counts or dates.
 - Country forks must replace the card copy/geography and the Lithuanian wordmark as well as the existing country configuration.
 - Run `npm test`, `npm run build`, review desktop/mobile, then deploy. Tests verify metadata, reciprocal language links, static About content, sitemap entries and the offline shell.
 
