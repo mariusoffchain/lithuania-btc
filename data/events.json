@@ -1,0 +1,136 @@
+[
+  {
+    "id": "meetup-315774816",
+    "type": "conference",
+    "featured": true,
+    "start": "2026-09-27T13:00:00+03:00",
+    "end": "2026-09-27T18:00:00+03:00",
+    "title": {
+      "en": "PROOF < the privacy + sovereignty conference >",
+      "lt": "PROOF < privatumo ir suvereniteto konferencija >"
+    },
+    "description": {
+      "en": "Talks and practical workshops on privacy, decentralized tools and financial sovereignty. The 2026 edition took place at Nova in Vilnius, with an after-party at Zolak.",
+      "lt": "Pranešimai ir praktinės dirbtuvės apie privatumą, decentralizuotas priemones ir finansinį suverenitetą. 2026 m. konferencija vyko Vilniuje, erdvėje „Nova“, o po jos vyko vakarėlis erdvėje „Zolak“."
+    },
+    "venue": "Nova · Kastytis",
+    "address": "V. Gerulaičio g. 10, Vilnius",
+    "url": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315774816/",
+    "website": "https://proofconference.com/",
+    "sources": [
+      "https://proofconference.com/en/",
+      "https://www.meetup.com/bitcoin-lithuania-meetup/events/315774816/",
+      "https://mapcarta.com/W704962896"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "initiative": "meetups",
+    "links": [
+      {
+        "name": "Luma",
+        "url": "https://luma.com/9jo99hd5"
+      },
+      {
+        "name": "Satlantis",
+        "url": "https://www.satlantis.io/events/1002517/proof-less-than-the-privacy-sovereignty-conference-greater-than"
+      }
+    ],
+    "lat": 54.71665,
+    "lon": 25.27776,
+    "locationSource": "https://www.openstreetmap.org/way/704962896"
+  },
+  {
+    "id": "2026-08-06-fed",
+    "start": "2026-08-06T18:00:00+03:00",
+    "end": "2026-08-06T20:00:00+03:00",
+    "title": {
+      "en": "Who Is Really In Charge Of Our Currency? - Discussions and documentary",
+      "lt": "Kas iš tikrųjų valdo mūsų valiutą? Diskusijos ir dokumentinis filmas"
+    },
+    "description": {
+      "en": "Documentary screening and discussion about the Federal Reserve, money and Bitcoin.",
+      "lt": "Dokumentinio filmo peržiūra ir diskusija apie JAV federalinę rezervų sistemą, pinigus ir Bitcoin."
+    },
+    "venue": "Zolak Micro Art Residence",
+    "address": "Vytenio g. 50D, Vilnius",
+    "lat": 54.670862,
+    "lon": 25.2686503,
+    "locationSource": "https://www.openstreetmap.org/way/229567214",
+    "url": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315641101/",
+    "sourceVerifiedAt": "2026-09-30",
+    "initiative": "meetups",
+    "venueWebsite": "https://zolak.lt/",
+    "links": [
+      {
+        "name": "Luma",
+        "url": "https://luma.com/v02li4cb"
+      },
+      {
+        "name": "Facebook",
+        "url": "https://fb.me/e/86DPMWzhT"
+      }
+    ]
+  },
+  {
+    "id": "2026-07-02-farmer",
+    "start": "2026-07-02T18:00:00+03:00",
+    "end": "2026-07-02T20:00:00+03:00",
+    "title": {
+      "en": "Bitcoin is actually good for the environment - Discussions and documentary",
+      "lt": "Bitcoin iš tikrųjų yra naudingas aplinkai. Diskusijos ir dokumentinis filmas"
+    },
+    "description": {
+      "en": "A documentary by Joe Nakamoto, followed by a discussion about Bitcoin mining and heat reuse.",
+      "lt": "Joe Nakamoto dokumentinis filmas ir diskusija apie Bitcoin kasimą bei pakartotinį šilumos panaudojimą."
+    },
+    "venue": "Zolak Micro Art Residence",
+    "address": "Vytenio g. 50D, Vilnius",
+    "lat": 54.670862,
+    "lon": 25.2686503,
+    "locationSource": "https://www.openstreetmap.org/way/229567214",
+    "url": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315410986/",
+    "sourceVerifiedAt": "2026-09-30",
+    "initiative": "meetups",
+    "venueWebsite": "https://zolak.lt/"
+  },
+  {
+    "id": "meetup-315411067",
+    "start": "2026-07-02T16:00:00+03:00",
+    "end": "2026-07-02T17:30:00+03:00",
+    "title": {
+      "en": "Bitcoin Meetup: Drinks, Food, and Paying in Bitcoin at Baltic Brew",
+      "lt": "Bitcoin susitikimas: gėrimai, maistas ir atsiskaitymas Bitcoin bare „Baltic Brew“"
+    },
+    "description": {
+      "en": "An informal gathering at Baltic Brew before the documentary screening, to eat, talk and try paying in Bitcoin. The archived Meetup page lists two different addresses; see the original listing for context.",
+      "lt": "Neformalus susitikimas bare „Baltic Brew“ prieš dokumentinio filmo peržiūrą. Dalyviai susirinko pavalgyti, pasikalbėti ir išbandyti atsiskaitymą Bitcoin. Archyviniame „Meetup“ puslapyje nurodyti 2 skirtingi adresai, daugiau informacijos rasi originaliame skelbime."
+    },
+    "venue": "Baltic Brew",
+    "address": "Vilnius",
+    "url": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315411067/",
+    "sourceVerifiedAt": "2026-09-30",
+    "sourceNotes": "Meetup venue says Laisvės pr. 36, description says L. Asanavičiūtės g. 29. No coordinates assigned pending confirmation.",
+    "initiative": "meetups",
+    "addressUncertain": true
+  },
+  {
+    "id": "2026-06-04-ekasi",
+    "start": "2026-06-04T18:00:00+03:00",
+    "end": "2026-06-04T20:00:00+03:00",
+    "title": {
+      "en": "How Bitcoin Adoption Happens in Real Life",
+      "lt": "Kaip Bitcoin prigyja kasdieniame gyvenime"
+    },
+    "description": {
+      "en": "Screening of Lekker Feeling: A Bitcoin Ekasi Story, followed by an open discussion.",
+      "lt": "Filmo „Lekker Feeling: A Bitcoin Ekasi Story“ peržiūra ir atvira diskusija."
+    },
+    "venue": "Zolak Micro Art Residence",
+    "address": "Vytenio g. 50D, Vilnius",
+    "lat": 54.670862,
+    "lon": 25.2686503,
+    "locationSource": "https://www.openstreetmap.org/way/229567214",
+    "url": "https://www.meetup.com/bitcoin-lithuania-meetup/",
+    "initiative": "meetups",
+    "venueWebsite": "https://zolak.lt/"
+  }
+]

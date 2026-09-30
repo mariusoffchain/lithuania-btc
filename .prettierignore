@@ -1,0 +1,8 @@
+node_modules
+public-build
+vendor
+data/*.geojson
+data/map*.json
+assets
+sw-template.js
+package-lock.json

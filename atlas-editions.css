@@ -1,0 +1,617 @@
+/* Atlas editions — loaded after templates.css. Five editorial editions on the
+   Atlas foundation, each in mode-light / mode-dark. Body carries:
+   theme-atlas edition-{atlas|juosta|sodas|vytis|baltic} mode-{light|dark}.
+   Strategy: scoped --paper/--text/--muted/--rule/--accent per mode+edition,
+   remapped onto the Atlas variables templates.css already consumes, then
+   explicit fixes for hardcoded ivory/green leftovers. Map stays unfiltered. */
+
+/* ── Mode palettes ─────────────────────────────────────────────── */
+
+.theme-atlas.mode-light {
+  --paper: #f4eddd; /* panels, sidebar */
+  --paper-deep: #e9e0cc; /* page margins around the map */
+  --paper-raised: #ece3cf;
+  --text: #1e3d31;
+  --muted: rgba(30, 61, 49, 0.6);
+  --rule: rgba(30, 61, 49, 0.3);
+  --rule-soft: rgba(30, 61, 49, 0.14);
+  --accent: #9c2f1e;
+}
+
+.theme-atlas.mode-dark {
+  --paper: #123b2d;
+  --paper-deep: #0e3126;
+  --paper-raised: #1a4a39;
+  --text: #f1ead6;
+  --muted: rgba(241, 234, 214, 0.64);
+  --rule: rgba(241, 234, 214, 0.3);
+  --rule-soft: rgba(241, 234, 214, 0.13);
+  --accent: #e08a6e;
+}
+
+/* Remap the variables templates.css/site.css already use, including the
+   hardcoded Atlas names: --ivory becomes the paper of the mode and --green
+   the text of the mode, so ivory-on-green flips cleanly in dark. */
+.theme-atlas.mode-light,
+.theme-atlas.mode-dark {
+  --canvas: var(--paper-deep);
+  --panel: var(--paper);
+  --panel-raised: var(--paper-raised);
+  --ink: var(--text);
+  --ink-muted: var(--muted);
+  --line: var(--rule);
+  --line-soft: var(--rule-soft);
+  --ivory: var(--paper);
+  --green: var(--text);
+  --vytis: var(--accent);
+  --amber: var(--accent);
+  --amber-soft: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+/* ── Edition accents ───────────────────────────────────────────── */
+
+.theme-atlas.edition-juosta.mode-light {
+  --accent: #b3301c;
+}
+.theme-atlas.edition-juosta.mode-dark {
+  --accent: #e5765a;
+}
+.theme-atlas.edition-sodas.mode-light {
+  --accent: #2f6a4c;
+}
+.theme-atlas.edition-sodas.mode-dark {
+  --accent: #93cfae;
+}
+.theme-atlas.edition-baltic.mode-light {
+  --accent: #a8781d;
+  --paper: #f0e5c9;
+  --paper-deep: #e7d9b4;
+  --paper-raised: #eaddbd;
+  --text: #21382c;
+  --muted: rgba(33, 56, 44, 0.62);
+  --rule: rgba(33, 56, 44, 0.3);
+  --rule-soft: rgba(33, 56, 44, 0.14);
+}
+.theme-atlas.edition-baltic.mode-dark {
+  --accent: #d9ac4f;
+  --text: #f2e6c6;
+  --muted: rgba(242, 230, 198, 0.62);
+  --rule: rgba(242, 230, 198, 0.28);
+  --rule-soft: rgba(242, 230, 198, 0.12);
+}
+
+/* ── Hardcoded-color fixes (site.css / templates.css literals) ─── */
+
+.theme-atlas .social-link {
+  color: var(--muted);
+}
+.theme-atlas .social-link:hover {
+  color: var(--text);
+  background: var(--rule-soft);
+}
+
+.theme-atlas .legend,
+.theme-atlas #data-status {
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  color: var(--muted);
+  border-color: var(--rule);
+}
+.theme-atlas #retry {
+  background: var(--paper);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.theme-atlas #retry:hover {
+  background: var(--amber-soft);
+}
+
+.theme-atlas .maplibregl-ctrl-attrib {
+  background: color-mix(in srgb, var(--paper) 82%, transparent) !important;
+}
+.theme-atlas .maplibregl-ctrl-attrib,
+.theme-atlas .maplibregl-ctrl-attrib a {
+  color: var(--muted) !important;
+}
+
+.theme-atlas dialog#event-dialog::backdrop {
+  background: rgba(8, 20, 16, 0.55);
+}
+.theme-atlas .detail-actions a,
+.theme-atlas .action-button,
+.theme-atlas .clear-date {
+  background: var(--text);
+  color: var(--paper);
+}
+.theme-atlas .detail-actions a:hover,
+.theme-atlas .action-button:hover {
+  background: var(--accent);
+  color: var(--paper);
+  filter: none;
+}
+.theme-atlas .clear-date {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.theme-atlas .calendar-content,
+.theme-atlas .search-results,
+.theme-atlas .mobile-events {
+  scrollbar-color: var(--rule) transparent;
+}
+
+.theme-atlas .merchant-marker,
+.theme-atlas .event-marker {
+  border-color: var(--paper);
+}
+
+/* ── Structure: one list, no tabs, fixed pane + scrolling list ─── */
+
+.theme-atlas .event-tabs {
+  display: none !important;
+}
+
+.theme-atlas .list-heading {
+  font: italic 600 15px var(--serif);
+  color: var(--text);
+  margin: 22px 0 6px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--rule);
+}
+.theme-atlas .event-list > .list-heading:first-child {
+  margin-top: 4px;
+}
+.theme-atlas .empty-state {
+  color: var(--muted);
+}
+
+/* Desktop map controls: keep the top-right corner clear for zoom. */
+@media (min-width: 761px) {
+  .theme-atlas .map-toolbar {
+    right: 96px;
+  }
+}
+
+/* ── Decorative slot (Codex inserts .edition-art in the aside) ─── */
+
+.theme-atlas .edition-art {
+  display: none;
+  flex: none;
+}
+.theme-atlas .edition-art .ornament,
+.theme-atlas .edition-art img.knight {
+  display: none;
+}
+
+/* ── 1 · Atlas — pure, understated, fine rules only ────────────── */
+
+.edition-atlas .calendar-top {
+  border-bottom: 1px solid var(--rule);
+}
+.edition-atlas .list-heading {
+  border-bottom-color: var(--rule-soft);
+}
+
+/* ── 2 · Juosta — woven frieze below the masthead, red accents ─── */
+
+.edition-juosta .navbar::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 12px;
+  pointer-events: none;
+  background: var(--accent);
+  -webkit-mask: url("assets/juosta.svg") repeat-x left center / auto 100%;
+  mask: url("assets/juosta.svg") repeat-x left center / auto 100%;
+}
+
+.edition-juosta .edition-art {
+  display: block;
+  height: 10px;
+  margin: 14px 26px 0;
+  background: var(--accent);
+  -webkit-mask: url("assets/juosta.svg") repeat-x left center / auto 100%;
+  mask: url("assets/juosta.svg") repeat-x left center / auto 100%;
+}
+
+.edition-juosta .list-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.edition-juosta .list-heading::after {
+  content: "";
+  flex: 1;
+  height: 8px;
+  align-self: center;
+  background: var(--accent);
+  opacity: 0.65;
+  -webkit-mask: url("assets/juosta.svg") repeat-x left center / auto 100%;
+  mask: url("assets/juosta.svg") repeat-x left center / auto 100%;
+}
+.edition-juosta .date-badge span {
+  color: var(--accent);
+}
+
+/* ── 3 · Sodas — lattice ornaments, airy spacing ───────────────── */
+
+.edition-sodas .edition-art {
+  display: flex;
+  justify-content: center;
+  padding: 18px 0 2px;
+}
+.edition-sodas .edition-art .ornament {
+  display: block;
+  width: 140px;
+  height: 54px;
+  background: var(--accent);
+  -webkit-mask: url("assets/sodas.svg") no-repeat center / contain;
+  mask: url("assets/sodas.svg") no-repeat center / contain;
+}
+
+.edition-sodas .calendar-content {
+  padding: 22px 30px 30px;
+}
+.edition-sodas .event-card {
+  padding: 22px 0;
+  gap: 20px;
+}
+.edition-sodas .list-heading {
+  border-bottom: 0;
+  text-align: center;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: var(--sans);
+}
+.edition-sodas .event-list::after {
+  content: "";
+  display: block;
+  width: 84px;
+  height: 34px;
+  margin: 22px auto 4px;
+  background: var(--muted);
+  -webkit-mask: url("assets/sodas.svg") no-repeat center / contain;
+  mask: url("assets/sodas.svg") no-repeat center / contain;
+}
+
+/* ── 4 · Vytis — knight plate in the aside, italic headings ────── */
+
+.edition-vytis .edition-art {
+  display: flex;
+  justify-content: center;
+  padding: 16px 26px 2px;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.edition-vytis .edition-art img.knight {
+  display: block;
+  height: 110px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+/* Dark: the cutout's natural offwhite reads well; light: silhouette it. */
+.edition-vytis.mode-light .edition-art img.knight {
+  filter: brightness(0);
+  opacity: 0.75;
+}
+
+.edition-vytis .sidebar-heading h1,
+.edition-vytis .event-copy h3 {
+  font-style: italic;
+}
+.edition-vytis .calendar-top {
+  border-bottom: 0;
+}
+.edition-vytis .list-heading {
+  border-bottom-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.edition-vytis .date-badge span {
+  color: var(--accent);
+}
+
+/* ── 5 · Baltic — amber warmth, sun-rosette seal, tactile rhythm ─ */
+
+.edition-baltic .edition-art {
+  display: flex;
+  justify-content: flex-start;
+  padding: 16px 26px 0;
+}
+.edition-baltic .edition-art .ornament {
+  display: block;
+  width: 52px;
+  height: 52px;
+  background: var(--accent);
+  -webkit-mask: url("assets/saule.svg") no-repeat center / contain;
+  mask: url("assets/saule.svg") no-repeat center / contain;
+}
+
+.edition-baltic .calendar-top {
+  border-bottom: 3px double var(--rule);
+}
+.edition-baltic .date-badge strong {
+  color: var(--accent);
+}
+.edition-baltic .list-heading {
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+}
+.edition-baltic .event-card {
+  border-top-color: var(--rule);
+}
+.edition-baltic .wordmark-btc {
+  color: var(--accent);
+}
+
+/* ── Mobile (≤760px) — compact header, quiet decoration ────────── */
+
+@media (max-width: 760px) {
+  /* The aside becomes a two-card strip; margin art would crowd it. */
+  .theme-atlas .edition-art {
+    display: none !important;
+  }
+  .edition-sodas .calendar-content {
+    padding: 14px;
+  }
+  .edition-juosta .navbar::after {
+    height: 8px;
+  }
+
+  .theme-atlas .navbar {
+    gap: 6px;
+  }
+  .theme-atlas .brand {
+    gap: 6px;
+    min-width: 0;
+  }
+  .theme-atlas .brand-name {
+    gap: 0.24em;
+  }
+  .theme-atlas .wordmark-country {
+    font-size: 16px;
+  }
+  .theme-atlas .wordmark-btc {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* Very narrow (≤376px): four socials + locale + brand must all fit. */
+@media (max-width: 376px) {
+  .theme-atlas .wordmark-country {
+    font-size: 14px;
+  }
+  .theme-atlas .social-link {
+    width: 27px !important;
+  }
+  .theme-atlas .language-button {
+    padding: 5px !important;
+    font-size: 12px;
+  }
+}
+/* Integration refinements: compact chronology and retain edition cues on phones. */
+.theme-atlas .empty-state {
+  margin: 0;
+  padding: 8px 0 12px;
+  line-height: 1.5;
+}
+.theme-atlas .sidebar-heading small,
+.theme-atlas .event-copy p {
+  color: var(--muted);
+}
+.theme-atlas .merchant-marker {
+  background: #f7f4e7;
+  border-color: #285845;
+  color: #143d2c;
+}
+.theme-atlas .event-marker {
+  background: #b43c2a;
+  border-color: #f7f4e7;
+  color: #fff6df;
+}
+@media (max-width: 760px) {
+  .edition-sodas .sidebar-heading,
+  .edition-vytis .sidebar-heading,
+  .edition-baltic .sidebar-heading {
+    position: relative;
+    padding-left: 39px;
+  }
+  .edition-sodas .sidebar-heading::before,
+  .edition-vytis .sidebar-heading::before,
+  .edition-baltic .sidebar-heading::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    mask: url(assets/sodas.svg) center/contain no-repeat;
+    -webkit-mask: url(assets/sodas.svg) center/contain no-repeat;
+  }
+  .edition-vytis .sidebar-heading::before {
+    mask-image: url(assets/vytis-cutout.png);
+    -webkit-mask-image: url(assets/vytis-cutout.png);
+  }
+  .edition-baltic .sidebar-heading::before {
+    mask-image: url(assets/saule.svg);
+    -webkit-mask-image: url(assets/saule.svg);
+  }
+}
+@media (min-width: 761px) {
+  .edition-vytis .calendar-pane,
+  .edition-sodas .calendar-pane,
+  .edition-baltic .calendar-pane {
+    position: relative;
+  }
+  .edition-vytis .calendar-top {
+    min-height: 112px;
+    padding-right: 140px;
+  }
+  .edition-vytis .edition-art {
+    position: absolute;
+    right: 22px;
+    top: 14px;
+    border: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  .edition-vytis .edition-art img.knight {
+    height: 88px;
+  }
+  .edition-sodas .calendar-top {
+    padding-right: 108px;
+  }
+  .edition-sodas .edition-art {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    padding: 0;
+    pointer-events: none;
+  }
+  .edition-sodas .edition-art .ornament {
+    width: 75px;
+    height: 58px;
+  }
+  .edition-baltic .calendar-top {
+    padding-right: 100px;
+  }
+  .edition-baltic .edition-art {
+    position: absolute;
+    right: 23px;
+    top: 23px;
+    padding: 0;
+    pointer-events: none;
+  }
+  .edition-baltic .edition-art .ornament {
+    width: 42px;
+    height: 42px;
+  }
+}
+@media (max-width: 760px) {
+  .theme-atlas .map-footer {
+    bottom: 57px;
+  }
+}
+
+/* Atlas newspaper + geometric motifs interpreted from Marius's supplied plate. */
+.theme-atlas.edition-atlas .navbar::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 30px);
+  bottom: -6px;
+  width: 60px;
+  height: 12px;
+  background: var(--text);
+  mask: url(assets/folk-diamond.svg) center/12px 12px repeat-x;
+  -webkit-mask: url(assets/folk-diamond.svg) center/12px 12px repeat-x;
+  pointer-events: none;
+}
+.theme-atlas.edition-atlas .calendar-top::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: var(--text);
+  mask: url(assets/folk-rosette.svg) center/contain no-repeat;
+  -webkit-mask: url(assets/folk-rosette.svg) center/contain no-repeat;
+  flex: none;
+}
+.theme-atlas.edition-atlas .list-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-style: normal;
+  font-size: 12px;
+  font-family: var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.theme-atlas.edition-atlas .list-heading::after {
+  content: "";
+  margin-left: auto;
+  width: 11px;
+  height: 17px;
+  background: var(--text);
+  mask: url(assets/folk-eglute.svg) center/contain no-repeat;
+  -webkit-mask: url(assets/folk-eglute.svg) center/contain no-repeat;
+  flex: none;
+}
+.theme-atlas.edition-atlas .event-list::after {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 24px auto 10px;
+  background: var(--text);
+  mask: url(assets/folk-diamond.svg) center/contain no-repeat;
+  -webkit-mask: url(assets/folk-diamond.svg) center/contain no-repeat;
+  opacity: 0.7;
+}
+.theme-atlas #appearance {
+  font-family: var(--sans);
+  font-size: 20px;
+  line-height: 1;
+  min-width: 34px;
+  padding: 6px;
+  border-color: transparent;
+}
+.theme-atlas.mode-dark .maplibregl-ctrl-group {
+  background: #17251f;
+  border: 1px solid #668074;
+}
+.theme-atlas.mode-dark .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(1);
+}
+@media (max-width: 760px) {
+  .theme-atlas .navbar {
+    padding: 0 9px;
+  }
+  .theme-atlas .brand-logo {
+    width: 23px;
+  }
+  .theme-atlas .wordmark-country {
+    font-size: 14px;
+  }
+  .theme-atlas .wordmark-btc {
+    font-size: 9px;
+  }
+  .theme-atlas .nav-links {
+    gap: 2px;
+  }
+  .theme-atlas .social-link {
+    min-width: 24px !important;
+    width: 24px !important;
+  }
+  .theme-atlas #appearance {
+    min-width: 25px;
+    padding: 3px !important;
+    font-size: 18px;
+  }
+  .theme-atlas.edition-atlas .calendar-top::after {
+    display: none;
+  }
+  .theme-atlas.edition-atlas .sidebar-heading {
+    position: relative;
+    padding-left: 31px;
+  }
+  .theme-atlas.edition-atlas .sidebar-heading::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    background: var(--text);
+    mask: url(assets/folk-rosette.svg) center/contain no-repeat;
+    -webkit-mask: url(assets/folk-rosette.svg) center/contain no-repeat;
+  }
+}

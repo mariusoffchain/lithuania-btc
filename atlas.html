@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#112c26" />
+    <title>Lithuania BTC</title>
+    <meta
+      name="description"
+      content="Bitcoin priimančios vietos Lietuvoje, bendruomenės susitikimai ir pasivaikščiojimai."
+    />
+    <link rel="icon" href="assets/logo.png" />
+    <link rel="stylesheet" href="vendor/maplibre-gl.css" />
+    <link rel="stylesheet" href="site.css" />
+    <script defer src="vendor/maplibre-gl.js"></script>
+    <script type="module" src="atlas-app.js"></script>
+    <link rel="stylesheet" href="templates.css" />
+    <link rel="stylesheet" href="atlas-editions.css" />
+    <link rel="stylesheet" href="navigation.css" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lithuania BTC" />
+    <meta property="og:title" content="Lithuania BTC" />
+    <meta
+      property="og:description"
+      content="Bitcoin priimančios vietos Lietuvoje, bendruomenės susitikimai ir pasivaikščiojimai."
+    />
+    <meta property="og:url" content="https://lithuaniabtc.com/" />
+    <meta property="og:locale" content="lt_LT" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta
+      property="og:image"
+      content="https://lithuaniabtc.com/assets/share-card.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Lithuania BTC" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lithuania BTC" />
+    <meta
+      name="twitter:image"
+      content="https://lithuaniabtc.com/assets/share-card.jpg"
+    />
+    <link rel="canonical" href="https://lithuaniabtc.com/" />
+    <link rel="alternate" hreflang="lt" href="https://lithuaniabtc.com/lt/" />
+    <link rel="alternate" hreflang="en" href="https://lithuaniabtc.com/en/" />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://lithuaniabtc.com/"
+    />
+  </head>
+  <body class="theme-atlas edition-atlas mode-dark">
+    <script>
+      const params = new URLSearchParams(location.search);
+      const edition = "atlas";
+      const mode = params.get("mode") === "light" ? "light" : "dark";
+      document.body.className =
+        "theme-atlas edition-" + edition + " mode-" + mode;
+    </script>
+    <header class="navbar">
+      <a class="brand" href="./" aria-label="Lithuania BTC"
+        ><img class="brand-logo" src="assets/logo.png" alt="" /><span
+          class="brand-name"
+          ><span class="wordmark-country">Lithuania</span
+          ><span class="wordmark-btc">BTC</span></span
+        ></a
+      >
+      <nav id="main-navigation" class="nav-links" aria-label="Community">
+        <div id="socials" class="initiatives"></div>
+        <a
+          id="add-place"
+          class="nav-add"
+          href="https://btcmap.org/add-location"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><span class="add-icon" aria-hidden="true">＋</span
+          ><span class="add-label" data-i18n="addPlace">Pridėti vietą</span></a
+        ><button
+          id="appearance"
+          class="language-button"
+          type="button"
+          aria-label="Switch theme"
+        >
+          ☀</button
+        ><button
+          id="language"
+          class="language-button"
+          aria-label="Switch to English"
+        >
+          EN
+        </button>
+      </nav>
+    </header>
+    <main class="workspace">
+      <section class="map-pane" aria-label="Bitcoin map">
+        <div id="map"></div>
+        <div class="map-toolbar">
+          <div class="search-wrap">
+            <label for="search" class="sr-only" data-i18n="search"
+              >Ieškoti vietos</label
+            ><input
+              id="search"
+              type="search"
+              autocomplete="off"
+              aria-controls="search-results"
+              placeholder="Ieškoti vietos…"
+            />
+            <div id="search-results" class="search-results" hidden></div>
+          </div>
+          <button
+            id="fit"
+            class="map-action"
+            aria-label="Reset map view"
+            title="Reset map view"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <path d="M4 10a8 8 0 1 1 1 8M4 4v6h6" />
+            </svg>
+          </button>
+        </div>
+        <div id="map-error" class="map-error" role="status" hidden></div>
+        <div class="map-footer">
+          <div class="legend">
+            <button id="toggle-merchants" aria-pressed="true">
+              <span class="legend-pin legend-place" aria-hidden="true">₿</span
+              ><span data-i18n="merchants">Priima Bitcoin</span></button
+            ><button id="toggle-events" aria-pressed="true">
+              <span class="legend-pin legend-meetup" aria-hidden="true"
+                ><span class="folk-icon folk-meetup"></span></span
+              ><span data-i18n="calendar">Susitikimai</span></button
+            ><button id="toggle-walks" aria-pressed="true">
+              <span class="legend-pin legend-walk" aria-hidden="true"
+                ><span class="folk-icon folk-walk"></span></span
+              ><span data-i18n="walksHeading">Pasivaikščiojimai</span>
+            </button>
+          </div>
+          <span id="data-status" role="status" aria-live="polite"></span>
+        </div>
+      </section>
+      <aside class="calendar-pane" aria-label="Meetups">
+        <div class="edition-art" aria-hidden="true">
+          <img class="knight" src="assets/vytis-cutout.png" alt="" />
+          <div class="ornament"></div>
+        </div>
+        <div id="calendar-content" class="calendar-content">
+          <div id="event-list" class="event-list" aria-live="polite"></div>
+        </div>
+      </aside>
+      <section
+        id="community-pane"
+        class="community-pane"
+        aria-label="Community"
+      >
+        <div id="community-gallery"></div>
+        <div id="community-links"></div>
+        <footer id="community-source" class="community-source"></footer>
+      </section>
+    </main>
+    <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+      <button type="button" data-mobile-view="map" aria-current="page">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2Zm6-2v16m6-14v16" /></svg
+        ><span>Map</span></button
+      ><button type="button" data-mobile-view="events">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path
+            d="M4 5h16v16H4ZM8 2v6m8-6v6M4 10h16M8 14h2m4 0h2m-8 4h2"
+          /></svg
+        ><span>Events</span></button
+      ><button type="button" data-mobile-view="community">
+        <span class="folk-icon folk-meetup" aria-hidden="true"></span
+        ><span>Community</span>
+      </button>
+    </nav>
+    <dialog id="event-dialog" aria-labelledby="detail-title">
+      <button class="dialog-close" aria-label="Close">×</button>
+      <div id="event-detail"></div>
+    </dialog>
+    <noscript
+      >Kad būtų rodomas žemėlapis ir renginiai, naršyklėje įjunk „JavaScript“.
+      <a href="https://btcmap.org/map">Atverti „BTC Map“</a>.</noscript
+    >
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "Lithuania BTC",
+  "short_name": "Lithuania BTC",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#143d2f",
+  "theme_color": "#143d2f",
+  "icons": [
+    {
+      "src": "/assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

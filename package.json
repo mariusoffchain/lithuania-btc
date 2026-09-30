@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test scripts/*.test.mjs",
+    "build": "node scripts/build-release.mjs",
+    "preview": "python3 -m http.server 8767 --bind 127.0.0.1 --directory public-build",
+    "refresh:merchants": "node scripts/refresh-snapshot.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "deploy:check": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9",
+    "wrangler": "4.144.0"
+  },
+  "name": "lithuania-btc",
+  "version": "1.0.0",
+  "description": "An open-source Bitcoin community map and events website",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}

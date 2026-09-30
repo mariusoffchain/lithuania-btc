@@ -1,0 +1,104 @@
+{
+  "socials": {
+    "nostr": null,
+    "telegram": null,
+    "x": null,
+    "facebook": null
+  },
+  "communityUrl": "https://www.meetup.com/bitcoin-lithuania-meetup/",
+  "timezone": "Europe/Vilnius",
+  "initiatives": [
+    {
+      "id": "meetups",
+      "name": "Meetups",
+      "links": [
+        {
+          "name": "Meetup",
+          "icon": "meetup",
+          "url": "https://www.meetup.com/bitcoin-lithuania-meetup/"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+N-CkFXQJmoA4YmQ8"
+        },
+        {
+          "name": "Luma",
+          "icon": "luma",
+          "kind": "event",
+          "url": "https://luma.com/v02li4cb"
+        },
+        {
+          "name": "Facebook",
+          "icon": "facebook",
+          "kind": "event",
+          "url": "https://fb.me/e/86DPMWzhT"
+        },
+        {
+          "name": "Satlantis",
+          "icon": "globe",
+          "kind": "platform",
+          "url": "https://www.satlantis.io/"
+        }
+      ]
+    },
+    {
+      "id": "walks",
+      "name": "Walks",
+      "links": [
+        {
+          "name": "BitcoinWalk Vilnius",
+          "icon": "walk",
+          "url": "https://bitcoinwalk.org/vilnius"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+Nb_w6ajjATIxMjhk"
+        },
+        {
+          "name": "Satlantis",
+          "icon": "globe",
+          "kind": "event",
+          "url": "https://www.satlantis.io/events/1822/BitcoinWalk-Vilnius-"
+        }
+      ]
+    }
+  ],
+  "initiativesSource": "https://www.offchain.media/lithuaniabtc/",
+  "initiativesVerifiedAt": "2026-09-30",
+  "gallery": [
+    {
+      "src": "assets/events/3.jpg",
+      "alt": {
+        "en": "A Bitcoin workshop with a projected presentation",
+        "lt": "Bitcoin dirbtuvės ir pristatymas ekrane"
+      },
+      "source": "https://www.offchain.media/media/3.jpg"
+    },
+    {
+      "src": "assets/events/2.jpg",
+      "alt": {
+        "en": "A film screening at a community meetup",
+        "lt": "Filmo peržiūra bendruomenės susitikime"
+      },
+      "source": "https://www.offchain.media/media/2.jpg"
+    },
+    {
+      "src": "assets/events/btc-walk-lt3.jpeg",
+      "alt": {
+        "en": "Participants standing in the snow during a walk",
+        "lt": "Pasivaikščiojimo dalyviai sniege"
+      },
+      "source": "https://www.offchain.media/media/btc-walk-lt3.jpeg"
+    },
+    {
+      "src": "assets/events/4.jpg",
+      "alt": {
+        "en": "A gathering place with a Bitcoin sign",
+        "lt": "Susitikimų vieta su Bitcoin ženklu"
+      },
+      "source": "https://www.offchain.media/media/4.jpg"
+    }
+  ]
+}
