@@ -69,6 +69,14 @@
   "initiativesVerifiedAt": "2026-09-30",
   "gallery": [
     {
+      "src": "assets/events/3.jpg",
+      "alt": {
+        "en": "A Bitcoin workshop with a projected presentation",
+        "lt": "Bitcoin dirbtuvės ir pristatymas ekrane"
+      },
+      "source": "https://www.offchain.media/media/3.jpg"
+    },
+    {
       "src": "assets/events/alexis-proof-conference-talk.jpeg",
       "alt": {
         "en": "A speaker presenting at the PROOF conference",
@@ -87,14 +95,6 @@
         "lt": "Nostr dekoracija šalia PROOF konferencijos ekrano"
       },
       "source": "Provided by the site owner on 2026-09-30"
-    },
-    {
-      "src": "assets/events/3.jpg",
-      "alt": {
-        "en": "A Bitcoin workshop with a projected presentation",
-        "lt": "Bitcoin dirbtuvės ir pristatymas ekrane"
-      },
-      "source": "https://www.offchain.media/media/3.jpg"
     },
     {
       "src": "assets/events/2.jpg",
