@@ -54,6 +54,15 @@ for (const [path, lang] of [
       assert.match(html, /<h1>/);
       assert.equal((html.match(/<h2>/g) || []).length, 5);
       assert.ok(!html.includes('src="atlas-app.js"'));
+      const community = JSON.parse(
+        html.match(
+          /<script type="application\/json" id="community-config">(.*?)<\/script>/s,
+        )[1],
+      );
+      assert.deepEqual(
+        community.initiatives.map((i) => i.id),
+        ["meetups", "walks"],
+      );
     }
     assert.ok(
       get("sitemap.xml").includes(`https://lithuaniabtc.com/${path}</loc>`),

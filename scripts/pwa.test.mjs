@@ -10,6 +10,7 @@ function worker() {
   const handlers = {},
     stores = new Map();
   let online = true;
+  let requests = 0;
   const caches = {
     async open(name) {
       if (!stores.has(name)) stores.set(name, new Map());
@@ -30,7 +31,15 @@ function worker() {
   vm.runInNewContext(
     template
       .replace("__VERSION__", "test")
-      .replace("__PRECACHE__", JSON.stringify(["/en/", "/data/events.json"])),
+      .replace(
+        "__PRECACHE__",
+        JSON.stringify([
+          "/en/",
+          "/en/about/",
+          "/about.js",
+          "/data/events.json",
+        ]),
+      ),
     {
       URL,
       Response,
@@ -39,6 +48,7 @@ function worker() {
       clearTimeout,
       caches,
       fetch: async () => {
+        requests++;
         if (!online) throw Error("offline");
         return new Response("network");
       },
@@ -51,6 +61,7 @@ function worker() {
   );
   return {
     stores,
+    requests: () => requests,
     setOnline: (value) => (online = value),
     async install() {
       let p;
@@ -99,5 +110,36 @@ test("map cache is bounded and offline misses do not invent a response", async (
   assert.equal(
     (await w.fetch("https://tiles.openfreemap.org/0.pbf")).type,
     "error",
+  );
+});
+
+test("installed About and scripts open without waiting for network; event data refreshes", async () => {
+  const w = worker();
+  await w.install();
+  assert.equal(
+    await (await w.fetch("https://example.com/en/about/?mode=light")).text(),
+    "cached:/en/about/",
+  );
+  assert.equal(
+    await (await w.fetch("https://example.com/about.js")).text(),
+    "cached:/about.js",
+  );
+  assert.equal(w.requests(), 0);
+  assert.equal(
+    await (await w.fetch("https://example.com/data/events.json")).text(),
+    "network",
+  );
+  assert.equal(w.requests(), 1);
+  w.setOnline(false);
+  assert.equal(
+    await (await w.fetch("https://example.com/data/events.json")).text(),
+    "network",
+  );
+});
+test("a missing shell cache entry falls back to the network", async () => {
+  const w = worker();
+  assert.equal(
+    await (await w.fetch("https://example.com/en/about/")).text(),
+    "network",
   );
 });

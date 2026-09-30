@@ -53,10 +53,8 @@ document
 document.querySelector(".add-label").textContent = en
   ? "Add a place"
   : "Pridėti vietą";
-fetch("/data/site.json")
-  .then((r) => {
-    if (!r.ok) throw Error("Community links unavailable");
-    return r.json();
-  })
-  .then((config) => renderInitiatives(config, en ? "en" : "lt"))
-  .catch(() => {});
+// Built from the same community configuration as the map, without a network waterfall.
+const config = JSON.parse(
+  document.querySelector("#community-config").textContent,
+);
+renderInitiatives(config, en ? "en" : "lt");

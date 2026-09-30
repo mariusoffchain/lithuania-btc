@@ -182,6 +182,7 @@ for (const lang of ["", "lt", "en"]) {
       aboutPage({
         homeHTML: html,
         copy: about[language],
+        initiatives: site.initiatives,
         lang: language,
         origin,
         name: COUNTRY.name,

@@ -37,6 +37,12 @@ self.addEventListener('fetch',event=>{
  if(event.request.method!=='GET'||url.origin!==self.location.origin||!PRECACHE.includes(url.pathname))return;
  event.respondWith((async()=>{
   const cache=await caches.open(CACHE);
+  // Serve the installed, content-versioned shell immediately. A new worker
+  // installs the next complete version; mutable data still refreshes online.
+  if(!url.pathname.startsWith('/data/')){
+   const saved=await cache.match(url.pathname);
+   if(saved)return saved;
+  }
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),5000);
   try {
    const response=await fetch(event.request,{signal:controller.signal});
