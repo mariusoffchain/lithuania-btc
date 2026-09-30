@@ -1,5 +1,31 @@
 [
   {
+    "id": "planned-meetup",
+    "type": "meetup",
+    "status": "planned",
+    "title": {
+      "en": "Next Bitcoin meetup",
+      "lt": "Kitas „Bitcoin“ susitikimas"
+    },
+    "description": {
+      "en": "We are preparing the next meetup. The date and location will be announced here and in our community channels.",
+      "lt": "Planuojame kitą susitikimą. Datą ir vietą paskelbsime čia ir bendruomenės kanaluose."
+    }
+  },
+  {
+    "id": "planned-walk",
+    "type": "walk",
+    "status": "planned",
+    "title": {
+      "en": "Next Bitcoin Walk",
+      "lt": "Kitas „Bitcoin Walk“ pasivaikščiojimas"
+    },
+    "description": {
+      "en": "We are preparing the next walk. The date and location will be announced here and in our community channels.",
+      "lt": "Planuojame kitą pasivaikščiojimą. Datą ir susitikimo vietą paskelbsime čia ir bendruomenės kanaluose."
+    }
+  },
+  {
     "id": "meetup-315774816",
     "type": "conference",
     "featured": true,

@@ -109,3 +109,10 @@ body.about-page {
     color: var(--text);
   }
 }
+
+@media (max-width: 760px) {
+  .installed-pwa .about-content {
+    padding-top: calc(90px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px));
+  }
+}

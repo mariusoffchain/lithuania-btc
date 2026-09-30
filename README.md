@@ -57,3 +57,11 @@ Code is MIT. See [THIRD_PARTY.md](THIRD_PARTY.md) for the separate licenses and 
 ## Scope and known gaps
 
 The event archive is manually curated and incomplete. The Lithuanian edition has 5 past events and no confirmed future events at initial release. X/Nostr accounts have not been supplied. One Baltic Brew archive has conflicting source addresses and therefore no map pin. Real-device PWA installation and airplane-mode behavior remain to be checked on iOS/Android after HTTPS deployment.
+
+### Planned events and installed-app spacing
+
+An event with `status: "planned"` and no `start`/`end` is displayed under “Being planned”, separately from dated upcoming and past events. Omit unconfirmed venue, address and coordinates. Calendar export is unavailable until dates are confirmed. To publish the confirmed event, remove `status: "planned"` and add verified ISO dates and location.
+
+`pwa.js` detects standalone display (including the iOS `navigator.standalone` fallback). Installed mobile apps use safe-area insets plus 10 px below the bottom navigation. Browser tabs retain their existing layout. Validate the home indicator on an installed iPhone app after updates.
+
+Community links were checked against https://offchain.media/lithuaniabtc on 2026-09-30. Its X and Nostr links belong to the organizer, not dedicated initiative accounts, so they are not labeled as meetup/walk accounts.

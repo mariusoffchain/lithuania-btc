@@ -1565,3 +1565,28 @@ html[lang="lt"] .theme-atlas .date-badge span {
     transition: none;
   }
 }
+
+/* Installed mobile app: retain full button height above the home indicator. */
+@media (max-width: 760px) {
+  .installed-pwa body.theme-atlas {
+    --bottom-h: calc(74px + env(safe-area-inset-bottom, 0px));
+  }
+  .installed-pwa .theme-atlas .mobile-bottom-nav {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  .installed-pwa .theme-atlas .navbar {
+    height: calc(60px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-left: max(10px, env(safe-area-inset-left, 0px));
+    padding-right: max(10px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+  }
+  .installed-pwa .theme-atlas .workspace {
+    top: calc(60px + env(safe-area-inset-top, 0px));
+  }
+}
+.theme-atlas .planned-event {
+  grid-template-columns: 1fr;
+}

@@ -49,11 +49,14 @@ export function dateKey(date) {
 }
 export function eventGroups(events, now = new Date()) {
   return {
+    planned: events.filter((e) => e.status === "planned"),
     upcoming: events
-      .filter((e) => new Date(e.end || e.start) >= now)
+      .filter(
+        (e) => e.status !== "planned" && new Date(e.end || e.start) >= now,
+      )
       .sort((a, b) => new Date(a.start) - new Date(b.start)),
     past: events
-      .filter((e) => new Date(e.end || e.start) < now)
+      .filter((e) => e.status !== "planned" && new Date(e.end || e.start) < now)
       .sort((a, b) => new Date(b.start) - new Date(a.start)),
   };
 }
@@ -80,6 +83,8 @@ function foldCalendarLine(line) {
   return result;
 }
 export function ics(event, language = "en") {
+  if (event.status === "planned" || !event.start)
+    throw new Error("Event date is not confirmed");
   const esc = (s) =>
     String(s || "")
       .replace(/\\/g, "\\\\")

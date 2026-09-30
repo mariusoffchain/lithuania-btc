@@ -532,6 +532,20 @@ function renderStatus() {
   n.classList.add("data-warning");
 }
 function eventCard(e) {
+  if (e.status === "planned") {
+    const b = button("", () => showEvent(e), "event-card planned-event");
+    const copy = el("div", "event-copy");
+    copy.append(
+      el("h3", null, e.title[lang] || e.title.en),
+      el(
+        "p",
+        null,
+        lang === "lt" ? "Data bus paskelbta" : "Date to be announced",
+      ),
+    );
+    b.append(copy);
+    return b;
+  }
   const b = button("", () => showEvent(e), "event-card");
   const date = el("div", "date-badge");
   date.append(
@@ -561,7 +575,7 @@ function eventCard(e) {
 function calendarEvents() {
   return selected
     ? events
-        .filter((e) => dateKey(e.start) === selected)
+        .filter((e) => e.start && dateKey(e.start) === selected)
         .sort((a, b) => new Date(a.start) - new Date(b.start))
     : eventGroups(events).upcoming;
 }
@@ -579,7 +593,17 @@ function renderCalendar() {
       ),
       ...groups.upcoming.map(eventCard),
     );
-  else upcoming.append(el("p", "empty-state", t("noUpcoming")));
+  else if (!groups.planned.length)
+    upcoming.append(el("p", "empty-state", t("noUpcoming")));
+  if (groups.planned.length)
+    upcoming.append(
+      el(
+        "h3",
+        "list-heading",
+        lang === "lt" ? "Planuojami renginiai" : "Being planned",
+      ),
+      ...groups.planned.map(eventCard),
+    );
   list.append(upcoming);
   const gallery = el("div");
   gallery.id = "desktop-gallery";
@@ -618,7 +642,11 @@ function showEvent(e) {
     el(
       "span",
       "badge",
-      t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
+      e.status === "planned"
+        ? lang === "lt"
+          ? "Planuojamas renginys"
+          : "Being planned"
+        : t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
     ),
     h,
   );
@@ -629,21 +657,33 @@ function showEvent(e) {
     target.append(site);
   }
   const meta = el("div", "detail-meta");
-  meta.append(
-    el("span", null, fmt(e.start, { dateStyle: "full" })),
-    el(
-      "span",
-      null,
-      fmt(e.start, { hour: "2-digit", minute: "2-digit" }) +
-        (lang === "lt" ? "-" : "–") +
-        fmt(e.end, { hour: "2-digit", minute: "2-digit" }),
-    ),
-  );
-  meta.append(
-    safeURL(e.venueWebsite)
-      ? link(e.venue, e.venueWebsite)
-      : el("span", null, e.venue),
-  );
+  if (e.status === "planned")
+    meta.append(
+      el(
+        "span",
+        null,
+        lang === "lt"
+          ? "Data ir vieta bus paskelbtos"
+          : "Date and location to be announced",
+      ),
+    );
+  else
+    meta.append(
+      el("span", null, fmt(e.start, { dateStyle: "full" })),
+      el(
+        "span",
+        null,
+        fmt(e.start, { hour: "2-digit", minute: "2-digit" }) +
+          (lang === "lt" ? "-" : "–") +
+          fmt(e.end, { hour: "2-digit", minute: "2-digit" }),
+      ),
+    );
+  if (e.venue)
+    meta.append(
+      safeURL(e.venueWebsite)
+        ? link(e.venue, e.venueWebsite)
+        : el("span", null, e.venue),
+    );
   target.append(meta);
   if (e.address) {
     const row = el("div", "detail-address");
@@ -772,7 +812,7 @@ function showEvent(e) {
         () => {
           dialog.close();
           setMobileView("map");
-          selected = dateKey(e.start);
+          selected = e.start ? dateKey(e.start) : null;
           renderCalendar();
           if (map) {
             map.resize();
@@ -784,13 +824,15 @@ function showEvent(e) {
       ),
     );
   if (downloadURL) URL.revokeObjectURL(downloadURL);
-  downloadURL = URL.createObjectURL(
-    new Blob([ics(e, lang)], { type: "text/calendar;charset=utf-8" }),
-  );
-  const a = el("a", null, t("addCalendar"));
-  a.href = downloadURL;
-  a.download = e.id + ".ics";
-  actions.append(a);
+  if (e.status !== "planned" && e.start) {
+    downloadURL = URL.createObjectURL(
+      new Blob([ics(e, lang)], { type: "text/calendar;charset=utf-8" }),
+    );
+    const a = el("a", null, t("addCalendar"));
+    a.href = downloadURL;
+    a.download = e.id + ".ics";
+    actions.append(a);
+  }
   const shareStatus = el("span", "share-status");
   shareStatus.setAttribute("role", "status");
   actions.append(

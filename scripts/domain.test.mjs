@@ -75,7 +75,7 @@ test("An ongoing event stays upcoming; archive order is newest first", () => {
   assert.equal(eventGroups(events, new Date("2026-09-30")).upcoming.length, 0);
   assert.equal(
     eventGroups(events, new Date("2026-09-30")).past[0].start,
-    events[0].start,
+    events.find((e) => e.id === "meetup-315774816").start,
   );
 });
 test("Unsafe external URLs are rejected", () => {
@@ -99,7 +99,7 @@ test("ICS exports actual UTC times and escapes event text", () => {
 
 test("ICS folds long UTF-8 content without splitting characters", () => {
   const e = {
-    ...events[0],
+    ...events.find((e) => e.id === "meetup-315774816"),
     description: { en: "Žąsis ".repeat(45) + "\r\nNext line" },
   };
   const out = ics(e);
@@ -109,4 +109,15 @@ test("ICS folds long UTF-8 content without splitting characters", () => {
   assert.ok(
     unfolded.includes("DESCRIPTION:" + "Žąsis ".repeat(45) + "\\nNext line"),
   );
+});
+
+test("Undated planned events stay separate and cannot generate calendar entries", () => {
+  const groups = eventGroups(events, new Date("2030-01-01"));
+  assert.equal(groups.planned.length, 2);
+  assert.equal(groups.past.length, 5);
+  assert.equal(groups.upcoming.length, 0);
+  for (const event of groups.planned) {
+    assert.equal(event.start, undefined);
+    assert.throws(() => ics(event), /date is not confirmed/);
+  }
 });
