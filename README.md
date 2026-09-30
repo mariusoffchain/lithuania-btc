@@ -60,8 +60,12 @@ The event archive is manually curated and incomplete. The Lithuanian edition has
 
 ### Planned events and installed-app spacing
 
-An event with `status: "planned"` and no `start`/`end` is displayed under “Being planned”, separately from dated upcoming and past events. Omit unconfirmed venue, address and coordinates. Calendar export is unavailable until dates are confirmed. To publish the confirmed event, remove `status: "planned"` and add verified ISO dates and location.
+An event with `status: "planned"` and no `start`/`end` is displayed under “Upcoming events” after dated upcoming events and before past events. Omit unconfirmed venue, address and coordinates. Calendar export is unavailable until dates are confirmed. To publish the confirmed event, remove `status: "planned"` and add verified ISO dates and location.
 
 `pwa.js` detects standalone display (including the iOS `navigator.standalone` fallback). Installed mobile apps use safe-area insets plus 10 px below the bottom navigation. Browser tabs retain their existing layout. Validate the home indicator on an installed iPhone app after updates.
 
 Community links were checked against https://offchain.media/lithuaniabtc on 2026-09-30. Its X and Nostr links belong to the organizer, not dedicated initiative accounts, so they are not labeled as meetup/walk accounts.
+
+### Machine-readable content
+
+The release builder generates `/llms.txt` and `/read/overview.md`, `/read/events.md`, `/read/merchants.md` through `scripts/build-llms.mjs`. These use the same community links, events and country-filtered merchant snapshot as the app. The snapshot timestamp and unconfirmed event dates remain explicit. Rebuild and deploy after data updates; no separate hand-maintained catalogue or tracking script is required. These resources do not change crawler access rules or Cloudflare bot settings.

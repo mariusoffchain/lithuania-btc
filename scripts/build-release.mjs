@@ -9,6 +9,7 @@ import {
 import { fileURLToPath } from "node:url";
 import { resolve, dirname } from "node:path";
 import { createHash } from "node:crypto";
+import { buildLLMs } from "./build-llms.mjs";
 import { aboutPage } from "./about-page.mjs";
 import { COUNTRY } from "../country-config.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -203,6 +204,7 @@ for (const lang of ["", "lt", "en"]) {
   await mkdir(resolve(out, lang), { recursive: true });
   await writeFile(resolve(out, lang, "index.html"), html);
 }
+await buildLLMs(root, out, site);
 await writeFile(
   resolve(out, "robots.txt"),
   `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`,

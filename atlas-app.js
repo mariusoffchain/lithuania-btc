@@ -584,26 +584,19 @@ function renderCalendar() {
     list = $("#event-list");
   list.replaceChildren();
   const upcoming = el("section", "upcoming-events");
-  if (groups.upcoming.length)
-    upcoming.append(
-      el(
-        "h3",
-        "list-heading",
-        lang === "lt" ? "Artimiausi renginiai" : "Upcoming events",
-      ),
-      ...groups.upcoming.map(eventCard),
-    );
-  else if (!groups.planned.length)
+  upcoming.append(
+    el(
+      "h3",
+      "list-heading",
+      lang === "lt" ? "Artimiausi renginiai" : "Upcoming events",
+    ),
+  );
+  upcoming.append(
+    ...groups.upcoming.map(eventCard),
+    ...groups.planned.map(eventCard),
+  );
+  if (!groups.upcoming.length && !groups.planned.length)
     upcoming.append(el("p", "empty-state", t("noUpcoming")));
-  if (groups.planned.length)
-    upcoming.append(
-      el(
-        "h3",
-        "list-heading",
-        lang === "lt" ? "Planuojami renginiai" : "Being planned",
-      ),
-      ...groups.planned.map(eventCard),
-    );
   list.append(upcoming);
   const gallery = el("div");
   gallery.id = "desktop-gallery";
@@ -644,8 +637,8 @@ function showEvent(e) {
       "badge",
       e.status === "planned"
         ? lang === "lt"
-          ? "Planuojamas renginys"
-          : "Being planned"
+          ? "Artėjantis renginys"
+          : "Upcoming event"
         : t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
     ),
     h,
