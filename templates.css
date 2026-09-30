@@ -616,7 +616,7 @@
   background: transparent;
   border: 0;
   border-top: 1px solid var(--line-soft);
-  padding: 18px 0;
+  padding: 18px 14px;
   gap: 18px;
   color: var(--green);
 }

@@ -1284,7 +1284,7 @@ html[lang="lt"] .theme-atlas .date-badge span {
     min-width: 0;
     border: 0;
     border-bottom: 1px solid var(--rule);
-    padding: 18px 0;
+    padding: 18px 12px;
     margin: 0;
   }
   .theme-atlas #community-gallery > .list-heading {
