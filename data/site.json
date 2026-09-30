@@ -69,6 +69,22 @@
   "initiativesVerifiedAt": "2026-09-30",
   "gallery": [
     {
+      "src": "assets/events/alexis-proof-conference-talk.jpeg",
+      "alt": {
+        "en": "A speaker presenting at the PROOF conference",
+        "lt": "Pranešėjas PROOF konferencijoje"
+      },
+      "source": "Provided by the site owner on 2026-09-30"
+    },
+    {
+      "src": "assets/events/deco-proof-conference-nostr.jpeg",
+      "alt": {
+        "en": "Nostr artwork beside the PROOF conference screen",
+        "lt": "Nostr dekoracija šalia PROOF konferencijos ekrano"
+      },
+      "source": "Provided by the site owner on 2026-09-30"
+    },
+    {
       "src": "assets/events/3.jpg",
       "alt": {
         "en": "A Bitcoin workshop with a projected presentation",

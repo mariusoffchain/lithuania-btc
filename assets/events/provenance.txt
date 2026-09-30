@@ -1,1 +1,3 @@
 Photos imported unchanged from https://www.offchain.media/lithuaniabtc/ on 2026-09-30 at the request of the site owner Marius. Original source URLs recorded in data/site.json gallery[].source. Photography is not covered by the MIT code license. Preserve existing masks on faces. No invented event dates or identities. Files 7.jpg and btc-lt-sticker2.jpeg are reference assets only, not displayed or copied into the release.
+
+2026-09-30: alexis-proof-conference-talk.jpeg and deco-proof-conference-nostr.jpeg supplied by the site owner for the PROOF gallery. Original files retained unchanged, including face masks. Photography remains excluded from the MIT code license.
