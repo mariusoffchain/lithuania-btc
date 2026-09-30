@@ -69,3 +69,27 @@ Community links were checked against https://offchain.media/lithuaniabtc on 2026
 ### Machine-readable content
 
 The release builder generates `/llms.txt` and `/read/overview.md`, `/read/events.md`, `/read/merchants.md` through `scripts/build-llms.mjs`. These use the same community links, events and country-filtered merchant snapshot as the app. The snapshot timestamp and unconfirmed event dates remain explicit. Rebuild and deploy after data updates; no separate hand-maintained catalogue or tracking script is required. These resources do not change crawler access rules or Cloudflare bot settings.
+
+## Bitcoin Baltics profile
+
+The same Atlas engine now builds Lithuania BTC (default) and an English regional edition for Lithuania, Latvia and Estonia. The regional edition uses country-in-address labels, a map/event country filter, its own brand assets and separate PWA caches.
+
+```sh
+npm ci
+npm run build
+npm run build:baltics
+npm test
+npm run preview:baltics
+```
+
+Regional preview: `http://127.0.0.1:8769/`. Build output: `public-baltics/`. The existing deployment configuration still targets **Lithuania BTC**. Do not run `npm run deploy` to publish the regional edition; it needs its own Worker configuration and confirmed domain access.
+
+- `profiles/baltics/config.json`: domain, English-only launch, map bounds, country names, BTC Map endpoint and cache prefix.
+- `profiles/baltics/boundary.geojson`: Natural Earth country features, including Estonia's islands.
+- `profiles/baltics/events.json` and `site.json`: regional additions. Lithuanian events, links and photos are merged from the main `data/` sources at build time. Do not duplicate them manually.
+- `profiles/baltics/about.json`: regional About copy.
+- `profiles/baltics/merchants-snapshot.json`: filtered BTC Map fallback. Refresh with `npm run refresh:baltics`, then rebuild. The browser also refreshes live data.
+- `profiles/baltics/sources.md`: provenance, limits and dates for regional content.
+- `profiles/baltics/logo.svg`: neutral pin with the vector Bitcoin symbol. `baltics-icon.png` is the 512 × 512 app icon. `baltics-share.jpg` is the 1200 × 630 social image. Share source is `share-preview.html`, rendered in-browser with the self-hosted fonts and logo served at `/assets/baltics-logo.svg`. The icon is the logo at x64/y54, 384 × 404, on a 512 × 512 `#143d2f` background.
+
+The source repository is shared. Builds and production deployments are separate. Translations beyond English, a regional domain deployment and broader verified event coverage remain to be prepared. Public community listings do not imply partnerships. Photos currently come from Lithuania.

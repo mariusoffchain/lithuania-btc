@@ -12,10 +12,11 @@ export function aboutPage({
   name,
   repository,
   initiatives,
+  regional = false,
 }) {
   const en = lang === "en",
-    home = en ? "/en/" : "/",
-    path = en ? "/en/about/" : "/about/";
+    home = en && !regional ? "/en/" : "/",
+    path = en && !regional ? "/en/about/" : "/about/";
   let head = homeHTML.slice(0, homeHTML.indexOf("</head>"));
   head = head
     .replace(/<title>[^<]*<\/title>/, `<title>${escape(copy.title)}</title>`)
@@ -88,7 +89,7 @@ export function aboutPage({
       'class="mobile-about" aria-current="page"',
     );
   return `${head}<link rel="stylesheet" href="/about.css"><script type="application/ld+json">${schema}</script><script type="module" src="/about.js"></script></head>
-<body class="theme-atlas edition-atlas mode-dark about-page">
+<body class="theme-atlas edition-atlas mode-dark about-page${regional ? " regional-site" : ""}">
 <script>if(new URLSearchParams(location.search).get('mode')==='light'){document.body.classList.replace('mode-dark','mode-light')}</script>
 ${header}
 <main class="about-content"><header class="about-intro"><span class="about-kicker">${escape(copy.aboutLabel)} / ${escape(name)}</span><h1>${escape(copy.heading)}</h1><p>${escape(copy.intro)}</p></header>

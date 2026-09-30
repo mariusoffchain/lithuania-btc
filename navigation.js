@@ -1,3 +1,4 @@
+import { COUNTRY } from "./country-config.js";
 import { safeURL } from "./domain.js";
 const $ = (s) => document.querySelector(s);
 function el(tag, cls, text) {
@@ -32,20 +33,37 @@ export function renderInitiatives(config, lang) {
   };
   const root = $("#socials");
   root.replaceChildren();
-  for (const initiative of config.initiatives || []) {
+  const initiatives = COUNTRY.regional
+    ? (COUNTRY.countries || []).map((c) => ({
+        id: c.code,
+        name: c.flag + " " + c.name,
+        countryGroup: true,
+        links: (config.initiatives || [])
+          .filter((i) => i.country === c.code)
+          .flatMap((i) =>
+            i.links
+              .filter((l) => l.kind !== "event")
+              .map((l) => ({ ...l, name: i.name + " · " + l.name })),
+          ),
+      }))
+    : config.initiatives || [];
+  for (const initiative of initiatives) {
     const details = el("details", "initiative");
     const summary = el(
       "summary",
       null,
-      initiative.id === "walks"
-        ? lang === "lt"
-          ? "Pasivaikščiojimai"
-          : "Walks"
-        : lang === "lt"
-          ? "Susitikimai"
-          : "Meetups",
+      initiative.countryGroup
+        ? initiative.name
+        : initiative.id === "walks"
+          ? lang === "lt"
+            ? "Pasivaikščiojimai"
+            : "Walks"
+          : lang === "lt"
+            ? "Susitikimai"
+            : "Meetups",
     );
-    summary.prepend(folkIcon(initiative.id === "walks" ? "walk" : "meetup"));
+    if (!initiative.countryGroup)
+      summary.prepend(folkIcon(initiative.id === "walks" ? "walk" : "meetup"));
     details.append(summary);
     const panel = el("div", "initiative-panel");
     for (const item of initiative.links) {

@@ -3,6 +3,9 @@ import { COUNTRY } from "./country-config.js";
 import {
   API,
   filterPlaces,
+  placeCountry,
+  inScope,
+  countryAddress,
   dateKey,
   eventGroups,
   safeURL,
@@ -108,6 +111,7 @@ try {
       ? urlLang
       : document.documentElement.dataset.language || "lt";
 } catch {}
+if (COUNTRY.languages?.length === 1) lang = COUNTRY.defaultLanguage;
 if (!TXT[lang]) lang = "lt";
 const t = (k) => TXT[lang][k] || k;
 const isDark = () => document.body.classList.contains("mode-dark");
@@ -168,10 +172,63 @@ let selected = null,
   dataFailed = false,
   requestSerial = 0,
   mapFailure = false;
+let countryFilter = (COUNTRY.countries || []).some(
+  (c) => c.code === new URLSearchParams(location.search).get("country"),
+)
+  ? new URLSearchParams(location.search).get("country")
+  : "";
+const scopedEvents = () => events.filter((e) => inScope(e, countryFilter));
+const scopedPlaces = () => places.filter((p) => inScope(p, countryFilter));
+const addressLabel = (item) =>
+  countryAddress(item.address || "", item.country, COUNTRY.countries);
+function renderCountryFilters() {
+  if (!COUNTRY.countries) return;
+  for (const [target, id] of [
+    [document.querySelector(".map-toolbar"), "map-country"],
+    [document.querySelector("#event-list"), "events-country"],
+  ]) {
+    if (document.getElementById(id)) continue;
+    const select = el("select", "country-filter");
+    select.id = id;
+    select.setAttribute("aria-label", "Filter by country");
+    for (const c of [
+      { code: "", name: "All Baltics", flag: "" },
+      ...COUNTRY.countries,
+    ]) {
+      const option = el(
+        "option",
+        null,
+        [c.flag, c.name].filter(Boolean).join(" "),
+      );
+      option.value = c.code;
+      select.append(option);
+    }
+    select.value = countryFilter;
+    select.onchange = () => {
+      countryFilter = select.value;
+      const url = new URL(location.href);
+      countryFilter
+        ? url.searchParams.set("country", countryFilter)
+        : url.searchParams.delete("country");
+      history.replaceState(null, "", url);
+      selected = null;
+      popup?.remove();
+      document
+        .querySelectorAll(".country-filter")
+        .forEach((n) => (n.value = countryFilter));
+      renderCalendar();
+      renderMerchantMarkers();
+      renderEventMarkers();
+      renderSearch();
+      resetLithuaniaView();
+    };
+    target.prepend(select);
+  }
+}
 function updateAboutLinks() {
   document.querySelectorAll("[data-about-link]").forEach((a) => {
     a.href =
-      (lang === "lt" ? "/about/" : "/en/about/") +
+      (COUNTRY.regional || lang === "lt" ? "/about/" : "/en/about/") +
       "?mode=" +
       (isDark() ? "dark" : "light");
     (a.querySelector("span") || a).textContent =
@@ -292,7 +349,9 @@ function ensureGalleryDialog() {
   return galleryDialog;
 }
 function showGalleryPhoto(index) {
-  const items = config.gallery || [];
+  const items = (config.gallery || []).filter(
+    (p) => container.id === "community-gallery" || inScope(p, countryFilter),
+  );
   if (!items.length) return;
   galleryIndex = ((index % items.length) + items.length) % items.length;
   const item = items[galleryIndex];
@@ -308,7 +367,9 @@ function openGalleryPhoto(item) {
   if (!galleryDialog.open) galleryDialog.showModal();
 }
 function renderGallery(container) {
-  const items = config.gallery || [];
+  const items = (config.gallery || []).filter(
+    (p) => container.id === "community-gallery" || inScope(p, countryFilter),
+  );
   if (!items.length) return;
   container.append(
     el("h3", "list-heading", lang === "lt" ? "Nuotraukos" : "Photos"),
@@ -464,33 +525,41 @@ function renderLabels() {
   localizeMapControls();
   $("#fit").setAttribute(
     "aria-label",
-    lang === "lt" ? "Atkurti Lietuvos vaizdą" : "Reset Lithuania view",
+    COUNTRY.regional
+      ? "Reset selected country or Baltic view"
+      : lang === "lt"
+        ? "Atkurti Lietuvos vaizdą"
+        : "Reset Lithuania view",
   );
   $("#fit").title = $("#fit").getAttribute("aria-label");
   document.documentElement.lang = lang;
   document.title =
+    COUNTRY.pageTitle ||
     COUNTRY.name +
-    (lang === "lt"
-      ? " | Bitcoin vietos ir renginiai Lietuvoje"
-      : " | Bitcoin map and events in Lithuania");
+      (lang === "lt"
+        ? " | Bitcoin vietos ir renginiai Lietuvoje"
+        : " | Bitcoin map and events in Lithuania");
   document
     .querySelectorAll(".brand-description, .community-description")
     .forEach((n) => {
       n.textContent =
-        lang === "lt"
+        COUNTRY.tagline ||
+        (lang === "lt"
           ? "Bitcoin vietos ir renginiai Lietuvoje"
-          : "Bitcoin places and events in Lithuania";
+          : "Bitcoin places and events in Lithuania");
     });
   updateAboutLinks();
   document.querySelector("meta[name=description]").content =
-    lang === "lt"
+    COUNTRY.description ||
+    (lang === "lt"
       ? "Bitcoin priimančios vietos Lietuvoje, bendruomenės susitikimai ir pasivaikščiojimai."
-      : "Find places accepting Bitcoin in Lithuania, community meetups and Bitcoin walks.";
+      : "Find places accepting Bitcoin in Lithuania, community meetups and Bitcoin walks.");
   document
     .querySelectorAll("[data-i18n]")
     .forEach((n) => (n.textContent = t(n.dataset.i18n)));
   $("#search").placeholder = t("search");
   $("#search").setAttribute("aria-label", t("search"));
+  $("#language").hidden = COUNTRY.languages?.length === 1;
   $("#language").textContent = lang === "lt" ? "EN" : "LT";
   $("#language").setAttribute(
     "aria-label",
@@ -545,6 +614,8 @@ function eventCard(e) {
     );
     const date = el("div", "date-badge pending-date");
     date.setAttribute("aria-hidden", "true");
+    if (COUNTRY.regional)
+      copy.append(el("p", "event-location", addressLabel(e)));
     b.append(date, copy);
     return b;
   }
@@ -570,21 +641,23 @@ function eventCard(e) {
         t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
     ),
   );
+  if (COUNTRY.regional) copy.append(el("p", "event-location", addressLabel(e)));
   b.append(date, copy);
   return b;
 }
 
 function calendarEvents() {
   return selected
-    ? events
+    ? scopedEvents()
         .filter((e) => e.start && dateKey(e.start) === selected)
         .sort((a, b) => new Date(a.start) - new Date(b.start))
-    : eventGroups(events).upcoming;
+    : eventGroups(scopedEvents()).upcoming;
 }
 function renderCalendar() {
-  const groups = eventGroups(events),
+  const groups = eventGroups(scopedEvents()),
     list = $("#event-list");
   list.replaceChildren();
+  renderCountryFilters();
   const upcoming = el("section", "upcoming-events");
   upcoming.append(
     el(
@@ -680,7 +753,7 @@ function showEvent(e) {
         : el("span", null, e.venue),
     );
   target.append(meta);
-  if (e.address) {
+  if (e.address || (COUNTRY.regional && e.country)) {
     const row = el("div", "detail-address");
     const pin = el("span", "address-icon");
     pin.setAttribute("aria-hidden", "true");
@@ -692,7 +765,7 @@ function showEvent(e) {
       safeURL(e.locationSource) ||
       (!e.addressUncertain && meaningfulAddress(e.address)
         ? "https://www.openstreetmap.org/search?query=" +
-          encodeURIComponent(e.address)
+          encodeURIComponent(addressLabel(e))
         : null);
     if (mapURL) {
       const chooser = el("dialog", "map-choice");
@@ -702,9 +775,9 @@ function showEvent(e) {
       );
       chooser.append(
         el("h3", null, lang === "lt" ? "Atverti žemėlapyje" : "Open in maps"),
-        el("p", null, e.address),
+        el("p", null, addressLabel(e)),
       );
-      const query = encodeURIComponent(e.address);
+      const query = encodeURIComponent(addressLabel(e));
       const choices = [
         [
           "Google Maps",
@@ -740,14 +813,14 @@ function showEvent(e) {
         }
       });
       const addressLink = button(
-        e.address,
+        addressLabel(e),
         () => chooser.showModal(),
         "detail-address-link",
       );
       addressLink.setAttribute("aria-haspopup", "dialog");
       addressLink.append(svgIcon(ARROW_SVG, 14));
       row.append(addressLink, chooser);
-    } else row.append(el("span", null, e.address));
+    } else row.append(el("span", null, addressLabel(e)));
     target.append(row);
   }
   target.append(el("p", null, e.description[lang] || e.description.en));
@@ -837,7 +910,7 @@ function showEvent(e) {
         const url = new URL(location.href);
         url.searchParams.set("event", e.id);
         url.searchParams.delete("lang");
-        url.pathname = lang === "en" ? "/en/" : "/";
+        url.pathname = COUNTRY.regional ? "/" : lang === "en" ? "/en/" : "/";
         url.searchParams.delete("edition");
         url.searchParams.delete("mode");
         try {
@@ -867,7 +940,7 @@ function renderMerchantMarkers() {
   merchantMarkers.forEach((m) => m.remove());
   merchantMarkers = [];
   if (!map || !loaded || !merchantsVisible) return;
-  for (const p of places) {
+  for (const p of scopedPlaces()) {
     const b = button(
       "₿",
       (ev) => {
@@ -932,7 +1005,7 @@ function openPlace(p) {
   if (popup) popup.remove();
   const root = el("div", "merchant-popup");
   root.append(el("span", "badge", "BTC Map"), el("h2", null, placeName(p)));
-  if (p.address) root.append(el("p", null, p.address));
+  if (p.address || p.country) root.append(el("p", null, addressLabel(p)));
   root.append(
     el(
       "p",
@@ -968,7 +1041,7 @@ function renderSearch() {
   results.replaceChildren();
   results.hidden = !q;
   if (!q) return;
-  const matches = places
+  const matches = scopedPlaces()
     .filter((p) =>
       ((p.name || "") + " " + (p.address || ""))
         .toLocaleLowerCase()
@@ -994,7 +1067,7 @@ function renderSearch() {
     );
     b.append(
       el("strong", null, placeName(p)),
-      el("span", null, p.address || ""),
+      el("span", null, addressLabel(p)),
     );
     results.append(b);
   }
@@ -1005,13 +1078,16 @@ async function refreshPlaces() {
     const data = await json(API);
     const filtered = filterPlaces(data, boundary);
     if (serial !== requestSerial) return;
-    places = filtered;
+    places = filtered.map((p) => ({
+      ...p,
+      country: placeCountry(p, boundary),
+    }));
     fetchedAt = new Date().toISOString();
     dataMode = "live";
     dataFailed = false;
     try {
       localStorage.setItem(
-        "lt-btc-places-v1",
+        (COUNTRY.cachePrefix || "lt-btc") + "-places-v1",
         JSON.stringify({ fetchedAt, places }),
       );
     } catch {}
@@ -1038,12 +1114,18 @@ function resetLithuaniaView(duration = 400) {
   if (!map) return;
   map.resize();
   const mobile = matchMedia("(max-width:760px)").matches;
-  map.fitBounds(COUNTRY.bounds, {
-    padding: mobile ? { top: 64, bottom: 90, left: 12, right: 12 } : 35,
-    bearing: 0,
-    pitch: 0,
-    duration,
-  });
+  map.fitBounds(
+    COUNTRY.countries?.find((c) => c.code === countryFilter)?.bounds ||
+      COUNTRY.bounds,
+    {
+      padding: mobile
+        ? { top: COUNTRY.regional ? 112 : 64, bottom: 90, left: 12, right: 12 }
+        : 35,
+      bearing: 0,
+      pitch: 0,
+      duration,
+    },
+  );
 }
 async function initMap() {
   if (!window.maplibregl) {
@@ -1202,7 +1284,9 @@ async function start() {
     initMap();
     let snapshot;
     try {
-      snapshot = JSON.parse(localStorage.getItem("lt-btc-places-v1"));
+      snapshot = JSON.parse(
+        localStorage.getItem((COUNTRY.cachePrefix || "lt-btc") + "-places-v1"),
+      );
     } catch {}
     if (
       !snapshot?.fetchedAt ||
@@ -1217,7 +1301,10 @@ async function start() {
       }
     }
     if (snapshot) {
-      places = filterPlaces(snapshot.places, boundary);
+      places = filterPlaces(snapshot.places, boundary).map((p) => ({
+        ...p,
+        country: placeCountry(p, boundary),
+      }));
       fetchedAt = snapshot.fetchedAt;
       dataMode = "cached";
       renderStatus();

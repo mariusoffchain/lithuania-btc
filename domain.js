@@ -17,6 +17,8 @@ export function inCountry(place, feature) {
     place.deleted_at
   )
     return false;
+  if (feature.type === "FeatureCollection")
+    return feature.features.some((f) => inCountry(place, f));
   const g = feature.geometry;
   const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
   return polys.some(
@@ -114,4 +116,21 @@ export function ics(event, language = "en") {
   ]
     .map(foldCalendarLine)
     .join("\r\n");
+}
+
+// Country identity is geographic for places and editorial for events.
+export function placeCountry(place, boundary) {
+  return (
+    boundary?.features?.find((f) => inCountry(place, f))?.properties?.code ||
+    null
+  );
+}
+export function inScope(item, code) {
+  return !code || item.country === code;
+}
+export function countryAddress(address, code, countries = []) {
+  const country = countries.find((c) => c.code === code);
+  return [country ? `${country.flag} ${country.name}` : "", address]
+    .filter(Boolean)
+    .join(" · ");
 }

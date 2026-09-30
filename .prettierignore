@@ -6,3 +6,7 @@ data/map*.json
 assets
 sw-template.js
 package-lock.json
+
+public-baltics
+profiles/baltics/*.geojson
+profiles/baltics/merchants-snapshot.json

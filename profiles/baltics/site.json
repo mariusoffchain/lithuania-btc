@@ -1,0 +1,47 @@
+{
+  "initiatives": [
+    {
+      "id": "honeybadger",
+      "name": "Baltic Honeybadger",
+      "country": "LV",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://baltichoneybadger.com/"
+        }
+      ]
+    },
+    {
+      "id": "riga-walks",
+      "name": "BitcoinWalk Riga",
+      "country": "LV",
+      "type": "walk",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "walk",
+          "url": "https://bitcoinwalk.org/riga/"
+        }
+      ]
+    },
+    {
+      "id": "mission-liberty",
+      "name": "Mission Liberty Tallinn",
+      "country": "EE",
+      "links": [
+        {
+          "name": "Meetup",
+          "icon": "meetup",
+          "url": "https://www.meetup.com/mission-liberty-tallinn/"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    "https://baltichoneybadger.com/",
+    "https://bitcoinwalk.org/riga/",
+    "https://www.meetup.com/mission-liberty-tallinn/"
+  ],
+  "verifiedAt": "2026-09-30"
+}

@@ -1,0 +1,54 @@
+{
+  "name": "Bitcoin Baltics",
+  "origin": "https://bitcoinbaltics.com",
+  "timezone": "Europe/Vilnius",
+  "boundaryPath": "data/baltics.geojson",
+  "center": [24.5, 56.9],
+  "bounds": [
+    [20.85, 53.88],
+    [28.25, 59.83]
+  ],
+  "navigationBounds": [
+    [14, 48],
+    [34, 65]
+  ],
+  "merchantsURL": "https://api.btcmap.org/v4/places/search?lat=57.05&lon=24.45&radius_km=500",
+  "repository": "https://github.com/mariusoffchain/lithuania-btc",
+  "countries": [
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "flag": "🇱🇹",
+      "bounds": [
+        [20.85, 53.88],
+        [26.84, 56.46]
+      ]
+    },
+    {
+      "code": "LV",
+      "name": "Latvia",
+      "flag": "🇱🇻",
+      "bounds": [
+        [20.97, 55.67],
+        [28.25, 58.09]
+      ]
+    },
+    {
+      "code": "EE",
+      "name": "Estonia",
+      "flag": "🇪🇪",
+      "bounds": [
+        [21.74, 57.5],
+        [28.22, 59.83]
+      ]
+    }
+  ],
+  "regionName": "the Baltics",
+  "tagline": "Bitcoin places and events across the Baltics",
+  "pageTitle": "Bitcoin Baltics | Bitcoin map and events across the Baltics",
+  "description": "Find places accepting Bitcoin, meetups and walks in Lithuania, Latvia and Estonia.",
+  "defaultLanguage": "en",
+  "languages": ["en"],
+  "cachePrefix": "bitcoin-baltics",
+  "regional": true
+}

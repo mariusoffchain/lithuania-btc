@@ -1,3 +1,4 @@
+import { COUNTRY } from "./country-config.js";
 import { renderInitiatives } from "./navigation.js";
 const en = document.documentElement.lang === "en";
 const button = document.querySelector("#appearance");
@@ -34,6 +35,7 @@ button.addEventListener("click", () => {
 syncTheme();
 
 const language = document.querySelector("#language");
+language.hidden = COUNTRY.languages?.length === 1;
 language.textContent = en ? "LT" : "EN";
 language.setAttribute(
   "aria-label",

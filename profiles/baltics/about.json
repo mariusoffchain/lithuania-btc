@@ -1,0 +1,43 @@
+{
+  "en": {
+    "title": "About Bitcoin Baltics",
+    "description": "Find places accepting Bitcoin, meetups and walks in Lithuania, Latvia and Estonia.",
+    "shortTagline": "Bitcoin places and events across the Baltics",
+    "aboutLabel": "About",
+    "heading": "Bitcoin across the Baltics, in person",
+    "intro": "Find places to spend Bitcoin and meet the people using it in Lithuania, Latvia and Estonia. One map brings local merchants, meetups, walks and conferences together.",
+    "contributeHeading": "Make the map yours",
+    "contributeText": "Add a place on BTC Map, join a local initiative, or reuse this open-source website for your region.",
+    "backLabel": "Back to map",
+    "sections": [
+      {
+        "heading": "Three countries, one map",
+        "paragraphs": [
+          "Explore Lithuania, Latvia and Estonia together, or choose a country to narrow the map and event list. Merchant listings come from BTC Map and OpenStreetMap contributors.",
+          "Listings can be incomplete or out of date. Check with the merchant before travelling and contribute corrections on BTC Map."
+        ]
+      },
+      {
+        "heading": "Meet, walk, exchange",
+        "paragraphs": [
+          "Discover local meetups, Bitcoin walks and conferences. Each event identifies its country alongside the address and links to its own organiser.",
+          "Event coverage is curated and still growing. A date marked to be announced is not a confirmed appointment. Check the organiser’s page for updates."
+        ]
+      },
+      {
+        "heading": "Built from Lithuania BTC",
+        "paragraphs": [
+          "Bitcoin Baltics extends the Atlas interface of Lithuania BTC to the Baltic region. Local communities keep their own identities and channels. Listing an initiative does not imply a partnership or endorsement.",
+          "The code is available under the MIT licence. Photos and branding have separate rights; the code licence does not grant permission to reuse them."
+        ]
+      },
+      {
+        "heading": "Find your community",
+        "paragraphs": [
+          "Community links are grouped by country. Start with the local organiser for announcements, participation and questions.",
+          "The gallery currently features gatherings in Lithuania, including PROOF. We will add photos from other countries as contributors provide them."
+        ]
+      }
+    ]
+  }
+}
