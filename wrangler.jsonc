@@ -8,4 +8,8 @@
     "not_found_handling": "404-page",
   },
   "workers_dev": true,
+  "routes": [
+    { "pattern": "lithuaniabtc.com", "custom_domain": true },
+    { "pattern": "www.lithuaniabtc.com", "custom_domain": true },
+  ],
 }

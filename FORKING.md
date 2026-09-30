@@ -7,7 +7,7 @@
 5. Adapt English/Lithuanian translations in `atlas-app.js`, the HTML labels, locale selection and static-page language list in `scripts/build-release.mjs`. Additional languages require code changes; do not claim a language by only changing a label.
 6. Replace the Lithuania wordmark, flag pin, folklore graphics, social preview and PWA icon. The code license is separate from photos and marks. Remove photo entries you cannot reuse. Update the manifest name/start URL and HTML descriptions/OG tags. Review all remaining `Lithuania`, `Lietuva`, `Vilnius`, `lt-LT`, `lithuaniabtc.com` references.
 7. Regenerate the merchant snapshot. Verify known places inside/outside your boundary and review source data licenses.
-8. Change the Worker name and public origin. The build uses the configured origin for canonical URLs, sharing metadata and sitemap; inspect generated `/`, `/en/`, `/lt/` before publishing.
+8. Change the Worker name and public origin, and remove or replace the Lithuania-specific `routes` in `wrangler.jsonc`. The build uses the configured origin for canonical URLs, sharing metadata and sitemap; inspect generated `/`, `/en/`, `/lt/` before publishing.
 9. Run tests, build, formatting and deployment dry run. Test mobile tab switching, map reset, event links, ICS timezone handling, both themes, and offline fallback.
 10. Deploy your own `public-build/`. Use your own Cloudflare account/domain. Never commit access tokens, account credentials or private notes.
 

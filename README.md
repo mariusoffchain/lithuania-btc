@@ -30,7 +30,7 @@ npm run deploy:check
 npm run deploy
 ```
 
-The default configuration deploys to a workers.dev address. To attach your own domain, first verify its zone is in the intended Cloudflare account, then add a custom domain route in `wrangler.jsonc`. Do not copy Lithuania's domain into your deployment. HTTPS is required for PWA features outside localhost.
+Before deploying a fork, change the Worker name and remove or replace the Lithuania-specific `routes` in `wrangler.jsonc`. With no routes, the site deploys only to a workers.dev address. To attach your own domain, first verify its zone is in the intended Cloudflare account, then configure its custom domain route. HTTPS is required for PWA features outside localhost.
 
 ```json
 "routes": [{"pattern": "your-domain.example", "custom_domain": true}]
