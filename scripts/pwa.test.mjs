@@ -53,6 +53,9 @@ function worker() {
         return new Response("network");
       },
       self: {
+        skipWaiting: async () => {
+          assert.ok(stores.get("lithuania-btc-test")?.has("/about.js"), "new shell must be cached before activation");
+        },
         location: { origin: "https://example.com" },
         clients: { claim: async () => {} },
         addEventListener: (type, fn) => (handlers[type] = fn),

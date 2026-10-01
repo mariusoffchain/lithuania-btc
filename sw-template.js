@@ -23,8 +23,8 @@ async function mapResponse(request){
   return response;
  }catch(error){return saved||Response.error();}finally{clearTimeout(timer);}
 }
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE))));
-// An updated worker waits until the old application has closed before activation.
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE)).then(()=>self.skipWaiting())));
+// Activate only after the complete new shell has been cached.
 self.addEventListener('activate',event=>event.waitUntil((async()=>{
  for(const key of await caches.keys())if(key.startsWith('lithuania-btc-')&&key!==CACHE)await caches.delete(key);
  await self.clients.claim();

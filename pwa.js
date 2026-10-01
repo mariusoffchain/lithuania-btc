@@ -11,6 +11,14 @@ syncDisplayMode();
 standalone.addEventListener("change", syncDisplayMode);
 // Register only in the release build, where /sw.js is generated.
 if ("serviceWorker" in navigator && window.isSecureContext) {
+  let changingVersion = false;
+  const hadController = Boolean(navigator.serviceWorker.controller);
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (hadController && !changingVersion) {
+      changingVersion = true;
+      location.reload();
+    }
+  });
   window.addEventListener("load", () =>
     navigator.serviceWorker
       .register("/sw.js", { scope: "/" })
