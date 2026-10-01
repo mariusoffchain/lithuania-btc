@@ -35,6 +35,46 @@
         "paragraphs": [
           "Meetups and Bitcoin Walk Vilnius are separate initiatives with their own community channels. Their links are gathered in the Community section, where you can find updates and join the conversation."
         ]
+      },
+      {
+        "heading": "Explore further",
+        "paragraphs": [
+          "Lithuania BTC is an open, autonomous local community."
+        ],
+        "links": [
+          {
+            "label": "Bitcoin Baltics · explore the Baltic region",
+            "url": "https://bitcoinbaltics.com/"
+          },
+          {
+            "label": "Cypher Baltics · privacy, sovereignty and open technology",
+            "url": "https://cypherbaltics.org/"
+          },
+          {
+            "label": "Offchain Media · Bitcoin articles and resources",
+            "url": "https://offchain.media/"
+          }
+        ]
+      },
+      {
+        "heading": "PROOF conference and book",
+        "paragraphs": [
+          "Talks and reading on privacy, decentralisation and monetary sovereignty. Read the book online in English or Lithuanian."
+        ],
+        "links": [
+          {
+            "label": "PROOF conference",
+            "url": "https://proofconference.com/en/"
+          },
+          {
+            "label": "Read the book · English",
+            "url": "https://proofconference.com/book/en/"
+          },
+          {
+            "label": "Read the book · Lietuvių",
+            "url": "https://proofconference.com/book/"
+          }
+        ]
       }
     ],
     "contributeHeading": "Get involved",
@@ -75,6 +115,46 @@
         "heading": "Sek iniciatyvą",
         "paragraphs": [
           "Susitikimai ir „Bitcoin Walk Vilnius“ yra atskiros iniciatyvos, turinčios savo bendruomenės kanalus. Jų nuorodas rasi skiltyje „Bendruomenė“ – ten gali sužinoti naujienas ir prisijungti prie pokalbių."
+        ]
+      },
+      {
+        "heading": "Sužinok daugiau",
+        "paragraphs": [
+          "Lithuania BTC yra atvira, savarankiška vietinė bendruomenė."
+        ],
+        "links": [
+          {
+            "label": "Bitcoin Baltics · atrask Baltijos šalis",
+            "url": "https://bitcoinbaltics.com/"
+          },
+          {
+            "label": "Cypher Baltics · privatumas, suverenitetas ir atviros technologijos",
+            "url": "https://cypherbaltics.org/"
+          },
+          {
+            "label": "Offchain Media · straipsniai ir ištekliai apie Bitcoin",
+            "url": "https://offchain.media/"
+          }
+        ]
+      },
+      {
+        "heading": "PROOF konferencija ir knyga",
+        "paragraphs": [
+          "Pranešimai ir tekstai apie privatumą, decentralizaciją ir piniginį suverenitetą. Skaityk knygą internete lietuvių arba anglų kalba."
+        ],
+        "links": [
+          {
+            "label": "PROOF konferencija",
+            "url": "https://proofconference.com/"
+          },
+          {
+            "label": "Knyga anglų kalba",
+            "url": "https://proofconference.com/book/en/"
+          },
+          {
+            "label": "Knyga lietuvių kalba",
+            "url": "https://proofconference.com/book/"
+          }
         ]
       }
     ],
