@@ -1684,3 +1684,13 @@ html[lang="lt"] .theme-atlas .date-badge span {
 /* Organiser links follow the active site theme, including visited state. */
 .theme-atlas #event-detail a.event-organiser{color:var(--text);text-decoration:underline;text-underline-offset:4px}
 .theme-atlas #event-detail a.event-organiser:hover,.theme-atlas #event-detail a.event-organiser:focus-visible{color:var(--accent)}
+
+/* Keep the site's purpose visible in the compact mobile masthead. */
+.sidebar-places-intro { color: var(--muted); font: 14px/1.5 var(--sans); margin: 0 0 16px; }
+@media (max-width: 760px) {
+  .theme-atlas .navbar .brand { min-width: 0; flex-shrink: 1; }
+  .theme-atlas .navbar .brand-copy { min-width: 0; gap: 2px; }
+  .theme-atlas .navbar .brand-logo { flex-shrink: 0; }
+  .theme-atlas .navbar .brand-description { display: block; white-space: normal; font-size: 11px; line-height: 1.2; max-width: 260px; }
+  .theme-atlas .navbar .nav-links { flex-shrink: 0; }
+}

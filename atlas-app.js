@@ -486,8 +486,8 @@ function renderLabels() {
     .forEach((n) => {
       n.textContent =
         lang === "lt"
-          ? "Bitcoin vietos ir renginiai Lietuvoje"
-          : "Bitcoin places and events in Lithuania";
+          ? "Atrask Bitcoin bendruomenę Lietuvoje."
+          : "Meet the Bitcoin community in Lithuania.";
     });
   updateAboutLinks();
   document.querySelector("meta[name=description]").content =
@@ -619,6 +619,7 @@ function renderSidebarTabs() {
 function renderPlacesList(list) {
   const items = places.slice().sort((a,b) => placeName(a).localeCompare(placeName(b), locale()));
   const section = el("section", "sidebar-places");
+  section.append(el("p", "sidebar-places-intro", lang === "lt" ? "Atrask, kur atsiskaityti Bitcoin. Pasirink vietą, kad pamatytum adresą ir atsiskaitymo būdus." : "Find somewhere to spend bitcoin. Select a place for its address and payment details."));
   section.append(el("p", "sidebar-place-count", t("merchants") + " · " + items.length));
   if (!items.length) section.append(el("p", "empty-state", t("noMatch")));
   for (const p of items) {
