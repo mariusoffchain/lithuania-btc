@@ -1,5 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  "account_id": "f9ee5f3ceb5658869b332ed8a0ed0a72",
   "name": "lithuania-btc",
   "compatibility_date": "2026-09-30",
   "assets": {
