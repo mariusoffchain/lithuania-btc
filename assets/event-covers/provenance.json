@@ -1,0 +1,122 @@
+{
+  "meetup-315774816": {
+    "src": "assets/event-covers/meetup-315774816.webp",
+    "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315774816/",
+    "original": "https://secure.meetupstatic.com/photos/event/b/0/6/c/600_535305164.jpeg",
+    "width": 600,
+    "height": 338,
+    "kind": "event"
+  },
+  "2026-08-06-fed": {
+    "src": "assets/event-covers/2026-08-06-fed.webp",
+    "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315641101/",
+    "original": "https://secure.meetupstatic.com/photos/event/7/a/9/d/600_534451389.jpeg",
+    "width": 600,
+    "height": 338,
+    "kind": "event"
+  },
+  "2026-07-02-farmer": {
+    "src": "assets/event-covers/2026-07-02-farmer.webp",
+    "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315410986/",
+    "original": "https://secure.meetupstatic.com/photos/event/7/a/9/d/600_534451389.jpeg",
+    "width": 600,
+    "height": 338,
+    "kind": "event"
+  },
+  "meetup-315411067": {
+    "src": "assets/event-covers/meetup-315411067.webp",
+    "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315411067/",
+    "original": "https://secure.meetupstatic.com/photos/event/3/a/c/3/600_534915043.jpeg",
+    "width": 600,
+    "height": 338,
+    "kind": "event"
+  },
+  "2026-06-04-ekasi": {
+    "src": "assets/event-covers/2026-06-04-ekasi.webp",
+    "source": "https://www.meetup.com/bitcoin-lithuania-meetup/",
+    "original": "https://secure.meetupstatic.com/photos/event/3/1/7/b/600_529872667.jpeg",
+    "width": 600,
+    "height": 338,
+    "kind": "organiser"
+  },
+  "tallinn-316565528": {
+    "src": "assets/event-covers/tallinn-316565528.webp",
+    "source": "https://www.meetup.com/mission-liberty-tallinn/events/316565528/",
+    "original": "https://secure.meetupstatic.com/photos/event/d/a/e/1/600_536156033.jpeg",
+    "width": 600,
+    "height": 337,
+    "kind": "event"
+  },
+  "honeybadger-riga-2025": {
+    "src": "assets/event-covers/honeybadger-riga-2025.webp",
+    "source": "https://baltichoneybadger.com/",
+    "original": "https://baltichoneybadger.com/og-images/link-preview-twitter.png",
+    "width": 1200,
+    "height": 675,
+    "kind": "event"
+  },
+  "btcpp-riga-privacy-2025": {
+    "src": "assets/event-covers/btcpp-riga-privacy-2025.webp",
+    "source": "https://btcpp.dev/riga",
+    "original": "https://btcpp.dev/social-cards/conference/riga.jpg?v=bd6c2ad08ef0",
+    "width": 1200,
+    "height": 630,
+    "kind": "event"
+  },
+  "solana-connect-2026": {
+    "src": "assets/event-covers/solana-connect-2026.webp",
+    "source": "https://luma.com/6qqwcg3o",
+    "original": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,anim=false,background=white,quality=75,width=800,height=420/event-social/8u/2439a547-3d9f-4722-8825-bff28d82cb97.png",
+    "width": 800,
+    "height": 420,
+    "kind": "event"
+  },
+  "unblock-fintech-2026": {
+    "src": "assets/event-covers/unblock-fintech-2026.webp",
+    "source": "https://fintech.unblockeurope.com/",
+    "original": "https://fintech.unblockeurope.com/og-image.jpg",
+    "width": 1200,
+    "height": 607,
+    "kind": "event"
+  },
+  "unblock-2027": {
+    "src": "assets/event-covers/unblock-2027.webp",
+    "source": "https://unblockeurope.com/",
+    "original": "https://cdn.prod.website-files.com/689d84c0d136d6b1dc876d47/6a312b90c035c4d8499ab3da_perfekti.png",
+    "width": 1200,
+    "height": 630,
+    "kind": "event"
+  },
+  "solana-vibecheck-2026": {
+    "src": "assets/event-covers/solana-vibecheck-2026.webp",
+    "source": "https://www.meetup.com/blockchainlt/",
+    "original": "https://secure.meetupstatic.com/photos/event/d/e/600_503040222.jpeg",
+    "width": 600,
+    "height": 338,
+    "kind": "organiser"
+  },
+  "ethtallinn-2024": {
+    "src": "assets/event-covers/ethtallinn-2024.webp",
+    "source": "https://linktr.ee/ethtallinn",
+    "original": "https://linktr.ee/ethtallinn",
+    "width": 1200,
+    "height": 630,
+    "kind": "organiser"
+  },
+  "unblock-2026": {
+    "src": "assets/event-covers/unblock-2026.webp",
+    "source": "https://unblockeurope.com/about-us",
+    "original": "https://unblockeurope.com/about-us",
+    "width": 256,
+    "height": 256,
+    "kind": "organiser"
+  },
+  "web3-vilnius-2023": {
+    "src": "assets/event-covers/web3-vilnius-2023.webp",
+    "source": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+    "original": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+    "width": 825,
+    "height": 1100,
+    "kind": "event"
+  }
+}

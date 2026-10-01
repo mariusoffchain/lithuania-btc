@@ -1,6 +1,7 @@
 /** Country settings shared by the browser, snapshot updater and release builder. */
 export const COUNTRY = Object.freeze({
   name: "Lithuania BTC",
+  contactEmail: "contact@lithuaniabtc.com",
   origin: "https://lithuaniabtc.com",
   timezone: "Europe/Vilnius",
   boundaryPath: "data/lithuania.geojson",

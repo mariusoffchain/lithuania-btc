@@ -125,3 +125,196 @@ summary:focus-visible {
     display: none;
   }
 }
+
+/* Directory layout: editorial section headings and recognisable identities. */
+.ecosystem-page .about-content {
+  max-width: 1260px;
+}
+.ecosystem-page .about-intro {
+  max-width: 850px;
+  margin-bottom: 30px;
+}
+.ecosystem-page .about-intro p {
+  font-size: 19px;
+  max-width: 650px;
+  color: var(--muted);
+}
+.ecosystem-filters {
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 42px;
+  gap: 28px;
+}
+.ecosystem-filters button {
+  padding-bottom: 18px;
+}
+.ecosystem-section {
+  margin: 0 0 52px;
+}
+.ecosystem-section[hidden] {
+  display: none;
+}
+.ecosystem-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.ecosystem-section-head h2 {
+  margin: 0;
+  font: 400 28px var(--serif);
+}
+.ecosystem-index,
+.ecosystem-total {
+  font: 13px var(--mono, monospace);
+  color: var(--muted);
+}
+.ecosystem-total {
+  margin-left: auto;
+}
+.ecosystem-grid {
+  gap: 22px;
+}
+.ecosystem-card {
+  padding: 28px;
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--text) 3%, var(--paper));
+}
+.ecosystem-card-head {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 76px;
+}
+.ecosystem-card-head h2 {
+  font: 400 26px/1.2 var(--serif);
+  margin: 0;
+}
+.ecosystem-brand {
+  flex: 0 0 112px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f1e6;
+  padding: 12px;
+}
+.ecosystem-brand img {
+  max-width: 100%;
+  height: 52px;
+  object-fit: contain;
+}
+.ecosystem-brand--meetups,
+.ecosystem-brand--walks {
+  background: none;
+  flex-basis: 52px;
+  padding: 0;
+}
+.ecosystem-brand--meetups img,
+.ecosystem-brand--walks img {
+  filter: none;
+}
+.ecosystem-card > p {
+  font-size: 17px;
+  color: var(--muted);
+  margin: 22px 0;
+}
+.ecosystem-links {
+  gap: 10px 20px;
+  margin: 0;
+  font-size: 15px;
+}
+.ecosystem-card details {
+  border-top: 1px solid var(--rule);
+  padding-top: 18px;
+  font-size: 15px;
+}
+.ecosystem-card details ul {
+  padding-left: 20px;
+}
+.ecosystem-photos {
+  border-top: 1px solid var(--rule);
+  padding-top: 30px;
+}
+.ecosystem-photo-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ecosystem-photo img {
+  height: 190px;
+}
+@media (max-width: 760px) {
+  .ecosystem-page .about-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .ecosystem-page .about-intro p {
+    font-size: 17px;
+  }
+  .ecosystem-filters {
+    gap: 6px 20px;
+    margin-bottom: 30px;
+  }
+  .ecosystem-filters button {
+    padding-bottom: 12px;
+    font-size: 14px;
+  }
+  .ecosystem-card {
+    padding: 22px;
+  }
+  .ecosystem-card-head {
+    gap: 16px;
+  }
+  .ecosystem-card-head h2 {
+    font-size: 24px;
+  }
+  .ecosystem-brand {
+    flex-basis: 86px;
+    height: 64px;
+    padding: 8px;
+  }
+  .ecosystem-brand--meetups,
+  .ecosystem-brand--walks {
+    flex-basis: 40px;
+  }
+  .ecosystem-section-head h2 {
+    font-size: 25px;
+  }
+  .ecosystem-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ecosystem-photo img {
+    height: 130px;
+  }
+}
+.mode-dark .ecosystem-brand--meetups img,
+.mode-dark .ecosystem-brand--walks img {
+  filter: invert(91%) sepia(12%) saturate(320%) hue-rotate(355deg);
+}
+.ecosystem-brand {
+  background: transparent;
+  padding: 0;
+  justify-content: flex-start;
+}
+.ecosystem-brand--bringin,
+.ecosystem-brand--wavespace {
+  flex-basis: 164px;
+}
+.ecosystem-brand--bringin img,
+.ecosystem-brand--wavespace img {
+  width: 164px;
+  height: 54px;
+  object-position: left center;
+}
+.mode-dark .ecosystem-brand--bringin img,
+.mode-dark .ecosystem-brand--wavespace img {
+  filter: brightness(0) invert(93%);
+}
+.ecosystem-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

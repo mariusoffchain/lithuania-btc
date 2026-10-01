@@ -39,6 +39,7 @@ const files = [
   "vendor/maplibre-LICENSE.txt",
   "data/events.json",
   "data/site.json",
+  "data/payment-methods.json",
   COUNTRY.boundaryPath,
   "data/map-style.json",
   "data/map-light.json",
@@ -55,6 +56,8 @@ const assets = (await readdir(resolve(root, "assets"))).filter(
       "share-atlas-lt-v2.jpg",
       "IBM-Plex-OFL.txt",
       "zolak-provenance.txt",
+      "ecosystem-wave.png",
+      "ecosystem-provenance.txt",
     ].includes(n),
 );
 for (const f of [...files, ...assets.map((n) => "assets/" + n)]) {
@@ -74,6 +77,15 @@ await copyFile(
   resolve(root, "assets/events/provenance.txt"),
   resolve(out, "assets/events/provenance.txt"),
 );
+// Copy only artwork referenced by the built event dataset.
+const builtEvents = JSON.parse(await readFile(resolve(out, "data/events.json"), "utf8"));
+for (const e of builtEvents) {
+  if (!e.image) continue;
+  const path = e.image.src;
+  if (!/^assets\/event-covers\/[a-zA-Z0-9._-]+\.webp$/.test(path)) throw Error("Invalid event artwork path");
+  await mkdir(dirname(resolve(out, path)), { recursive: true });
+  await copyFile(resolve(root, path), resolve(out, path));
+}
 const template = (await readFile(resolve(root, "atlas.html"), "utf8")).replace(
   "</head>",
   '<link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/assets/logo.png"><meta name="apple-mobile-web-app-title" content="Lithuania BTC"><script defer src="/pwa.js"></script></head>',
@@ -194,6 +206,7 @@ for (const lang of ["", "lt", "en"]) {
         origin,
         name: COUNTRY.name,
         repository: COUNTRY.repository,
+        contactEmail: COUNTRY.contactEmail,
         site,
         events: JSON.parse(
           await readFile(resolve(root, "data/events.json"), "utf8"),
@@ -212,6 +225,7 @@ for (const lang of ["", "lt", "en"]) {
         origin,
         name: COUNTRY.name,
         repository: COUNTRY.repository,
+        contactEmail: COUNTRY.contactEmail,
       }),
     );
   }

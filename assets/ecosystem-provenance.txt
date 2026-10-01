@@ -1,0 +1,5 @@
+Official brand assets retrieved 2026-09-30 for identification. Trademarks remain their owners’ property; not covered by the project code licence.
+ecosystem-bringin.svg https://cdn.prod.website-files.com/690affc873894d6d7718551d/69280275bdc3ba581945ab77_bringin-logo.svg
+ecosystem-wave.png https://cdn.prod.website-files.com/667823d9b944eb95404be544/69a5f095608a2c8d68dd0596_WORD%20LOGO%20(Light%20Back).png
+ecosystem-proof.svg: inline favicon from https://proofconference.com/
+Meetup and Walk illustrations: existing local site identity assets.

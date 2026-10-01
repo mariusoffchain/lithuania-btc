@@ -11,6 +11,7 @@ export function aboutPage({
   origin,
   name,
   repository,
+  contactEmail = `contact@${new URL(origin).hostname.replace(/^www\./, "")}`,
   initiatives,
 }) {
   const en = lang === "en",
@@ -93,6 +94,6 @@ export function aboutPage({
 ${header}
 <main class="about-content"><header class="about-intro"><span class="about-kicker">${escape(copy.aboutLabel)} / ${escape(name)}</span><h1>${escape(copy.heading)}</h1><p>${escape(copy.intro)}</p></header>
 <div class="about-sections">${copy.sections.map((s, i) => `<section><span class="folk-icon ${i % 2 ? "folk-meetup" : "folk-sun"} about-ornament" aria-hidden="true"></span><h2>${escape(s.heading)}</h2>${s.paragraphs.map((p) => `<p>${escape(p)}</p>`).join("")}${i === 0 ? '<a href="https://btcmap.org/add-location">BTC Map ↗</a>' : i === 1 ? `<a href="${home}?view=events">${labels[1]} →</a>` : i === 3 ? `<a href="${home}ecosystem/">${labels[2]} →</a>` : ""}</section>`).join("")}</div>
-<footer class="about-contribute"><h2>${escape(copy.contributeHeading)}</h2><p>${escape(copy.contributeText)}</p><a href="${escape(repository)}">GitHub ↗</a><a href="${home}">${escape(copy.backLabel)} →</a></footer></main>
+<div class="about-contribute contact-section"><h2>${en ? "Contact" : "Susisiekite"}</h2><a href="mailto:${escape(contactEmail)}">${escape(contactEmail)}</a></div><footer class="about-contribute"><h2>${escape(copy.contributeHeading)}</h2><p>${escape(copy.contributeText)}</p><a href="${escape(repository)}">GitHub ↗</a><a href="${home}">${escape(copy.backLabel)} →</a></footer></main>
 ${nav}<script type="application/json" id="community-config">${community}</script></body></html>`;
 }

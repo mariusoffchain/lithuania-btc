@@ -2,9 +2,9 @@ const filters = [...document.querySelectorAll("[data-filter]")];
 for (const b of filters)
   b.onclick = () => {
     for (const f of filters) f.setAttribute("aria-pressed", String(f === b));
-    for (const c of document.querySelectorAll("[data-category]"))
+    for (const c of document.querySelectorAll("[data-group]"))
       c.hidden =
-        b.dataset.filter !== "all" && c.dataset.category !== b.dataset.filter;
+        b.dataset.filter !== "all" && c.dataset.group !== b.dataset.filter;
   };
 const photos = [...document.querySelectorAll("[data-photo] img")],
   dialog = document.querySelector("#ecosystem-gallery");

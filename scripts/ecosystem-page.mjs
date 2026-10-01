@@ -70,8 +70,8 @@ export function ecosystemPage({
       group: "companies",
       name: "Bringin",
       description: en
-        ? "Bitcoin-to-euro services, Lightning and payments. A company registered in Lithuania."
-        : "Bitcoin ir eurų keitimo bei mokėjimų paslaugos. Lietuvoje registruota įmonė.",
+        ? "Bringin is a company registered in Lithuania offering Bitcoin-to-euro services, Lightning and payments."
+        : "„Bringin“ yra Lietuvoje registruota įmonė, teikianti Bitcoin ir eurų keitimo bei mokėjimų paslaugas.",
       links: [{ name: "Bringin", url: "https://bringin.app/" }],
     },
     {
@@ -79,8 +79,8 @@ export function ecosystemPage({
       group: "companies",
       name: "wave.space",
       description: en
-        ? "Buy, sell and spend Bitcoin with wavecard. A company registered in Lithuania."
-        : "Bitcoin pirkimas, pardavimas ir mokėjimai su „wavecard“. Lietuvoje registruota įmonė.",
+        ? "wave.space is a company registered in Lithuania offering Bitcoin buying, selling and payments with wavecard."
+        : "„wave.space“ yra Lietuvoje registruota įmonė, siūlanti Bitcoin pirkimą, pardavimą ir mokėjimus su „wavecard“.",
       links: [{ name: "wave.space", url: "https://www.wave.space/" }],
     },
     {
@@ -100,11 +100,28 @@ export function ecosystemPage({
   ];
   const eventOwner = (e) =>
     e.type === "conference" ? "proof" : e.type === "walk" ? "walks" : "meetups";
-  const cards = entries
-    .map((x) => {
-      const related = events.filter((e) => eventOwner(e) === x.id);
-      return `<article class="ecosystem-card" id="${x.id}" data-category="${x.group}"><p class="about-kicker">${groups.find((g) => g[0] === x.group)[1]}</p><h2>${esc(x.name)}</h2><p>${esc(x.description)}</p><div class="ecosystem-links">${x.links.map((l) => `<a href="${esc(l.url)}" rel="noopener noreferrer">${esc(l.name)} ↗</a>`).join("")}</div>${related.length ? `<details><summary>${en ? "Related events" : "Susiję renginiai"} (${related.length})</summary><ul>${related.map((e) => `<li><a href="${home}?event=${encodeURIComponent(e.id)}&view=events">${esc(e.title[lang] || e.title.en)}</a></li>`).join("")}</ul></details>` : ""}</article>`;
-    })
+  const logos = {
+    meetups: "ui-meetup.svg",
+    walks: "ui-walk.svg",
+    bringin: "ecosystem-bringin.svg",
+    wavespace: "ecosystem-wave.png",
+    proof: "ecosystem-proof.svg",
+  };
+  const cards = entries.map((x) => {
+    const related = events.filter((e) => eventOwner(e) === x.id);
+    return `<article class="ecosystem-card" id="${x.id}" data-category="${x.group}"><div class="ecosystem-card-head"><div class="ecosystem-brand ecosystem-brand--${x.id}"><img src="/assets/${logos[x.id]}" alt="" width="140" height="64" loading="lazy"></div><h2${x.group === "companies" ? ' class="ecosystem-sr-only"' : ""}>${esc(x.name)}</h2></div><p>${esc(x.description)}</p><div class="ecosystem-links">${x.links.map((l) => `<a href="${esc(l.url)}" rel="noopener noreferrer">${esc(x.group === "companies" ? (en ? "Website" : "Svetainė") : l.name)} ↗</a>`).join("")}</div>${related.length ? `<details><summary>${en ? "Related events" : "Susiję renginiai"} (${related.length})</summary><ul>${related.map((e) => `<li><a href="${home}?event=${encodeURIComponent(e.id)}&view=events">${esc(e.title[lang] || e.title.en)}</a></li>`).join("")}</ul></details>` : ""}</article>`;
+  });
+  const sections = groups
+    .map(
+      ([id, label], i) =>
+        `<section class="ecosystem-section" data-group="${id}"><header class="ecosystem-section-head"><span class="ecosystem-index">0${i + 1}</span><h2>${label}</h2><span class="ecosystem-total">${entries
+          .filter((x) => x.group === id)
+          .length.toString()
+          .padStart(
+            2,
+            "0",
+          )}</span></header><div class="ecosystem-grid">${entries.map((x, n) => (x.group === id ? cards[n] : "")).join("")}</div></section>`,
+    )
     .join("");
   const photos = site.gallery
     .map(
@@ -130,7 +147,7 @@ export function ecosystemPage({
     .replaceAll(' aria-current="page"', "");
   html = html.replace(
     /<div class="about-sections">[\s\S]*?<\/main>/,
-    `<nav class="ecosystem-filters" aria-label="${en ? "Categories" : "Kategorijos"}"><button data-filter="all" aria-pressed="true">${en ? "All" : "Visi"}</button>${groups.map(([id, label]) => `<button data-filter="${id}" aria-pressed="false">${label}</button>`).join("")}</nav><div class="ecosystem-grid">${cards}</div><section class="ecosystem-photos"><h2>${en ? "Community photos" : "Bendruomenės nuotraukos"}</h2><div class="ecosystem-photo-grid">${photos}</div></section><p>${en ? "Listings do not imply a partnership. Company offices are not necessarily shops accepting Bitcoin." : "Įtraukimas į sąrašą nereiškia partnerystės. Įmonių biurai nebūtinai yra Bitcoin priimančios prekybos vietos."}</p><a href="${home}">${copy.backLabel} →</a></main><dialog id="ecosystem-gallery"><button data-close aria-label="${en ? "Close" : "Uždaryti"}">×</button><img alt=""><p class="photo-caption"></p><div><button data-prev aria-label="${en ? "Previous photo" : "Ankstesnė nuotrauka"}">←</button><span class="photo-count"></span><button data-next aria-label="${en ? "Next photo" : "Kita nuotrauka"}">→</button></div></dialog>`,
+    `<nav class="ecosystem-filters" aria-label="${en ? "Categories" : "Kategorijos"}"><button data-filter="all" aria-pressed="true">${en ? "All" : "Visi"}</button>${groups.map(([id, label]) => `<button data-filter="${id}" aria-pressed="false">${label}</button>`).join("")}</nav>${sections}<section class="about-contribute contact-section"><h2>${en ? "Contact" : "Susisiekite"}</h2><a href="mailto:contact@lithuaniabtc.com">contact@lithuaniabtc.com</a></section><section class="ecosystem-photos"><h2>${en ? "Community photos" : "Bendruomenės nuotraukos"}</h2><div class="ecosystem-photo-grid">${photos}</div></section><p>${en ? "Listings do not imply a partnership. Company offices are not necessarily shops accepting Bitcoin." : "Įtraukimas į sąrašą nereiškia partnerystės. Įmonių biurai nebūtinai yra Bitcoin priimančios prekybos vietos."}</p><a href="${home}">${copy.backLabel} →</a></main><dialog id="ecosystem-gallery"><button data-close aria-label="${en ? "Close" : "Uždaryti"}">×</button><img alt=""><p class="photo-caption"></p><div><button data-prev aria-label="${en ? "Previous photo" : "Ankstesnė nuotrauka"}">←</button><span class="photo-count"></span><button data-next aria-label="${en ? "Next photo" : "Kita nuotrauka"}">→</button></div></dialog>`,
   );
   return html.replace(
     "</head>",

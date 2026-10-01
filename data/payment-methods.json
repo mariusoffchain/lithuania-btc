@@ -1,0 +1,98 @@
+{
+  "node:11144623602": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/11144623602.json",
+    "checkedAt": "2026-10-01T10:15:15.980989+00:00"
+  },
+  "node:2601476084": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/2601476084.json",
+    "checkedAt": "2026-10-01T10:15:15.885628+00:00"
+  },
+  "node:2974438059": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/2974438059.json",
+    "checkedAt": "2026-10-01T10:15:15.972828+00:00"
+  },
+  "node:3047048128": {
+    "lightning": false,
+    "lightningTag": null,
+    "source": "https://api.openstreetmap.org/api/0.6/node/3047048128.json",
+    "checkedAt": "2026-10-01T10:15:15.949232+00:00"
+  },
+  "way:1233522453": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/way/1233522453.json",
+    "checkedAt": "2026-10-01T10:15:16.311542+00:00"
+  },
+  "node:11012119607": {
+    "lightning": false,
+    "lightningTag": null,
+    "source": "https://api.openstreetmap.org/api/0.6/node/11012119607.json",
+    "checkedAt": "2026-10-01T10:15:16.285722+00:00"
+  },
+  "node:12066462358": {
+    "lightning": false,
+    "lightningTag": null,
+    "source": "https://api.openstreetmap.org/api/0.6/node/12066462358.json",
+    "checkedAt": "2026-10-01T10:15:16.371483+00:00"
+  },
+  "node:12229605260": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/12229605260.json",
+    "checkedAt": "2026-10-01T10:15:16.348706+00:00"
+  },
+  "node:4365038892": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/4365038892.json",
+    "checkedAt": "2026-10-01T10:15:16.740268+00:00"
+  },
+  "node:5124345638": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/5124345638.json",
+    "checkedAt": "2026-10-01T10:15:16.718086+00:00"
+  },
+  "node:11041734537": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/11041734537.json",
+    "checkedAt": "2026-10-01T10:15:16.797310+00:00"
+  },
+  "node:12922174649": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/12922174649.json",
+    "checkedAt": "2026-10-01T10:15:16.818366+00:00"
+  },
+  "node:13042920082": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/13042920082.json",
+    "checkedAt": "2026-10-01T10:15:17.090213+00:00"
+  },
+  "node:13093807482": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/13093807482.json",
+    "checkedAt": "2026-10-01T10:15:17.087932+00:00"
+  },
+  "node:13134353197": {
+    "lightning": true,
+    "lightningTag": "yes",
+    "source": "https://api.openstreetmap.org/api/0.6/node/13134353197.json",
+    "checkedAt": "2026-10-01T10:15:17.094541+00:00"
+  },
+  "node:13428605737": {
+    "lightning": false,
+    "lightningTag": "no",
+    "source": "https://api.openstreetmap.org/api/0.6/node/13428605737.json",
+    "checkedAt": "2026-10-01T10:15:17.197306+00:00"
+  }
+}

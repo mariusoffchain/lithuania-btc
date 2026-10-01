@@ -52,7 +52,7 @@ for (const [path, lang] of [
     );
     if (path.includes("about")) {
       assert.match(html, /<h1>/);
-      assert.equal((html.match(/<h2>/g) || []).length, 5);
+      assert.equal((html.match(/<h2>/g) || []).length, 6);
       assert.ok(!html.includes('src="atlas-app.js"'));
       const community = JSON.parse(
         html.match(

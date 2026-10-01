@@ -62,7 +62,15 @@
     ],
     "lat": 54.71665,
     "lon": 25.27776,
-    "locationSource": "https://www.openstreetmap.org/way/704962896"
+    "locationSource": "https://www.openstreetmap.org/way/704962896",
+    "image": {
+      "src": "assets/event-covers/meetup-315774816.webp",
+      "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315774816/",
+      "original": "https://secure.meetupstatic.com/photos/event/b/0/6/c/600_535305164.jpeg",
+      "width": 600,
+      "height": 338,
+      "kind": "event"
+    }
   },
   {
     "id": "2026-08-06-fed",
@@ -94,7 +102,15 @@
         "name": "Facebook",
         "url": "https://fb.me/e/86DPMWzhT"
       }
-    ]
+    ],
+    "image": {
+      "src": "assets/event-covers/2026-08-06-fed.webp",
+      "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315641101/",
+      "original": "https://secure.meetupstatic.com/photos/event/7/a/9/d/600_534451389.jpeg",
+      "width": 600,
+      "height": 338,
+      "kind": "event"
+    }
   },
   {
     "id": "2026-07-02-farmer",
@@ -116,7 +132,15 @@
     "url": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315410986/",
     "sourceVerifiedAt": "2026-09-30",
     "initiative": "meetups",
-    "venueWebsite": "https://zolak.lt/"
+    "venueWebsite": "https://zolak.lt/",
+    "image": {
+      "src": "assets/event-covers/2026-07-02-farmer.webp",
+      "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315410986/",
+      "original": "https://secure.meetupstatic.com/photos/event/7/a/9/d/600_534451389.jpeg",
+      "width": 600,
+      "height": 338,
+      "kind": "event"
+    }
   },
   {
     "id": "meetup-315411067",
@@ -136,7 +160,15 @@
     "sourceVerifiedAt": "2026-09-30",
     "sourceNotes": "Meetup venue says Laisvės pr. 36, description says L. Asanavičiūtės g. 29. No coordinates assigned pending confirmation.",
     "initiative": "meetups",
-    "addressUncertain": true
+    "addressUncertain": true,
+    "image": {
+      "src": "assets/event-covers/meetup-315411067.webp",
+      "source": "https://www.meetup.com/bitcoin-lithuania-meetup/events/315411067/",
+      "original": "https://secure.meetupstatic.com/photos/event/3/a/c/3/600_534915043.jpeg",
+      "width": 600,
+      "height": 338,
+      "kind": "event"
+    }
   },
   {
     "id": "2026-06-04-ekasi",
@@ -157,6 +189,14 @@
     "locationSource": "https://www.openstreetmap.org/way/229567214",
     "url": "https://www.meetup.com/bitcoin-lithuania-meetup/",
     "initiative": "meetups",
-    "venueWebsite": "https://zolak.lt/"
+    "venueWebsite": "https://zolak.lt/",
+    "image": {
+      "src": "assets/event-covers/2026-06-04-ekasi.webp",
+      "source": "https://www.meetup.com/bitcoin-lithuania-meetup/",
+      "original": "https://secure.meetupstatic.com/photos/event/3/1/7/b/600_529872667.jpeg",
+      "width": 600,
+      "height": 338,
+      "kind": "organiser"
+    }
   }
 ]
