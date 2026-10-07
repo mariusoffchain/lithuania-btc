@@ -3,8 +3,11 @@
   "account_id": "f9ee5f3ceb5658869b332ed8a0ed0a72",
   "name": "lithuania-btc",
   "compatibility_date": "2026-09-30",
+  "main": "worker.mjs",
   "assets": {
     "directory": "./public-build",
+    "binding": "ASSETS",
+    "run_worker_first": true,
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
   },

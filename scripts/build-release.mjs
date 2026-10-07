@@ -50,6 +50,8 @@ const assets = (await readdir(resolve(root, "assets"))).filter(
     /\.(svg|woff2)$/.test(n) ||
     [
       "logo.png",
+      "favicon-48.png",
+      "favicon-192.png",
       "vytis-cutout.png",
       "share-card.jpg",
       "share-atlas-en-v2.jpg",
@@ -88,7 +90,7 @@ for (const e of builtEvents) {
 }
 const template = (await readFile(resolve(root, "atlas.html"), "utf8")).replace(
   "</head>",
-  '<link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/assets/logo.png"><meta name="apple-mobile-web-app-title" content="Lithuania BTC"><script defer src="/pwa.js"></script></head>',
+  '<link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/assets/favicon-192.png"><meta name="apple-mobile-web-app-title" content="Lithuania BTC"><script defer src="/pwa.js"></script></head>',
 );
 const about = JSON.parse(
   await readFile(resolve(root, "data/about.json"), "utf8"),
@@ -263,6 +265,7 @@ await writeFile(
   JSON.stringify(manifest, null, 2),
 );
 await copyFile(resolve(root, "_headers"), resolve(out, "_headers"));
+await copyFile(resolve(root, "favicon.ico"), resolve(out, "favicon.ico"));
 console.log(`Atlas release prepared: ${out}`);
 
 // Version the offline shell from its content, including data and generated pages.
