@@ -3,6 +3,7 @@
 ## Implemented
 
 - `/` is Lithuanian; `/en/` is English. `/lt/` remains a compatible alias with a canonical pointing to `/`.
+- `/` and `/en/` each have one visually hidden H1 matching the page title, and the build prerenders the event list with the application's own classes (`scripts/home-crawlable.mjs`). Crawlers that do not run JavaScript, and visitors without it, read the events; `atlas-app.js` replaces the list once its data loads and keeps the H1 in the active language.
 - `/about/` and `/en/about/` contain descriptive HTML at build time, including headings and ordinary links. They do not depend on the map application or JavaScript to expose their content.
 - Mobile navigation has a fourth About destination. Desktop has a short brand description and an About link.
 - Localized titles, descriptions, canonical URLs, reciprocal `hreflang` alternatives, and WebSite/AboutPage JSON-LD describe the real site. No invented reviews or business identity.
