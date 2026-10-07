@@ -100,3 +100,46 @@ test("Home pages carry one H1 and a crawlable event list before JavaScript", () 
     assert.ok((list.match(/class="event-card/g) || []).length >= 3);
   }
 });
+const dated = JSON.parse(get("data/events.json")).filter(
+  (e) => e.status !== "planned" && e.start,
+);
+test("Every dated event has its own Lithuanian and English page with Event data", () => {
+  assert.ok(dated.length >= 3);
+  for (const e of dated)
+    for (const [path, lang] of [
+      [`events/${e.id}/`, "lt"],
+      [`en/events/${e.id}/`, "en"],
+    ]) {
+      const html = get(path + "index.html");
+      const url = `https://lithuaniabtc.com/${path}`;
+      assert.match(html, new RegExp(`<html lang="${lang}"`));
+      assert.match(html, new RegExp(`rel="canonical" href="${url}"`));
+      assert.ok(html.includes(`hreflang="lt" href="https://lithuaniabtc.com/events/${e.id}/"`));
+      assert.ok(html.includes(`hreflang="en" href="https://lithuaniabtc.com/en/events/${e.id}/"`));
+      assert.equal((html.match(/<h1>/g) || []).length, 1);
+      assert.ok(!html.includes('src="atlas-app.js"'));
+      const schemas = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
+      assert.equal(schemas.length, 1);
+      const event = JSON.parse(schemas[0][1]);
+      assert.equal(event["@type"], "Event");
+      assert.equal(event.url, url);
+      assert.equal(event.name, e.title[lang] || e.title.en);
+      assert.equal(event.startDate, e.start);
+      assert.equal(event.eventAttendanceMode, "https://schema.org/OfflineEventAttendanceMode");
+      assert.equal(event.location.address.addressCountry, "LT");
+      assert.ok(event.location.address.addressLocality);
+      assert.ok(event.organizer.name);
+      if (e.image) assert.ok(readFileSync(join(out, e.image.src)).length > 1000);
+      assert.ok(get("sitemap.xml").includes(`<loc>${url}</loc>`));
+    }
+});
+test("Planned events without a date have no page", () => {
+  for (const e of JSON.parse(get("data/events.json")).filter((e) => e.status === "planned"))
+    assert.throws(() => get(`events/${e.id}/index.html`));
+});
+test("Home event cards link to the event pages", () => {
+  for (const [path, prefix] of [["", "/events/"], ["en/", "/en/events/"]]) {
+    const html = get(path + "index.html");
+    for (const e of dated) assert.ok(html.includes(`href="${prefix}${e.id}/"`));
+  }
+});

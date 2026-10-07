@@ -13,6 +13,8 @@ import { buildLLMs } from "./build-llms.mjs";
 import { ecosystemPage } from "./ecosystem-page.mjs";
 import { aboutPage } from "./about-page.mjs";
 import { crawlableHome } from "./home-crawlable.mjs";
+import { hasEventPage, eventSlug } from "./event-data.mjs";
+import { atlasEventPage } from "./event-page.mjs";
 import { COUNTRY } from "../country-config.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = resolve(root, process.argv[2] || "public-build");
@@ -89,6 +91,23 @@ for (const e of builtEvents) {
   await mkdir(dirname(resolve(out, path)), { recursive: true });
   await copyFile(resolve(root, path), resolve(out, path));
 }
+// Every dated event gets /events/<id>/ in Lithuanian and /en/events/<id>/ in English.
+const eventPath = (e, language) =>
+  (language === "en" ? "/en" : "") + "/events/" + eventSlug(e) + "/";
+const pageEvents = builtEvents.filter(hasEventPage);
+const ORGANISERS = {
+  proof: { name: "PROOF", url: "https://proofconference.com/" },
+  walks: { name: "BitcoinWalk Vilnius", url: "https://bitcoinwalk.org/vilnius" },
+  meetups: {
+    name: "Bitcoin Lithuania Meetup",
+    url: "https://www.meetup.com/bitcoin-lithuania-meetup/",
+  },
+};
+// Same owner rule as the event modal in atlas-app.js.
+const organiser = (e) =>
+  ORGANISERS[
+    e.type === "conference" ? "proof" : e.type === "walk" ? "walks" : "meetups"
+  ];
 const template = (await readFile(resolve(root, "atlas.html"), "utf8")).replace(
   "</head>",
   '<link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/assets/favicon-192.png"><meta name="apple-mobile-web-app-title" content="Lithuania BTC"><script defer src="/pwa.js"></script></head>',
@@ -251,8 +270,41 @@ for (const lang of ["", "lt", "en"]) {
     lang: language,
     timezone: COUNTRY.timezone,
     countries: COUNTRY.countries,
+    eventHref: (e) => eventPath(e, language),
   });
   await writeFile(resolve(out, lang, "index.html"), html);
+}
+for (const language of ["lt", "en"]) {
+  const about = await readFile(
+    resolve(out, language === "en" ? "en/about" : "about", "index.html"),
+    "utf8",
+  );
+  for (const event of pageEvents) {
+    const path = eventPath(event, language);
+    const other = eventPath(event, language === "en" ? "lt" : "en");
+    await mkdir(resolve(out, path.slice(1)), { recursive: true });
+    await writeFile(
+      resolve(out, path.slice(1), "index.html"),
+      atlasEventPage({
+        template: about,
+        event,
+        lang: language,
+        origin,
+        name: COUNTRY.name,
+        home: language === "en" ? "/en/" : "/",
+        canonical: origin + path,
+        alternates: {
+          lt: origin + eventPath(event, "lt"),
+          en: origin + eventPath(event, "en"),
+          "x-default": origin + eventPath(event, "lt"),
+        },
+        alternatePath: other,
+        organiser: organiser(event),
+        timezone: COUNTRY.timezone,
+        defaultCountry: "LT",
+      }),
+    );
+  }
 }
 await buildLLMs(root, out, site);
 await writeFile(
@@ -261,7 +313,7 @@ await writeFile(
 );
 await writeFile(
   resolve(out, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/", "/about/", "/en/about/", "/ecosystem/", "/en/ecosystem/"].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["/", "/en/", "/about/", "/en/about/", "/ecosystem/", "/en/ecosystem/", ...pageEvents.flatMap((e) => [eventPath(e, "lt"), eventPath(e, "en")])].map((p) => `<url><loc>${origin + p}</loc></url>`).join("")}</urlset>\n`,
 );
 const manifest = JSON.parse(
   await readFile(resolve(root, "manifest.webmanifest"), "utf8"),

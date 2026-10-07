@@ -41,10 +41,11 @@ language.setAttribute(
 );
 language.onclick = () => {
   location.href =
-    (en ? "/" : "/en/") +
-    (document.body.classList.contains("ecosystem-page")
-      ? "ecosystem/"
-      : "about/") +
+    (document.body.dataset.alternate ||
+      (en ? "/" : "/en/") +
+        (document.body.classList.contains("ecosystem-page")
+          ? "ecosystem/"
+          : "about/")) +
     "?mode=" +
     (document.body.classList.contains("mode-dark") ? "dark" : "light");
 };

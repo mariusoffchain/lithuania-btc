@@ -541,6 +541,14 @@ function renderStatus() {
     : t("noData");
   n.classList.add("data-warning");
 }
+// Built for every dated event by scripts/build-release.mjs.
+const eventPagePath = (e) =>
+  e.status !== "planned" && e.start
+    ? (lang === "en" && COUNTRY.languages?.length !== 1 ? "/en" : "") +
+      "/events/" +
+      encodeURIComponent(e.id) +
+      "/"
+    : null;
 function eventCard(e) {
   if (e.status === "planned") {
     const b = button("", () => showEvent(e), "event-card planned-event");
@@ -558,7 +566,14 @@ function eventCard(e) {
     b.append(date, copy);
     return b;
   }
-  const b = button("", () => showEvent(e), "event-card");
+  // A real link to the event's own page; a plain click still opens the modal.
+  const b = el("a", "event-card");
+  b.href = eventPagePath(e);
+  b.addEventListener("click", (ev) => {
+    if (ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    ev.preventDefault();
+    showEvent(e);
+  });
   const date = el("div", "date-badge");
   date.append(
     el("strong", null, fmt(e.start, { day: "2-digit" })),
@@ -952,6 +967,11 @@ function showEvent(e) {
         url.pathname = lang === "en" ? "/en/" : "/";
         url.searchParams.delete("edition");
         url.searchParams.delete("mode");
+        // Dated events share their own page, with its title and description.
+        if (eventPagePath(e)) {
+          url.pathname = eventPagePath(e);
+          url.search = "";
+        }
         try {
           await navigator.clipboard.writeText(url.href);
           shareStatus.textContent =

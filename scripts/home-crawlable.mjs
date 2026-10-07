@@ -11,7 +11,10 @@ function swap(html, from, to) {
   return html.replace(from, to);
 }
 
-export function crawlableHome(html, { heading, events, lang, timezone, countries }) {
+export function crawlableHome(
+  html,
+  { heading, events, lang, timezone, countries, eventHref },
+) {
   const locale = lang === "lt" ? "lt-LT" : "en-GB";
   const fmt = (d, opts) =>
     new Intl.DateTimeFormat(locale, { timeZone: timezone, ...opts }).format(
@@ -32,7 +35,8 @@ export function crawlableHome(html, { heading, events, lang, timezone, countries
     if (e.status === "planned")
       return `<div class="event-card planned-event"><div class="date-badge pending-date" aria-hidden="true"></div><div class="event-copy"><h3>${title}</h3><p>${lang === "lt" ? "Data bus paskelbta" : "Date to be announced"}</p></div></div>`;
     const place = [e.venue, country(e.country)].filter(Boolean).map(esc).join(", ");
-    return `<div class="event-card"><div class="date-badge"><strong>${fmt(e.start, { day: "2-digit" })}</strong><span>${fmt(e.start, { month: lang === "lt" ? "long" : "short" })}</span></div><div class="event-copy"><h3>${title}</h3><p>${fmt(e.start, { hour: "2-digit", minute: "2-digit" })} · ${place}</p><p>${fmt(e.start, { year: "numeric" })}</p></div></div>`;
+    // Dated events link to their own page; atlas-app.js opens the same link as a modal.
+    return `<a class="event-card" href="${esc(eventHref(e))}"><div class="date-badge"><strong>${fmt(e.start, { day: "2-digit" })}</strong><span>${fmt(e.start, { month: lang === "lt" ? "long" : "short" })}</span></div><div class="event-copy"><h3>${title}</h3><p>${fmt(e.start, { hour: "2-digit", minute: "2-digit" })} · ${place}</p><p>${fmt(e.start, { year: "numeric" })}</p></div></a>`;
   };
   const list =
     `<section class="upcoming-events"><h3 class="list-heading">${lang === "lt" ? "Artimiausi renginiai" : "Upcoming events"}</h3>${[...upcoming, ...planned].map(card).join("")}</section>` +
