@@ -86,3 +86,17 @@ test("About uses the shared header and four complete mobile links", () => {
     assert.ok(!html.includes('id="about-theme"'));
   }
 });
+test("Home pages carry one H1 and a crawlable event list before JavaScript", () => {
+  for (const [path, heading] of [
+    ["", "Bitcoin vietos ir renginiai Lietuvoje"],
+    ["en/", "Bitcoin map and events in Lithuania"],
+  ]) {
+    const html = get(path + "index.html");
+    assert.deepEqual(
+      [...html.matchAll(/<h1[^>]*>([^<]*)<\/h1>/g)].map((m) => m[1]),
+      [heading],
+    );
+    const list = html.match(/<div id="event-list"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/aside>/)[1];
+    assert.ok((list.match(/class="event-card/g) || []).length >= 3);
+  }
+});

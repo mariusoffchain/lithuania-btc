@@ -12,6 +12,7 @@ import { createHash } from "node:crypto";
 import { buildLLMs } from "./build-llms.mjs";
 import { ecosystemPage } from "./ecosystem-page.mjs";
 import { aboutPage } from "./about-page.mjs";
+import { crawlableHome } from "./home-crawlable.mjs";
 import { COUNTRY } from "../country-config.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = resolve(root, process.argv[2] || "public-build");
@@ -244,6 +245,13 @@ for (const lang of ["", "lt", "en"]) {
       )
       .replace(">Atverti „BTC Map“<", ">Open BTC Map<");
   await mkdir(resolve(out, lang), { recursive: true });
+  html = crawlableHome(html, {
+    heading: title.split(" | ").pop(),
+    events: builtEvents,
+    lang: language,
+    timezone: COUNTRY.timezone,
+    countries: COUNTRY.countries,
+  });
   await writeFile(resolve(out, lang, "index.html"), html);
 }
 await buildLLMs(root, out, site);
