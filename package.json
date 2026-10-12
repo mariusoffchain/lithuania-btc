@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test scripts/*.test.mjs",
-    "build": "node scripts/build-release.mjs",
+    "build": "node scripts/build-release.mjs && node scripts/sitemap-lastmod.mjs public-build",
     "preview": "python3 -m http.server 8767 --bind 127.0.0.1 --directory public-build",
     "refresh:merchants": "node scripts/refresh-snapshot.mjs",
     "format": "prettier --write .",
