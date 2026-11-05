@@ -1,6 +1,6 @@
 // A static page per dated event, built from the site's own About page so it keeps
 // the same header, navigation, theme and styles. The map keeps its modal and links here.
-import { esc, eventFacts, eventSchema } from "./event-data.mjs";
+import { esc, eventFacts, eventSchema, eventSlug } from "./event-data.mjs";
 
 const LABELS = {
   en: {
@@ -105,7 +105,7 @@ export function atlasEventPage({
     : "";
   const main = `<main class="about-content event-detail"><header class="about-intro"><a class="about-kicker" href="${home}?view=events">${L.events} / ${esc(name)}</a><h1>${esc(f.title)}</h1><p><time datetime="${f.startDay}">${esc(f.date)}</time>${f.time ? ` · ${esc(f.time)}` : ""}</p></header>
 <div class="event-detail-body${figure ? " has-artwork" : ""}"><div class="event-detail-copy">${facts.length ? `<dl class="event-facts">${facts.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}${f.description ? `<p class="event-detail-description">${esc(f.description)}</p>` : ""}${f.links.length ? `<p class="event-detail-links">${f.links.map((l) => external(l.name + " ↗", l.url)).join("")}</p>` : ""}${f.checked ? `<p class="event-detail-note">${L.checked} ${esc(f.checked.replace(/\.$/, ""))}.</p>` : ""}</div>${figure}</div>
-<footer class="about-contribute"><a href="${home}?event=${encodeURIComponent(f.id)}">${L.showMap} →</a><a href="${home}?view=events">${L.allEvents} →</a></footer></main>`;
+<footer class="about-contribute"><a href="/calendars/${encodeURIComponent(eventSlug(event))}-${lang}.ics" download>${lang === "lt" ? "Įtraukti į kalendorių" : "Add to calendar"}</a><a href="/contribute/?event=${encodeURIComponent(f.id)}&amp;lang=${lang}">${lang === "lt" ? "Siūlyti pataisymą" : "Suggest a correction"}</a><a href="${home}?event=${encodeURIComponent(f.id)}">${L.showMap} →</a><a href="${home}?view=events">${L.allEvents} →</a></footer></main>`;
   let body = template.slice(template.indexOf("</head>"));
   body = replaceOnce(
     body,

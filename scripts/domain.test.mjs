@@ -49,18 +49,18 @@ test("Polygon holes, deletion and duplicate records are excluded", () => {
   assert.equal(
     filterPlaces(
       [
-        { id: 1, lat: 2, lon: 2 },
-        { id: 1, lat: 2, lon: 2 },
-        { id: 2, lat: 2, lon: 2, deleted_at: "2026-01-01" },
-        { id: 3, lat: NaN, lon: 2 },
+        { name: "Test venue", id: 1, lat: 2, lon: 2 },
+        { name: "Test venue", id: 1, lat: 2, lon: 2 },
+        { name: "Test venue", id: 2, lat: 2, lon: 2, deleted_at: "2026-01-01" },
+        { name: "Test venue", id: 3, lat: NaN, lon: 2 },
       ],
       b,
     ).length,
     1,
   );
 });
-test("Real snapshot produces 8 Lithuanian places", () =>
-  assert.equal(filterPlaces(snapshot.places, boundary).length, 8));
+test("Real snapshot excludes unnamed and irrelevant Lithuanian places", () =>
+  assert.equal(filterPlaces(snapshot.places, boundary).length, 6));
 test("Dates use Vilnius midnight in summer and winter", () => {
   assert.equal(dateKey("2026-08-06T21:30:00Z"), "2026-08-07");
   assert.equal(dateKey("2026-01-06T22:30:00Z"), "2026-01-07");

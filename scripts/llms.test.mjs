@@ -17,5 +17,5 @@ test("LLM reading guide points to generated resources with honest dates and coun
   assert.ok(merchants.includes("2026-09-29"));
   assert.ok(merchants.includes("Zolak"));
   assert.ok(!merchants.includes("Piercing4u"));
-  assert.equal((merchants.match(/^## /gm) || []).length, 8);
+  assert.equal((merchants.match(/^## /gm) || []).length, 6);
 });

@@ -1,3 +1,4 @@
+import { calendarEvent } from "../calendar.js";
 // Build the approved Atlas only; keep design sources and historical prototypes private.
 import {
   readFile,
@@ -27,6 +28,7 @@ const files = [
   "pwa.js",
   "atlas-app.js",
   "domain.js",
+  "calendar.js",
   "site.css",
   "templates.css",
   "atlas-editions.css",
@@ -84,6 +86,15 @@ await copyFile(
 );
 // Copy only artwork referenced by the built event dataset.
 const builtEvents = JSON.parse(await readFile(resolve(out, "data/events.json"), "utf8"));
+await mkdir(resolve(out, "calendars"), { recursive: true });
+for (const event of builtEvents.filter(hasEventPage)) {
+  for (const language of ["en", "lt"]) {
+    const calendarPath = "calendars/" + eventSlug(event) + "-" + language + ".ics";
+    await writeFile(resolve(out, calendarPath), calendarEvent(event, language, COUNTRY.origin, COUNTRY.name));
+    files.push(calendarPath);
+  }
+}
+
 for (const e of builtEvents) {
   if (!e.image) continue;
   const path = e.image.src;
@@ -357,3 +368,10 @@ await writeFile(
     .replace("__VERSION__", version)
     .replace("__PRECACHE__", JSON.stringify(precache)),
 );
+
+const { filterPlaces: visiblePlaces } = await import('../domain.js');
+const snapshotPath = resolve(out, 'data/merchants-snapshot.json');
+const publishedSnapshot = JSON.parse(await readFile(snapshotPath, 'utf8'));
+const publishedBoundary = JSON.parse(await readFile(resolve(out, COUNTRY.boundaryPath), 'utf8'));
+publishedSnapshot.places = visiblePlaces(publishedSnapshot.places, publishedBoundary);
+await writeFile(snapshotPath, JSON.stringify(publishedSnapshot, null, 2)+'\n');

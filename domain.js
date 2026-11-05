@@ -1,3 +1,4 @@
+import { calendarEvent } from "./calendar.js";
 import { COUNTRY } from "./country-config.js";
 export const API = COUNTRY.merchantsURL;
 export function inRing(lon, lat, ring) {
@@ -31,6 +32,7 @@ export function filterPlaces(places, boundary) {
   return places.filter((p) => {
     if (
       !Number.isSafeInteger(p.id) ||
+      !p.name?.trim() || /^(unnamed(?: place)?$|t\/n fun casino)/i.test(p.name.trim()) ||
       seen.has(p.id) ||
       !inCountry(p, boundary)
     )
@@ -68,50 +70,29 @@ export function safeURL(value) {
     return null;
   }
 }
-function foldCalendarLine(line) {
-  let result = "",
-    length = 0;
-  for (const char of line) {
-    const bytes = new TextEncoder().encode(char).length;
-    if (length + bytes > 75) {
-      result += "\r\n ";
-      length = 1;
-    }
-    result += char;
-    length += bytes;
-  }
-  return result;
-}
 export function ics(event, language = "en") {
-  if (event.status === "planned" || !event.start)
-    throw new Error("Event date is not confirmed");
-  const esc = (s) =>
-    String(s || "")
-      .replace(/\\/g, "\\\\")
-      .replace(/\r\n|\r|\n/g, "\\n")
-      .replace(/,/g, "\\,")
-      .replace(/;/g, "\\;");
-  const stamp = (s) =>
-    new Date(s)
-      .toISOString()
-      .replace(/[-:]/g, "")
-      .replace(/\.\d{3}Z/, "Z");
-  return [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//" + COUNTRY.name + "//Calendar//EN",
-    "BEGIN:VEVENT",
-    "UID:" + event.id + "@" + new URL(COUNTRY.origin).hostname,
-    "DTSTAMP:" + stamp(new Date()),
-    "DTSTART:" + stamp(event.start),
-    "DTEND:" + stamp(event.end || event.start),
-    "SUMMARY:" + esc(event.title[language] || event.title.en),
-    "LOCATION:" + esc(event.venue + ", " + event.address),
-    "DESCRIPTION:" + esc(event.description[language] || event.description.en),
-    "END:VEVENT",
-    "END:VCALENDAR",
-    "",
-  ]
-    .map(foldCalendarLine)
-    .join("\r\n");
+  return calendarEvent(event, language, COUNTRY.origin, COUNTRY.name);
+}
+
+
+// Match names, addresses and BTC Map categories independently of accents.
+export function normalizeSearch(value) {
+  return String(value ?? "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().trim();
+}
+export function matchesPlace(place, query) {
+  const categories = { local_cafe: "cafe coffee kavine", restaurant: "restaurant food restoranas", local_bar: "bar pub baras", hotel: "hotel accommodation viesbutis", shopping_cart: "shop store parduotuve", storefront: "shop store parduotuve", local_movies: "cinema movie kinas", palette: "art culture menas" };
+  const text = normalizeSearch([place.name, place.address, place.city, place.category, place.icon, place.description, categories[place.icon]].filter(Boolean).join(" "));
+  return normalizeSearch(query).split(/\s+/).every(word => text.includes(word));
+}
+// Screen-space connected groups keep even identical coordinates selectable.
+export function groupNearbyPlaces(places, project, radius = 44) {
+  const groups = [];
+  for (const place of places) {
+    const point = project([place.lon, place.lat]);
+    const neighbours = groups.filter(group => group.some(item => Math.hypot(item.point.x - point.x, item.point.y - point.y) < radius));
+    const merged = [{place, point}, ...neighbours.flat()];
+    for (const group of neighbours) groups.splice(groups.indexOf(group), 1);
+    groups.push(merged);
+  }
+  return groups.map(group => group.map(item => item.place));
 }

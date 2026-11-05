@@ -69,3 +69,16 @@ Community links were checked against https://offchain.media/lithuaniabtc on 2026
 ### Machine-readable content
 
 The release builder generates `/llms.txt` and `/read/overview.md`, `/read/events.md`, `/read/merchants.md` through `scripts/build-llms.mjs`. These use the same community links, events and country-filtered merchant snapshot as the app. The snapshot timestamp and unconfirmed event dates remain explicit. Rebuild and deploy after data updates; no separate hand-maintained catalogue or tracking script is required. These resources do not change crawler access rules or Cloudflare bot settings.
+
+
+## Visitor navigation changes (2026-11-05)
+
+Local work on `fix/visitor-navigation`; no deployment is included. The existing build command also generates `/contribute/`. Its English/Lithuanian form only prepares a message in the browser. It has no submission endpoint, stays disabled without JavaScript, and exposes copying and an explicit email-draft link. No message is sent automatically. Correction links carry the existing event or listing reference.
+
+Merchant search normalizes accents and indexes the name, address, city, category, icon and description. `?q=` preserves the query. Nearby screen coordinates form selectable groups, including identical coordinates. Mobile place details use a native dialog above the map, with coordinate-based directions and dated Lightning information when present in the existing source data.
+
+`filterPlaces` excludes empty/unnamed records and the specific Fun Casino listing from the generated snapshot, cached records and live responses. Imported source JSON is preserved. `calendar.js` escapes and folds ICS text, handles date-only events, and leaves the end unset when no end is known. The usual meetup cadence is descriptive, not a confirmed next event.
+
+The gallery uses `deco-proof-conference-nostr-web.jpeg` (1600 px maximum dimension, JPEG quality 78) while keeping the original photograph. The logo and Vytis PNGs are reduced to maximum dimensions of 512 and 640 px. Original full-resolution PNGs remain recoverable from the preceding Git revision.
+
+Validation includes the repository tests and separate DOM interaction tests. The latter simulate responsive branches with map geometry mocked; they do not establish the rendered layout, tile loading or behaviour on physical phones. A real desktop/mobile visual review is still required before release. No complete new Lithuanian landing-page translation is claimed.

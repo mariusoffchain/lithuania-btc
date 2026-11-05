@@ -1684,3 +1684,12 @@ html[lang="lt"] .theme-atlas .date-badge span {
 /* Organiser links follow the active site theme, including visited state. */
 .theme-atlas #event-detail a.event-organiser{color:var(--text);text-decoration:underline;text-underline-offset:4px}
 .theme-atlas #event-detail a.event-organiser:hover,.theme-atlas #event-detail a.event-organiser:focus-visible{color:var(--accent)}
+
+/* Place details stay above the map legend and inside the mobile viewport. */
+.theme-atlas .place-dialog{box-sizing:border-box;width:min(540px,calc(100% - 32px));max-height:80dvh;overflow:auto;background:var(--paper);color:var(--text);border:1px solid var(--line);padding:30px 22px 22px}
+.place-dialog::backdrop{background:#0008}.place-dialog .place-close{position:absolute;right:8px;top:4px;font-size:26px;background:none;color:inherit;border:0;width:44px;height:44px;cursor:pointer}
+.place-dialog h2{padding-right:24px}.place-dialog .search-result{display:block;width:100%;text-align:left;padding:12px;background:transparent;color:inherit;border:0;border-bottom:1px solid var(--line)}
+.place-dialog .search-result span{display:block}.place-dialog .detail-actions{display:flex;flex-wrap:wrap;gap:16px}.place-dialog a{color:var(--accent)}
+.theme-atlas .merchant-cluster{min-width:38px;min-height:38px;font-size:16px;border:2px solid var(--paper);border-radius:50%}
+.community-help{font-size:13px;line-height:1.6;padding-block:12px}.community-help a{color:var(--accent);display:inline-block;margin-right:12px}.search-empty a{display:block;margin-top:10px}
+@media(max-width:760px){.theme-atlas .place-dialog{position:fixed;inset:auto 0 0;margin:0;width:100%;max-width:100%;max-height:65dvh;padding-bottom:max(22px,env(safe-area-inset-bottom));border-radius:16px 16px 0 0}}
