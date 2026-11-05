@@ -639,7 +639,7 @@ function renderPlacesList(list) {
   const items = places.slice().sort((a,b) => placeName(a).localeCompare(placeName(b), locale()));
   const section = el("section", "sidebar-places");
   section.append(el("p", "sidebar-place-count", t("merchants") + " · " + items.length));
-  section.append(el("p", "community-help", lang === "lt" ? "Duomenys atnaujinami iš BTC Map. Jei ryšio nėra, rodoma išsaugota kopija. Naujos vietos pridėjimo terminas negarantuojamas; patikrink nurodytą duomenų datą." : "Places refresh from BTC Map. Offline, the saved snapshot is shown. There is no guaranteed listing delay; check the displayed data date."));
+  section.append(el("p", "places-source-note", lang === "lt" ? "Duomenys atnaujinami iš BTC Map. Jei ryšio nėra, rodoma išsaugota kopija. Naujos vietos pridėjimo terminas negarantuojamas; patikrink nurodytą duomenų datą." : "Places refresh from BTC Map. Offline, the saved snapshot is shown. There is no guaranteed listing delay; check the displayed data date."));
   if (!items.length) section.append(el("p", "empty-state", t("noMatch")));
   for (const p of items) {
     const card = button("", () => {

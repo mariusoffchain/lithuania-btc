@@ -12,11 +12,72 @@ const pages={
 };
 const paths=(slug,lang)=>ltDefault?(lang==='en'?'/en/':'/')+slug+'/':(lang==='lt'?'/lt/':'/')+slug+'/';
 const routes=[];
+const atlas=name==='Lithuania BTC'||name==='Bitcoin Baltics';
+const crypto=name==='Crypto Baltics';
+const esc=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
+const shells={};
+for(const lang of ['en','lt']){
+ const home=ltDefault?(lang==='en'?'/en/':'/'):(lang==='lt'?'/lt/':'/');
+ const sourcePath=atlas?home+'about/':crypto?home+'approach/':home;
+ shells[lang]=await readFile(out+sourcePath+'index.html','utf8');
+}
 for(const [slug,copy] of Object.entries(pages))for(const lang of ['en','lt']){
  const [title,rawBody]=copy[lang],path=paths(slug,lang),home=ltDefault?(lang==='en'?'/en/':'/'):(lang==='lt'?'/lt/':'/');routes.push(path);
- const body=rawBody.replace(/href="\/(?:lt\/)?partners\/"/g, `href="${paths("partners",lang)}"`);
- const html=`<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} · ${name}</title><meta name="description" content="${title} · ${name}"><link rel="canonical" href="${origin+path}"><link rel="alternate" hreflang="en" href="${origin+paths(slug,'en')}"><link rel="alternate" hreflang="lt" href="${origin+paths(slug,'lt')}"><link rel="stylesheet" href="/visitor-pages.css"></head><body><header><a href="${home}">${name}</a><a href="${paths(slug,lang==='en'?'lt':'en')}" lang="${lang==='en'?'lt':'en'}">${lang==='en'?'Lietuvių':'English'}</a></header><main><h1>${title}</h1>${body}</main><footer><nav aria-label="${lang==='en'?'Resources':'Ištekliai'}">${Object.entries(pages).map(([s,c])=>link(paths(s,lang),c[lang][0])).join(' ')} ${link(home,lang==='en'?'Back to site':'Grįžti į svetainę')}</nav><small>${lang==='en'?'Sources reviewed':'Šaltiniai peržiūrėti'} 2026-11-05</small></footer></body></html>`;
+ const body=rawBody.replace(/href="\/(?:lt\/)?partners\/"/g, `href="${paths('partners',lang)}"`);
+ const labels=lang==='lt'?['Pradėti','Verslui','Žiniasklaidai','Bendradarbiavimas']:['Start here','For merchants','Press','Partners'];
+ const nav=Object.keys(pages).map((s,i)=>`<a href="${paths(s,lang)}"${s===slug?' aria-current="page"':''}>${labels[i]}</a>`).join('');
+ const content=`<aside class="resource-sidebar"><p class="resource-eyebrow">${lang==='lt'?'Informacija':'Information'}</p><nav class="resource-nav" aria-label="${lang==='lt'?'Informacija':'Information'}">${nav}</nav></aside><article class="resource-article"><p class="resource-eyebrow">${name}</p><h1>${esc(title)}</h1><div class="resource-prose">${body}</div><footer class="resource-footnote">${lang==='lt'?'Šaltiniai peržiūrėti':'Sources reviewed'} 2026-11-05</footer></article>`;
+ const main=atlas?`<main id="main" class="about-content visitor-content">${content}</main>`:crypto?`<main id="main"><section class="wrap visitor-content">${content}</section></main>`:`<main id="main" class="visitor-content">${content}</main>`;
+ let html=shells[lang].replace(/ aria-current="page"/g,'').replace(/<main\b[\s\S]*?<\/main>/,main);
+ html=html.replace(/href="#"/g,`href="${home}"`);
+ // Reuse the site's complete shell, including its fonts, navigation and theme controller.
+ html=html.replace(/<title>[\s\S]*?<\/title>/,`<title>${esc(title)} · ${name}</title>`)
+  .replace(/(<meta\s+(?:name|property)="(?:description|og:description|twitter:description)"\s+content=")[^"]*/g,'$1'+esc(title+' · '+name))
+  .replace(/(<meta\s+(?:name|property)="(?:og:title|twitter:title)"\s+content=")[^"]*/g,'$1'+esc(title+' · '+name))
+  .replace(/(<link\s+rel="canonical"\s+href=")[^"]*/g,'$1'+origin+path)
+  .replace(/(<meta\s+property="og:url"\s+content=")[^"]*/g,'$1'+origin+path)
+  .replace(/<link\b[^>]*rel="alternate"[^>]*>/g,'')
+  .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g,'')
+  .replace(/(<body[^>]*?)\sdata-alternate="[^"]*"/,'$1');
+ html=html.replace(/<body([^>]*)>/,(_,attrs)=>{
+  attrs=attrs.includes('class="')?attrs.replace('class="','class="visitor-page '):attrs+' class="visitor-page"';
+  return `<body${attrs} data-alternate="${paths(slug,lang==='en'?'lt':'en')}">`;
+ });
+ // Keep copied relative assets rooted at the site, rather than at the article URL.
+ html=html.replace(/(src|href)="(?!https?:|mailto:|#|\/|data:)([^"]+)"/g,'$1="/$2"');
+ html=html.replace('</head>',`<link rel="alternate" hreflang="en" href="${origin+paths(slug,'en')}"><link rel="alternate" hreflang="lt" href="${origin+paths(slug,'lt')}"><link rel="stylesheet" href="/visitor-pages.css"><script type="application/ld+json">${JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:title,url:origin+path,inLanguage:lang}).replaceAll('<','\\u003c')}</script></head>`);
+ if(atlas)html=html.replace(/(<a[^>]*class="(?:desktop-about|mobile-about)"[^>]*?) aria-current="page"/g,'$1');
  await mkdir(out+path,{recursive:true});await writeFile(out+path+'index.html',html);
 }
-await writeFile(out+'/visitor-pages.css',`*{box-sizing:border-box}body{margin:0;background:#f7f8f6;color:#15251f;font:18px/1.65 system-ui,sans-serif}header,main,footer{max-width:850px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #c8d1cb}a{color:#225b43;text-underline-offset:4px;overflow-wrap:anywhere}h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.1}h2{font-size:1.4rem;margin-top:2rem}li{margin:1rem 0}nav{display:flex;gap:16px;flex-wrap:wrap}footer{border-top:1px solid #c8d1cb;font-size:1rem}small{display:block;margin-top:20px}a:focus-visible{outline:3px solid #dc7b13;outline-offset:4px}@media(max-width:400px){header,main,footer{padding:18px}}`);
+await writeFile(out+'/visitor-pages.css',`
+/* Article layout uses the existing site palette, fonts and masthead. */
+.visitor-page{--article-rule:var(--rule,var(--line));--article-accent:var(--accent,var(--green));--article-ink:var(--text,var(--ink,#e1e9e2))}
+.visitor-page .visitor-content{display:grid;grid-template-columns:190px minmax(0,720px);gap:64px;align-items:start;padding-top:64px;padding-bottom:80px}
+.visitor-page.theme-atlas .visitor-content{max-width:1160px;padding-top:120px}
+.visitor-page .resource-sidebar{position:sticky;top:108px}
+.visitor-page .resource-eyebrow{font-size:11px;line-height:1.5;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 20px}
+.visitor-page .resource-nav{display:flex;flex-direction:column;align-items:stretch;gap:0;width:auto;margin:0;font-size:14px;line-height:1.4;border-top:1px solid var(--article-rule)}
+.visitor-page .resource-nav a{display:block;padding:14px 0;border-bottom:1px solid var(--article-rule);color:var(--muted);text-decoration:none}
+.visitor-page .resource-nav a[aria-current],.visitor-page .resource-nav a:hover{color:var(--article-accent)}
+.visitor-page .resource-nav a[aria-current]{font-weight:600}
+.visitor-page .resource-article{min-width:0}
+.visitor-page .resource-article h1{font-size:clamp(34px,4vw,54px);line-height:1.12;letter-spacing:-.025em;font-weight:400;margin:0 0 30px}
+.visitor-page.theme-atlas .resource-article h1,.visitor-page.theme-atlas .resource-prose h2{font-family:var(--serif)}
+.visitor-page .resource-prose{font-size:17px;line-height:1.65;color:var(--article-ink)}
+.visitor-page .resource-prose>p:first-child{font-size:20px;line-height:1.55;margin-bottom:32px}
+.visitor-page .resource-prose p{font-size:inherit;line-height:inherit;margin:0 0 18px}
+.visitor-page .resource-prose h2{font-size:26px;font-weight:400;line-height:1.25;margin:36px 0 18px;padding-top:24px;border-top:1px solid var(--article-rule);letter-spacing:-.02em}
+.visitor-page .resource-prose a{color:var(--article-accent);text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.visitor-page .resource-prose :is(ol,ul){margin:0 0 26px;padding-left:24px}
+.visitor-page .resource-prose li{padding-left:6px;margin:0 0 18px}
+.visitor-page .resource-footnote{display:block;margin-top:36px;padding:20px 0 0;border-top:1px solid var(--article-rule);font-size:12px;color:var(--muted)}
+@media(max-width:800px){.visitor-page .visitor-content{display:block;padding-top:36px;padding-bottom:50px}.visitor-page .resource-sidebar{display:none}.visitor-page.theme-atlas .visitor-content{padding:94px 22px 100px}.visitor-page .resource-article h1{font-size:36px}.visitor-page .resource-prose{font-size:16px}.visitor-page .resource-prose>p:first-child{font-size:18px}.visitor-page .resource-prose h2{font-size:24px;margin-top:28px;padding-top:22px}}
+`);
+if(name==='Cypher Baltics')for(const lang of ['en','lt']){
+ const path=(lang==='lt'?'/lt':'')+'/about/',other=(lang==='lt'?'':'/lt')+'/about/';
+ let html=await readFile(out+paths('press',lang)+'index.html','utf8');
+ html=html.replaceAll(origin+paths('press',lang),origin+path).replaceAll(origin+paths('press',lang==='lt'?'en':'lt'),origin+other).replace('<h1>'+esc(pages.press[lang][0])+'</h1>','<h1>'+(lang==='lt'?'Apie ':'About ')+name+'</h1>');
+ html=html.replace(/<title>[\s\S]*?<\/title>/,`<title>${lang==='lt'?'Apie':'About'} · ${name}</title>`).replace(/data-alternate="[^"]*"/,`data-alternate="${other}"`);
+ await mkdir(out+path,{recursive:true});await writeFile(out+path+'index.html',html);routes.push(path);
+}
 const sitemap=out+'/sitemap.xml';await writeFile(sitemap,(await readFile(sitemap,'utf8')).replace('</urlset>',routes.map(p=>`<url><loc>${origin+p}</loc></url>`).join('')+'</urlset>'));

@@ -1700,3 +1700,9 @@ html[lang="lt"] .theme-atlas .date-badge span {
 
 /* Secondary agenda action stays with the event list. */
 .theme-atlas .calendar-contribute{display:inline-block;margin:18px 0 4px;color:var(--muted);font:12px/1.5 var(--sans);text-underline-offset:4px}.theme-atlas .calendar-contribute:hover{color:var(--accent)}
+
+/* Keep the merchant count and source note subordinate to the places. */
+.theme-atlas .sidebar-places .sidebar-place-count{font:13px/1.4 var(--sans);margin:0 0 8px;color:var(--muted)}
+.theme-atlas .sidebar-places .places-source-note{font:12px/1.5 var(--sans);color:var(--muted);margin:0 0 18px;padding:0}
+.theme-atlas .calendar-content:has(.sidebar-places){padding-top:20px}
+.theme-atlas .sidebar-place{padding:18px 8px;gap:12px}

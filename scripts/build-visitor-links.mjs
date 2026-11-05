@@ -3,10 +3,10 @@ const [out,name]=process.argv.slice(2),ltDefault=name==='Lithuania BTC';
 const base=lang=>ltDefault?(lang==='en'?'/en/':'/'):(lang==='lt'?'/lt/':'/');
 const origin='https://'+({'Bitcoin Baltics':'bitcoinbaltics.com','Lithuania BTC':'lithuaniabtc.com','Crypto Baltics':'cryptobaltics.org','Cypher Baltics':'cypherbaltics.org'})[name];
 const icon='<svg class="resource-menu-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
-function menu(content,label,kind,mobile=false){return `<details class="site-resources ${kind}${mobile?' mobile-resources':''}"><summary aria-label="${label}"><span class="resource-menu-label">${label}</span>${icon}<span class="resource-chevron" aria-hidden="true">⌄</span></summary><div class="resource-panel">${content}</div></details>`;}
+function menu(content,label,kind,mobile=false){return `<details class="site-resources ${kind}${mobile?' mobile-resources':''}"><summary aria-label="${label}"><span class="resource-menu-label">${label}</span>${icon}<svg class="resource-chevron" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary><div class="resource-panel">${content}</div></details>`;}
 async function walk(dir){for(const entry of await readdir(dir,{withFileTypes:true})){
  const path=dir+'/'+entry.name;if(entry.isDirectory()){await walk(path);continue;}if(entry.name!=='index.html'||path.includes('/contribute/'))continue;
- let html=await readFile(path,'utf8');if(html.includes('/visitor-links.css')||html.includes('/visitor-pages.css'))continue;
+ let html=await readFile(path,'utf8');if(html.includes('/visitor-links.css'))continue;
  const lang=html.match(/<html[^>]*lang="(lt|en)"/)?.[1]||'en',lt=lang==='lt',prefix=base(lang);
  const labels=lt?['Pradėti','Verslui','Žiniasklaidai','Bendradarbiavimas']:['Start here','For merchants','Press','Partners'];
  const links=['learn','accept-bitcoin','press','partners'].map((s,i)=>`<a href="${prefix+s}/">${labels[i]}</a>`).join('');
@@ -36,7 +36,8 @@ await writeFile(out+'/visitor-links.css',`
 .site-resources>summary{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;cursor:pointer;list-style:none;font:inherit;color:inherit;white-space:nowrap}
 .site-resources>summary::-webkit-details-marker{display:none}
 .site-resources>summary::marker{content:""}
-.resource-chevron{font-size:14px;line-height:1;opacity:.65}
+.resource-chevron{display:block;flex:none;width:14px;height:14px;opacity:.7;transition:transform .15s}.site-resources[open] .resource-chevron{transform:rotate(180deg)}
+.theme-atlas .navbar .site-resources>summary{text-decoration:none}.site-resources>summary:hover .resource-menu-label{text-decoration:underline;text-underline-offset:5px}
 .resource-menu-icon{display:none}
 .resource-panel{position:absolute;right:0;top:100%;width:230px;max-height:calc(100dvh - 100px);overflow:auto;padding:10px;z-index:200;border:1px solid var(--resource-line);background:var(--resource-bg);color:var(--resource-ink);box-shadow:0 12px 30px #0002;text-align:left}
 .resource-panel a{display:flex!important;justify-content:flex-start;align-items:center;min-height:42px;padding:9px 12px!important;margin:0!important;width:auto!important;font:inherit;line-height:1.4;text-decoration:none;white-space:normal;color:inherit}
@@ -67,7 +68,23 @@ await writeFile(out+'/visitor-links.css',`
 @media(min-width:761px) and (max-width:1050px){.site-header{gap:14px}.site-header nav{gap:14px;font-size:13px}}
 `);
 await writeFile(out+'/visitor-language.js',`for(const a of document.querySelectorAll('a.language-link')){const url=new URL(a.href);url.search=location.search;url.hash=location.hash;a.href=url.href;}
+function syncResourceTheme(){
+ if(!document.body.classList.contains('theme-atlas'))return;
+ const mode=document.body.classList.contains('mode-light')?'light':'dark';
+ for(const link of document.querySelectorAll('.resource-panel a,.resource-nav a,.mobile-resource-links a')){
+  const url=new URL(link.href);if(url.origin!==location.origin)continue;
+  url.searchParams.set('mode',mode);link.href=url.href;
+ }
+}
+syncResourceTheme();
+new MutationObserver(syncResourceTheme).observe(document.body,{attributes:true,attributeFilter:['class']});
 const menus=[...document.querySelectorAll('.site-resources, .mobile-menu')];
+for(const menu of menus){
+ const hover=()=>matchMedia('(min-width:761px) and (hover:hover)').matches;
+ menu.addEventListener('pointerenter',()=>{if(hover())menu.open=true;});
+ menu.addEventListener('pointerleave',()=>{if(hover()&&!menu.contains(document.activeElement))menu.open=false;});
+ menu.addEventListener('focusout',()=>queueMicrotask(()=>{if(hover()&&!menu.contains(document.activeElement))menu.open=false;}));
+}
 for(const menu of menus)menu.addEventListener('toggle',()=>{if(menu.open)for(const other of menus)if(other!==menu)other.open=false;});
 document.addEventListener('click',event=>{for(const menu of menus)if(!menu.contains(event.target))menu.open=false;});
 document.addEventListener('keydown',event=>{if(event.key==='Escape')for(const menu of menus)if(menu.open){menu.open=false;menu.querySelector('summary').focus();}});
