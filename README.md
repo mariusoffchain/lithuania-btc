@@ -73,7 +73,7 @@ The release builder generates `/llms.txt` and `/read/overview.md`, `/read/events
 
 ## Visitor navigation changes (2026-11-05)
 
-Local work on `fix/visitor-navigation`; no deployment is included. The existing build command also generates `/contribute/`. Its English/Lithuanian form only prepares a message in the browser. It has no submission endpoint, stays disabled without JavaScript, and exposes copying and an explicit email-draft link. No message is sent automatically. Correction links carry the existing event or listing reference.
+Published on 2026-11-06. The build also generates `/contribute/`. Its English/Lithuanian form only prepares a message in the browser. It has no submission endpoint, stays disabled without JavaScript, and exposes copying and an explicit email-draft link. No message is sent automatically. Correction links carry the existing event or listing reference.
 
 Merchant search normalizes accents and indexes the name, address, city, category, icon and description. `?q=` preserves the query. Nearby screen coordinates form selectable groups, including identical coordinates. Mobile place details use a native dialog above the map, with coordinate-based directions and dated Lightning information when present in the existing source data.
 
@@ -81,4 +81,4 @@ Merchant search normalizes accents and indexes the name, address, city, category
 
 The gallery uses `deco-proof-conference-nostr-web.jpeg` (1600 px maximum dimension, JPEG quality 78) while keeping the original photograph. The logo and Vytis PNGs are reduced to maximum dimensions of 512 and 640 px. Original full-resolution PNGs remain recoverable from the preceding Git revision.
 
-Validation includes the repository tests and separate DOM interaction tests. The latter simulate responsive branches with map geometry mocked; they do not establish the rendered layout, tile loading or behaviour on physical phones. A real desktop/mobile visual review is still required before release. No complete new Lithuanian landing-page translation is claimed.
+Repository tests and cross-site interaction checks passed before publication. Browser review covered desktop and mobile viewports (320, 390 and 1440 px), including the live sites after deployment. Physical phones were not tested. English and Lithuanian pages are available; resource pages use each site’s typography, colours and theme.
