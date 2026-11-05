@@ -686,6 +686,11 @@ function renderCalendar() {
   const contribute = el("a", null, lang === "lt" ? "Siūlyti renginį ar pataisymą" : "Submit an event or correction");
   contribute.href = "/contribute/?lang=" + lang;
   help.append(contribute);
+  const resourceBase = COUNTRY.regional ? (lang === "lt" ? "/lt/" : "/") : (lang === "en" ? "/en/" : "/");
+  for (const [path, en, lt] of [["learn", "Start here", "Pradėti"], ["accept-bitcoin", "For merchants", "Verslui"], ["press", "Press", "Žiniasklaidai"], ["partners", "Partners", "Bendradarbiavimas"]]) {
+    const a = el("a", null, lang === "lt" ? lt : en); a.href = resourceBase + path + "/"; help.append(a);
+  }
+
   for (const initiative of (config.initiatives || []).filter(i => (i.id === "meetups" || i.id === "riga-walks" || i.id === "mission-liberty"))) {
     for (const channel of initiative.links.filter(l => l.kind !== "event")) help.append(link(initiative.name + " · " + channel.name, channel.url));
   }
