@@ -1697,3 +1697,6 @@ html[lang="lt"] .theme-atlas .date-badge span {
 @media(max-width:760px){.theme-atlas .legend{display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 24px);height:auto;white-space:normal}.theme-atlas .legend button{flex:0 1 calc(50% - 4px);white-space:normal;text-align:left;min-height:28px}}
 
 @media(max-width:760px){.theme-atlas .maplibregl-ctrl-top-right{bottom:130px}}
+
+/* Secondary agenda action stays with the event list. */
+.theme-atlas .calendar-contribute{display:inline-block;margin:18px 0 4px;color:var(--muted);font:12px/1.5 var(--sans);text-underline-offset:4px}.theme-atlas .calendar-contribute:hover{color:var(--accent)}
