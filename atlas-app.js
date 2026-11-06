@@ -1121,6 +1121,12 @@ function openPlace(p) {
     root.append(el("p", null, t("hours") + " · " + p.opening_hours));
   const payment = paymentMethods[p.osm_id];
   if (payment?.lightning === true) root.append(el("p", "badge", "Lightning · OpenStreetMap" + (payment.checkedAt ? " · " + fmt(payment.checkedAt, {dateStyle: "medium"}) : "")));
+  const venueStatement = payment?.venueStatement;
+  if (venueStatement && safeURL(venueStatement.source)) {
+    const note = el("p", "muted", venueStatement[lang] || venueStatement.en);
+    note.append(" ", link((lang === "lt" ? "Vietos šaltinis" : "Venue source") + " · " + venueStatement.checkedAt, venueStatement.source));
+    root.append(note);
+  }
   root.append(el("p", "muted", t("acceptance")));
   const actions = el("div", "detail-actions");
   if (safeURL(p.website)) actions.append(link(t("website"), p.website));

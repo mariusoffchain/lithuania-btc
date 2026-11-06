@@ -69,7 +69,13 @@
     "lightning": true,
     "lightningTag": "yes",
     "source": "https://api.openstreetmap.org/api/0.6/node/12922174649.json",
-    "checkedAt": "2026-10-01T10:15:16.818366+00:00"
+    "checkedAt": "2026-10-01T10:15:16.818366+00:00",
+    "venueStatement": {
+      "source": "https://bar.zolak.lt/",
+      "checkedAt": "2026-11-06",
+      "en": "Centralny Crypto Bar is inside Zolak, Vytenio g. 50D. Its website lists Lightning and on-chain Bitcoin payments (on-chain orders from €25). Payment has not been tested in person.",
+      "lt": "„Centralny Crypto Bar“ veikia „Zolak“ patalpose, Vytenio g. 50D. Jo svetainėje nurodomi mokėjimai per Lightning ir Bitcoin pagrindinį tinklą (pastarieji nuo 25 €). Mokėjimas vietoje neišbandytas."
+    }
   },
   "node:13042920082": {
     "lightning": true,

@@ -10,7 +10,12 @@
     "description": {
       "en": "The Vilnius Bitcoin meetup usually takes place on the 1st Thursday of the month at 18:00 at Zolak, in English. The next date and venue are not confirmed. Check Meetup or Telegram before travelling.",
       "lt": "Vilniaus „Bitcoin“ susitikimai paprastai vyksta 1-ąjį mėnesio ketvirtadienį 18:00 „Zolak“, anglų kalba. Kito susitikimo data ir vieta dar nepatvirtintos. Prieš kelionę patikrink „Meetup“ arba „Telegram“."
-    }
+    },
+    "sources": [
+      "https://www.meetup.com/bitcoin-lithuania-meetup/events/"
+    ],
+    "sourceVerifiedAt": "2026-11-06",
+    "sourceNotes": "Public Meetup calendar lists no upcoming event on 2026-11-06. No new date or venue confirmed; private Telegram messages were not reviewed."
   },
   {
     "id": "planned-walk",
@@ -23,7 +28,12 @@
     "description": {
       "en": "We are preparing the next walk. The date and location will be announced here and in our community channels.",
       "lt": "Planuojame kitą pasivaikščiojimą. Datą ir susitikimo vietą paskelbsime čia ir bendruomenės kanaluose."
-    }
+    },
+    "sources": [
+      "https://bitcoinwalk.org/#find-walk"
+    ],
+    "sourceVerifiedAt": "2026-11-06",
+    "sourceNotes": "Former Vilnius city URL returns HTTP 404. Official homepage now provides a walk finder; no dated Vilnius walk confirmed in the public sources reviewed."
   },
   {
     "id": "meetup-315774816",
