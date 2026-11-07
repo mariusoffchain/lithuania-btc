@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Third-party exceptions: IBM Plex font files use SIL OFL 1.1, see
-assets/IBM-Plex-OFL.txt. Natural Earth geographic data are public domain.
-
-Third-party additions for the functional site: MapLibre GL JS is BSD-3-Clause (vendor/maplibre-LICENSE.txt). BTC Map/OpenStreetMap merchant data is subject to ODbL and attribution, not this MIT grant. OpenFreeMap/OpenMapTiles basemap attribution must be retained. See README.md for sources.
-
-Community photographs and third-party branding are excluded from this MIT grant.
-See THIRD_PARTY.md and asset provenance files for applicable terms.

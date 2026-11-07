@@ -1,6 +1,6 @@
 # Third-party notices and reuse
 
-- Application code: MIT, copyright 2026 Marius Farashi (LICENSE).
+- Application code: MIT, copyright 2026 Marius Farashi (LICENSE). The MIT grant covers the code only, not the exceptions below.
 - MapLibre GL JS/CSS: BSD-3-Clause, see vendor/maplibre-LICENSE.txt. Vendored files are not reformatted.
 - IBM Plex fonts: SIL Open Font License 1.1, see assets/IBM-Plex-OFL.txt. Fonts are self-hosted.
 - Country boundary: Natural Earth; public domain. https://www.naturalearthdata.com/about/terms-of-use/

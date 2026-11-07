@@ -66,6 +66,10 @@ An event with `status: "planned"` and no `start`/`end` is displayed under “Upc
 
 Community links were checked against https://offchain.media/lithuaniabtc on 2026-09-30. Its X and Nostr links belong to the organizer, not dedicated initiative accounts, so they are not labeled as meetup/walk accounts.
 
+### Shared data for other sites
+
+`/data/*.json`, `/llms.txt` and `/read/*` are served with `Access-Control-Allow-Origin: *` by `worker.mjs`, so another community site can load the events, community links or merchant snapshot from the browser. Pages keep the default policy. Credit Lithuania BTC and keep the BTC Map/OpenStreetMap (ODbL) attribution when reusing merchant data.
+
 ### Machine-readable content
 
 The release builder generates `/llms.txt` and `/read/overview.md`, `/read/events.md`, `/read/merchants.md` through `scripts/build-llms.mjs`. These use the same community links, events and country-filtered merchant snapshot as the app. The snapshot timestamp and unconfirmed event dates remain explicit. Rebuild and deploy after data updates; no separate hand-maintained catalogue or tracking script is required. These resources do not change crawler access rules or Cloudflare bot settings.
